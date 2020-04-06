@@ -4,7 +4,9 @@ require_once('../_private/env.php');
 
 function connect_db(string $dsn, string $user, string $pass): PDO
 {
-  return new PDO($dsn, $user, $pass);
+  return new PDO($dsn, $user, $pass, array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+  ));
 }
 
 

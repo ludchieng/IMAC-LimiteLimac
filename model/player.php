@@ -1,7 +1,42 @@
 <?php
-require_once('api_response.php');
+require_once('../model/data_access.php');
 
-function check_token(int $id, string $token): bool
+function create_player(string $name, string $pass): int
+{
+  $sql = "INSERT INTO player (name, pass)
+    VALUES (:name, :pass);
+  ";
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->bindValue(':name', $name, PDO::PARAM_STR);
+  $pst->bindValue(':pass', password_hash($pass, PASSWORD_DEFAULT), PDO::PARAM_STR);
+  $pst->execute();
+  $pst->closeCursor();
+  return $pdo->lastInsertId();
+}
+
+
+function authenticate_player(string $name, string $pass): int
+{
+  $sql = 'SELECT P.id_player, P.name, P.pass FROM player P
+    WHERE P.name = :name
+  ';
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->execute([':name' => $name]);
+  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
+  if (count($data) > 1)
+    throw new Exception('Player\'s name duplicates');
+
+  $pst->closeCursor();
+  if (!password_verify($pass, $data[0]['pass']))
+    return FALSE;
+
+  return $data[0]['id_player'];
+}
+
+
+function is_valid_token(int $id, string $token): bool
 {
   $sql = 'SELECT P.token FROM player P WHERE P.id_player = :id';
   $pdo = connect_db_player();

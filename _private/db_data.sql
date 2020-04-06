@@ -159,17 +159,19 @@ INSERT INTO `party` (`id_party`, `name`, `id_card`) VALUES
 CREATE TABLE IF NOT EXISTS `player` (
   `id_player` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `pass` varchar(50) NOT NULL,
-  `token` char(24) NOT NULL,
+  `pass` varchar(60) NOT NULL,
+  `token` char(24) DEFAULT NULL,
+  `isReady` tinyint(1) DEFAULT '0',
+  `lastPing` datetime DEFAULT NULL,
   `id_party` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_player`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` (`id_player`, `name`, `pass`, `token`, `id_party`) VALUES
-	(1, 'GotchiT', 'protool', 'vf5j5pn14PkCy8WFRGayuDhq', 1),
-	(2, 'PandaDesSteppes', 'klakos', 'OR2$a34iVAA0lzEb2kYPcsTk', 2),
-	(3, 'Kysios', 'pouletcurry', 'puxLtJe1GcYM6YFJK#JstraC', 1);
+INSERT INTO `player` (`id_player`, `name`, `pass`, `token`, `isReady`, `lastPing`, `id_party`) VALUES
+	(1, 'GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, NULL, 1),
+	(2, 'PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, NULL, 2),
+	(3, 'Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, NULL, 1);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `posseder` (
