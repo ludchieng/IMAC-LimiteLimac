@@ -22,12 +22,14 @@ $API_ERROR_MSG = [
 define('API_ERROR_DO_ABORT', -100);
 define('API_ERROR_DONT_ABORT', -101);
 
+
 function create_response(): array
 {
   $r = [];
   $r['success'] = true;
   return $r;
 }
+
 
 function push_error(array &$r, int $code, string $detail = null, int $option = API_ERROR_DO_ABORT): void
 {

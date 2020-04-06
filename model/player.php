@@ -16,52 +16,35 @@ function create_player(string $name, string $pass): int
 }
 
 
+function get_player($id, $attr)
+{
+  return get('player', $id, $attr);
+}
+
+
+function get_player_by_name($name, $attr)
+{
+  return get_by('player', 'name', $name, $attr);
+}
+
+
+function set_player($id, $attr, $value): bool
+{
+  return set('player', $id, $attr, $value);
+}
+
+
 function authenticate_player(string $name, string $pass): int
 {
-  $sql = 'SELECT P.id_player, P.name, P.pass FROM player P
-    WHERE P.name = :name
-  ';
-  $pdo = connect_db_player();
-  $pst = $pdo->prepare($sql);
-  $pst->execute([':name' => $name]);
-  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
-  if (count($data) > 1)
-    throw new Exception('Player\'s name duplicates');
-
-  $pst->closeCursor();
-  if (!password_verify($pass, $data[0]['pass']))
+  if (!password_verify($pass, get_player_by_name($name, 'pass')))
     return FALSE;
-
-  return $data[0]['id_player'];
+  return get_player_by_name($name, 'id_player');
 }
 
 
-function is_valid_token(int $id, string $token): bool
+function is_valid_token(int $id_player, string $token): bool
 {
-  $sql = 'SELECT P.token FROM player P WHERE P.id_player = :id';
-  $pdo = connect_db_player();
-  $pst = $pdo->prepare($sql);
-  $pst->execute([':id' => $id]);
-  $data = $pst->fetch(PDO::FETCH_ASSOC);
-  $pst->closeCursor();
-  return $data['token'] == $token;
-}
-
-
-function get_player_cards(int $id): array
-{
-  $sql = 'SELECT P.id_card, C.content
-    FROM posseder P, card C
-    WHERE P.id_player = :id
-    AND P.id_card = C.id_card;
-  ';
-
-  $pdo = connect_db_player();
-  $pst = $pdo->prepare($sql);
-  $pst->execute([':id' => $id]);
-  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
-  $pst->closeCursor();
-  return $data;
+  return get_player($id_player, 'token') == $token;
 }
 
 
@@ -99,4 +82,20 @@ function draw_card(int $id, int $amount = 1): array
   $pst->closeCursor();
 
   return $cards;
+}
+
+
+function get_player_cards(int $id): array
+{
+  $sql = 'SELECT P.id_card, C.content
+    FROM posseder P, card C
+    WHERE P.id_player = :id
+    AND P.id_card = C.id_card;
+  ';
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->execute([':id' => $id]);
+  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
+  $pst->closeCursor();
+  return $data;
 }

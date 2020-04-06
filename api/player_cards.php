@@ -16,7 +16,7 @@ try {
     push_error($r, 101, 'token', API_ERROR_DONT_ABORT);
 
   if (!is_numeric($_GET['idplayer']))
-    push_error($r, 301, 'concerning idplayer', API_ERROR_DONT_ABORT);
+    push_error($r, 301, 'idplayer', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
