@@ -14,11 +14,11 @@ if ($DB_PASSWORD === '')
 	die('Error: DB_PASSWORD is required in ./_private/env.php');
 
 
-if (!isset($_GET['db_host'], $_GET['db_username'], $_GET['db_password']))
-	die('Error: Database host, username and password are required.');
+if (!isset($_GET['db_admin'], $_GET['db_password']))
+	die('Error: Database admin username and password are required.');
 
 // Connect to mysql server
-$db = mysqli_connect($_GET['db_host'], $_GET['db_username'], $_GET['db_password']);
+$db = mysqli_connect($DB_HOST, $_GET['db_admin'], $_GET['db_password']);
 if (!$db)
 	die('Error: could not connect to mysql.');
 if ($db->connect_error)
@@ -26,7 +26,7 @@ if ($db->connect_error)
 echo '<pre>' . 'Database connection opened.' . '</pre>';
 
 // Query db to create schema
-$sql = "CREATE SCHEMA ${DB_DATABASE};";
+$sql = "CREATE SCHEMA ${DB_DATABASE} CHARACTER SET ${DB_CHARSET} COLLATE ${DB_COLLATION};";
 if (TRUE === $db->query($sql)) {
 	echo '<pre>' . "Schema '${DB_DATABASE}' has been created successfully." . '</pre>';
 } else {

@@ -77,12 +77,8 @@
 
   <form action="install.php" method="get">
     <div class="form-group">
-      <label for="db_host">Database Host</label>
-      <input id="db_host" class="form-control" name="db_host" type="text" value="localhost">
-    </div>
-    <div class="form-group">
-      <label for="db_username">Database Username</label>
-      <input id="db_username" class="form-control" name="db_username" type="text" value="root">
+      <label for="db_admin">Database Admin Username</label>
+      <input id="db_admin" class="form-control" name="db_admin" type="text" value="root">
     </div>
     <div class="form-group">
       <label for="db_password">Database Password</label>

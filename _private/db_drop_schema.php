@@ -11,11 +11,11 @@ if ($DB_USERNAME === '')
 	die('Error: DB_USERNAME is empty in ./_private/env.php');
 
 
-if (!isset($_GET['db_host'], $_GET['db_username'], $_GET['db_password']))
-  die('Error: Database host, username and password are required.');
+if (!isset($_GET['db_admin'], $_GET['db_password']))
+  die('Error: Database admin username and password are required.');
 
 // Connect to mysql server
-$db = mysqli_connect($_GET['db_host'], $_GET['db_username'], $_GET['db_password']);
+$db = mysqli_connect($DB_HOST, $_GET['db_admin'], $_GET['db_password']);
 if (!$db)
 	die('Error: Could not connect to mysql');
 if ($db->connect_error)
