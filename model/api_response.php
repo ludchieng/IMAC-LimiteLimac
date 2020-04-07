@@ -6,6 +6,7 @@ $API_ERROR_MSG = [
   101 => 'Param: missing',
   200 => 'Database error',
   201 => 'Database query failed via PDO',
+  202 => 'Database: duplicate entry',
   300 => 'Invalid input',
   301 => 'Invalid input: not a number',
   302 => 'Invalid input: not a string',

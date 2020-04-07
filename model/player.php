@@ -1,14 +1,15 @@
 <?php
 require_once('../model/data_access.php');
 
-function create_player(string $name, string $pass): int
+
+function create_player(string $pname, string $pass): int
 {
-  $sql = "INSERT INTO player (name, pass)
-    VALUES (:name, :pass);
+  $sql = "INSERT INTO player (pname, pass)
+    VALUES (:pname, :pass);
   ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
-  $pst->bindValue(':name', $name, PDO::PARAM_STR);
+  $pst->bindValue(':pname', $pname, PDO::PARAM_STR);
   $pst->bindValue(':pass', password_hash($pass, PASSWORD_DEFAULT), PDO::PARAM_STR);
   $pst->execute();
   $pst->closeCursor();
@@ -16,48 +17,52 @@ function create_player(string $name, string $pass): int
 }
 
 
-function get_player($id, $attr)
+function is_known_player(string $pname): bool
 {
-  return get('player', $id, $attr);
+  try {
+    get_player($pname, 'pname');
+    return true;
+  } catch (PDOException $e) {
+    return false;
+  }
 }
 
 
-function get_player_by_name($name, $attr)
+function get_player(string $pname, string $attr)
 {
-  return get_by('player', 'name', $name, $attr);
+  return get('player', $pname, $attr);
 }
 
 
-function set_player($id, $attr, $value): bool
+function set_player(string $pname, string $attr, $value): bool
 {
-  return set('player', $id, $attr, $value);
+  return set('player', $pname, $attr, $value);
 }
 
 
-function authenticate_player(string $name, string $pass): int
+function authenticate_player(string $pname, string $pass): int
 {
-  if (!password_verify($pass, get_player_by_name($name, 'pass')))
+  if (!password_verify($pass, get_player($pname, 'pass')))
     return FALSE;
-  return get_player_by_name($name, 'id_player');
+  return get_player($pname, 'pname');
 }
 
 
-function is_valid_token(int $id_player, string $token): bool
+function is_valid_token(string $pname, string $token): bool
 {
-  return get_player($id_player, 'token') == $token;
+  return get_player($pname, 'token') == $token;
 }
 
 
-function draw_card(int $id, int $amount = 1): array
+function draw_card(string $pname, int $amount = 1): array
 {
+  $id_room = get_player($pname, 'id_room');
   // Get random cards from a set of drawable cards for a given in-game player
   $sql = "SELECT C.id_card, C.content FROM card C
   WHERE C.id_card LIKE 'W%'
   AND C.id_card NOT IN (
-    SELECT Po.id_card FROM posseder Po, player Pl, party Pa
-    WHERE Po.id_player = Pl.id_player
-    AND Pl.id_party = Pa.id_party
-    AND Pa.id_party = :id
+    SELECT H.id_card FROM handcard H
+    WHERE H.id_room = :id_room
   )
   ORDER BY RAND()
   LIMIT :amount;
@@ -65,14 +70,14 @@ function draw_card(int $id, int $amount = 1): array
 
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
-  $pst->bindValue(':id', $id, PDO::PARAM_INT);
+  $pst->bindValue(':id_room', $id_room, PDO::PARAM_INT);
   $pst->bindValue(':amount', $amount, PDO::PARAM_INT);
   $pst->execute();
   $cards = $pst->fetchAll(PDO::FETCH_ASSOC);
 
-  $sql = "INSERT INTO posseder (id_player, id_card, isSelected) VALUES";
+  $sql = "INSERT INTO handcard (id_room, id_card, pname) VALUES";
   foreach ($cards as $c) {
-    $sql .= " ('{$id}', '{$c['id_card']}', 0),";
+    $sql .= " ('{$id_room}', '{$c['id_card']}', '{$pname}'),";
   }
   $sql = substr($sql, 0, -1);
   $sql .= ';';
@@ -85,16 +90,17 @@ function draw_card(int $id, int $amount = 1): array
 }
 
 
-function get_player_cards(int $id): array
+function get_player_cards(string $pname): array
 {
-  $sql = 'SELECT P.id_card, C.content
-    FROM posseder P, card C
-    WHERE P.id_player = :id
-    AND P.id_card = C.id_card;
+  $sql = 'SELECT H.id_card, C.content
+    FROM handcard H, card C
+    WHERE H.pname = :pname
+    AND H.id_card = C.id_card;
   ';
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
-  $pst->execute([':id' => $id]);
+  $pst->bindValue(':pname', $pname, PDO::PARAM_STR);
+  $pst->execute();
   $data = $pst->fetchAll(PDO::FETCH_ASSOC);
   $pst->closeCursor();
   return $data;

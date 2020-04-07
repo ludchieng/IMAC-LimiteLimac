@@ -1,6 +1,6 @@
 <?php
 require_once('../model/api_response.php');
-require_once('../model/party.php');
+require_once('../model/room.php');
 
 $r = create_response();
 
@@ -17,7 +17,7 @@ try {
   $name = $_POST['name'];
 
   $r['response'] = [];
-  $r['response']['newPartyId'] = create_party($name);
+  $r['response']['id'] = create_room($name);
 } catch (PDOException $e) {
   push_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

@@ -2,6 +2,14 @@
 require_once('api_response.php');
 require_once('../_private/env.php');
 
+
+$DB_DATA_PK = [
+  'player' => 'pname',
+  'room' => 'id_room',
+  'card' => 'id_card',
+];
+
+
 function connect_db(string $dsn, string $user, string $pass): PDO
 {
   return new PDO($dsn, $user, $pass, array(
@@ -30,15 +38,16 @@ function connect_db_player(): PDO
 }
 
 
-function get($table, $id, $attr)
+function get(string $table, $id, string $attr)
 {
-  $sql = "SELECT P.{$attr} FROM {$table} P
-      WHERE P.id_{$table} = :id_{$table}
+  global $DB_DATA_PK;
+  $sql = "SELECT {$attr} FROM {$table}
+      WHERE {$DB_DATA_PK[$table]} = :id
   ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
-  $pst->bindValue(":id_{$table}", $id, PDO::PARAM_INT);
-  
+  $pst->bindValue(":id", $id);
+
   if (!$pst->execute())
     throw new PDOException($pst->errorInfo()[2]);
 
@@ -50,15 +59,15 @@ function get($table, $id, $attr)
 }
 
 
-function get_by($table, $identifier, $identifierValue, $attr)
+function get_by(string $table, string $identifier, $identifierValue, string $attr)
 {
-  $sql = "SELECT P.{$attr} FROM {$table} P
-      WHERE P.{$identifier} = :identifier
+  $sql = "SELECT {$attr} FROM {$table}
+      WHERE {$identifier} = :identifier
   ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->bindValue(":identifier", $identifierValue);
-  
+
   if (!$pst->execute())
     throw new PDOException($pst->errorInfo()[2]);
 
@@ -74,15 +83,16 @@ function get_by($table, $identifier, $identifierValue, $attr)
 }
 
 
-function set($table, $id, $attr, $value): bool
+function set(string $table, $id, string $attr, $value): bool
 {
+  global $DB_DATA_PK;
   $sql = "UPDATE {$table} SET {$attr} = :value
-    WHERE id_{$table} = :id;
+    WHERE {$DB_DATA_PK[$table]} = :id;
   ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->bindValue(':value', $value);
-  $pst->bindValue(':id', $id, PDO::PARAM_INT);
+  $pst->bindValue(':id', $id);
   $isSuccess = $pst->execute();
   $pst->closeCursor();
   return $isSuccess;

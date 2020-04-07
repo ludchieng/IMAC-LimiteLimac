@@ -142,66 +142,67 @@ INSERT INTO `card` (`id_card`, `content`) VALUES
 	('W0074', '03bèz');
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 
-CREATE TABLE IF NOT EXISTS `party` (
-  `id_party` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `id_card` char(5) DEFAULT NULL,
-  PRIMARY KEY (`id_party`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-/*!40000 ALTER TABLE `party` DISABLE KEYS */;
-INSERT INTO `party` (`id_party`, `name`, `id_card`) VALUES
-	(1, 'Salon du sale', 'B1005'),
-	(2, 'Carré VIP', 'B1007'),
-	(3, 'Milsolodéon', 'B2002');
-/*!40000 ALTER TABLE `party` ENABLE KEYS */;
-
-CREATE TABLE IF NOT EXISTS `player` (
-  `id_player` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `pass` varchar(60) NOT NULL,
-  `token` char(24) DEFAULT NULL,
-  `isReady` tinyint(1) DEFAULT '0',
-  `lastPing` datetime DEFAULT NULL,
-  `id_party` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_player`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
-/*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` (`id_player`, `name`, `pass`, `token`, `isReady`, `lastPing`, `id_party`) VALUES
-	(1, 'GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, NULL, 1),
-	(2, 'PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, NULL, 2),
-	(3, 'Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, NULL, 1);
-/*!40000 ALTER TABLE `player` ENABLE KEYS */;
-
-CREATE TABLE IF NOT EXISTS `posseder` (
-  `id_player` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `handcard` (
+  `id_room` int(11) NOT NULL,
   `id_card` char(5) NOT NULL,
+  `pname` varchar(50) NOT NULL,
   `isSelected` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_player`,`id_card`)
+  PRIMARY KEY (`id_room`,`id_card`,`pname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*!40000 ALTER TABLE `posseder` DISABLE KEYS */;
-INSERT INTO `posseder` (`id_player`, `id_card`, `isSelected`) VALUES
-	(1, 'W0005', 0),
-	(1, 'W0006', 0),
-	(1, 'W0007', 0),
-	(1, 'W0008', 0),
-	(1, 'W0009', 0),
-	(1, 'W0010', 0),
-	(2, 'W0011', 0),
-	(2, 'W0012', 0),
-	(2, 'W0013', 0),
-	(2, 'W0014', 0),
-	(2, 'W0015', 0),
-	(2, 'W0016', 0),
-	(3, 'W0017', 0),
-	(3, 'W0018', 0),
-	(3, 'W0019', 0),
-	(3, 'W0020', 0),
-	(3, 'W0021', 0),
-	(3, 'W0022', 0);
-/*!40000 ALTER TABLE `posseder` ENABLE KEYS */;
+/*!40000 ALTER TABLE `handcard` DISABLE KEYS */;
+INSERT INTO `handcard` (`id_room`, `id_card`, `pname`, `isSelected`) VALUES
+	(1, 'W0005', 'GotchiT', 0),
+	(1, 'W0006', 'GotchiT', 0),
+	(1, 'W0007', 'GotchiT', 0),
+	(1, 'W0008', 'GotchiT', 0),
+	(1, 'W0009', 'GotchiT', 0),
+	(1, 'W0010', 'GotchiT', 0),
+	(1, 'W0017', 'Kysios', 0),
+	(1, 'W0018', 'Kysios', 0),
+	(1, 'W0019', 'Kysios', 0),
+	(1, 'W0020', 'Kysios', 0),
+	(1, 'W0021', 'Kysios', 0),
+	(1, 'W0022', 'Kysios', 0),
+	(2, 'W0011', 'PandaDesSteppes', 0),
+	(2, 'W0012', 'PandaDesSteppes', 0),
+	(2, 'W0013', 'PandaDesSteppes', 0),
+	(2, 'W0014', 'PandaDesSteppes', 0),
+	(2, 'W0015', 'PandaDesSteppes', 0),
+	(2, 'W0016', 'PandaDesSteppes', 0);
+/*!40000 ALTER TABLE `handcard` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `player` (
+  `pname` varchar(50) NOT NULL,
+  `pass` varchar(60) NOT NULL,
+  `token` char(24) DEFAULT NULL,
+  `isReady` tinyint(1) NOT NULL DEFAULT '0',
+  `lastPing` datetime DEFAULT NULL,
+  `id_room` int(11) DEFAULT NULL,
+  `id_room_master` int(11) DEFAULT NULL,
+  PRIMARY KEY (`pname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `player` DISABLE KEYS */;
+INSERT INTO `player` (`pname`, `pass`, `token`, `isReady`, `lastPing`, `id_room`, `id_room_master`) VALUES
+	('GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, NULL, 1, NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, NULL, 1, NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, NULL, 2, NULL);
+/*!40000 ALTER TABLE `player` ENABLE KEYS */;
+
+CREATE TABLE IF NOT EXISTS `room` (
+  `id_room` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `id_card` char(5) DEFAULT NULL,
+  PRIMARY KEY (`id_room`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` (`id_room`, `name`, `id_card`) VALUES
+	(1, 'Salon du sale', 'B1005'),
+	(2, 'Carré VIP', 'B1007'),
+	(3, 'Le Mils', 'B2002');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
