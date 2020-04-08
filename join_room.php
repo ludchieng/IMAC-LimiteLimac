@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Room</title>
-  <?php require('includes/frameworks.php') ?>
+  <?php require('includes/head.php') ?>
 </head>
 <body>
   
@@ -37,7 +37,7 @@ $('#send').click((e) => {
   }
 
   // Construct url and params
-  let url = 'api/party_join.php';
+  let url = 'api/room_join.php';
   let params = 'idroom=' + idroom;
   params += '&pname=' + pname;
   params += '&pass=' + pass;

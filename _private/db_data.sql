@@ -142,6 +142,15 @@ INSERT INTO `card` (`id_card`, `content`) VALUES
 	('W0074', '03bèz');
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 
+CREATE TABLE IF NOT EXISTS `had` (
+  `id_room` int(11) NOT NULL,
+  `id_card` char(5) NOT NULL,
+  PRIMARY KEY (`id_room`,`id_card`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*!40000 ALTER TABLE `had` DISABLE KEYS */;
+/*!40000 ALTER TABLE `had` ENABLE KEYS */;
+
 CREATE TABLE IF NOT EXISTS `handcard` (
   `id_room` int(11) NOT NULL,
   `id_card` char(5) NOT NULL,
@@ -177,17 +186,17 @@ CREATE TABLE IF NOT EXISTS `player` (
   `pass` varchar(60) NOT NULL,
   `token` char(24) DEFAULT NULL,
   `isReady` tinyint(1) NOT NULL DEFAULT '0',
+  `isGameMaster` tinyint(4) NOT NULL DEFAULT '0',
   `lastPing` datetime DEFAULT NULL,
   `id_room` int(11) DEFAULT NULL,
-  `id_room_master` int(11) DEFAULT NULL,
   PRIMARY KEY (`pname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` (`pname`, `pass`, `token`, `isReady`, `lastPing`, `id_room`, `id_room_master`) VALUES
-	('GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, NULL, 1, NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, NULL, 1, NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, NULL, 2, NULL);
+INSERT INTO `player` (`pname`, `pass`, `token`, `isReady`, `isGameMaster`, `lastPing`, `id_room`) VALUES
+	('GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, 0, NULL, 1),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, 0, NULL, 1),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, 0, NULL, 2);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (

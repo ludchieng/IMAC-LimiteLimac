@@ -40,7 +40,7 @@ function set_player(string $pname, string $attr, $value): bool
 }
 
 
-function authenticate_player(string $pname, string $pass): int
+function authenticate_player(string $pname, string $pass): string
 {
   if (!password_verify($pass, get_player($pname, 'pass')))
     return FALSE;

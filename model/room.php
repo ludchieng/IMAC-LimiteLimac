@@ -1,6 +1,7 @@
 <?php
 require_once('../model/data_access.php');
 require_once('../model/player.php');
+require_once('../model/round.php');
 
 define('ROOM_MAX_HAND_CARDS_COUNT', 7);
 define('TOKEN_LENGTH', 24);
@@ -94,40 +95,19 @@ function can_room_start(int $id_room): bool
 }
 
 
-function start_room(int $id_room): void
+function start_room(int $id_room): array
 {
   $players = get_room_players($id_room);
   $r = rand(0, count($players) - 1);
   start_round($id_room, $players[$r]);
   // Get random cards from a set of drawable cards for a given in-game player
-  $sql = "SELECT C.id_card, C.content
+  /*$sql = "SELECT C.id_card, C.content
     FROM card C WHERE C.id_card LIKE 'B%';
   ";
 
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->execute();
-  $cards = $pst->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-function start_round(int $id_room, string $pname): void
-{
-  $players = get_room_players($id_room);
-  foreach ($players as $p) {
-    set_player($players[], 'isGameMaster', true);
-  }
-  for ($i = 0; $i < count($players); $i++) {
-    if ($players[$i]['pname'] == $pname)
-      set_player($players[$i], 'isGameMaster', true);
-    else
-      set_player($players[$i], 'isGameMaster', false);
-  }
-}
-
-
-function has_room_started(int $id_room): bool
-{
-  // Check if room has a black card
-  return get('room', $id_room, 'id_card') != 'null';
+  $cards = $pst->fetchAll(PDO::FETCH_ASSOC);*/
+  return [];
 }
