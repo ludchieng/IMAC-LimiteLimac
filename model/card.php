@@ -1,4 +1,10 @@
 <?php
+/**
+ * Functions concerning cards.
+ * 
+ * @package Card
+ */
+
 require_once('../model/data_access.php');
 
 /**

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Functions concerning players.
+ * 
+ * @package Player
+ */
+
 require_once('../model/data_access.php');
 
 /**
@@ -39,13 +45,25 @@ function is_known_player(string $pname): bool
   }
 }
 
+
+function reset_player($pname): void
+{
+  purge_player_cards($pname);
+  set_player($pname, 'token', null);
+  set_player($pname, 'isReady', 0);
+  set_player($pname, 'isGameMaster', 0);
+  set_player($pname, 'hasPlayed', 0);
+  set_player($pname, 'lastping', null);
+  set_player($pname, 'id_room', null);
+}
+
 /**
  * Returns the value of a given attribute for
  * the specified player.
  *
  * @param string $pname player name
  * @param string $attr
- * @return void value of a given attribute for
+ * @return mixed value of a given attribute for
  * the specified player
  */
 function get_player(string $pname, string $attr)
@@ -93,6 +111,37 @@ function authenticate_player(string $pname, string $pass): bool
 function is_valid_token(string $pname, string $token): bool
 {
   return get_player($pname, 'token') == $token;
+}
+
+/**
+ * Assigns the specified player to the given room
+ * and generating a token for authenticating towards
+ * his future requests with the server.
+ *
+ * @param integer $id_room
+ * @param string $pname
+ * @return string generated token
+ */
+function join_room(int $id_room, string $pname): string
+{
+  reset_player($pname);
+  // Generate token
+  $token = substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$', TOKEN_LENGTH * strlen($x))), 1, TOKEN_LENGTH);
+  set_player($pname, 'id_room', $id_room);
+  set_player($pname, 'token', $token);
+  return $token;
+}
+
+/**
+ * Unassigns the specified player of
+ * his current room.
+ *
+ * @param string $pname
+ * @return void
+ */
+function quit_room(string $pname): void
+{
+  reset_player($pname);
 }
 
 /**

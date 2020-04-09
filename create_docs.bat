@@ -1,0 +1,1 @@
+rm -rf ./docs & phpdoc -d model/ -t docs/ --title="LimiteLimac Documentation" --template="abstract" & rm -rf ./docs/phpdoc*

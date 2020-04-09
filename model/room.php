@@ -1,10 +1,20 @@
 <?php
+/**
+ * Functions concerning rooms.
+ * 
+ * @package Room
+ */
+
 require_once('../model/data_access.php');
 require_once('../model/player.php');
 require_once('../model/round.php');
 
 define('ROOM_MAX_HAND_CARDS_COUNT', 7);
-define('TOKEN_LENGTH', 24);
+define('TOKEN_LENGTH', 7);
+
+define('ROOM_STATUS_STANDBY', 'STANDBY');
+define('ROOM_STATUS_PLAYING_ROUND', 'PLAYING_ROUND');
+define('ROOM_STATUS_END_ROUND', 'END_ROUND');
 
 /**
  * Inserts a new room in database.
@@ -14,6 +24,9 @@ define('TOKEN_LENGTH', 24);
  */
 function create_room(string $name): int
 {
+  // Check for obsolete rooms
+  purge_empty_rooms();
+  
   $sql = "INSERT INTO room (name)
     VALUES (:name);
   ";
@@ -51,36 +64,6 @@ function get_room(int $id_room, string $attr)
 function set_room(int $id_room, string $attr, $value): void
 {
   set('room', $id_room, $attr, $value);
-}
-
-/**
- * Assigns the specified player to the given room
- * and generating a token for authenticating towards
- * his future requests with the server.
- *
- * @param integer $id_room
- * @param string $pname
- * @return string generated token
- */
-function join_room(int $id_room, string $pname): string
-{
-  // Generate token
-  $token = substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@#$', TOKEN_LENGTH * strlen($x))), 1, TOKEN_LENGTH);
-  set_player($pname, 'id_room', $id_room);
-  set_player($pname, 'token', $token);
-  return $token;
-}
-
-/**
- * Unassigns the specified player of
- * his current room.
- *
- * @param string $pname
- * @return void
- */
-function quit_room(string $pname): void
-{
-  set_player($pname, 'id_room', null);
 }
 
 /**
@@ -155,6 +138,8 @@ function are_room_players_ready(int $id_room): bool
  */
 function can_room_start(int $id_room): bool
 {
+  if (get_room($id_room, 'status') !== ROOM_STATUS_STANDBY)
+    return false;
   if (!are_room_players_ready($id_room))
     return false;
   if (count(get_room_players($id_room)) < 3)
@@ -183,10 +168,10 @@ function start_room(int $id_room): void
  * room to its room cards history
  *
  * @param integer $id_room
- * @param integer $id_card
+ * @param string $id_card
  * @return void
  */
-function add_room_card_to_history(int $id_room, int $id_card): void
+function add_room_card_to_history(int $id_room, string $id_card): void
 {
   $sql = " INSERT INTO had (id_room, id_card)
     VALUES ('{$id_room}', '{$id_card}');
@@ -210,4 +195,19 @@ function purge_room_cards_history(int $id_room): void
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->execute(['id_room' => $id_room]);
+}
+
+
+function purge_empty_rooms(): void
+{
+  $sql = "DELETE FROM room
+    WHERE (
+      SELECT R.id_room FROM room R
+    ) NOT IN (
+      SELECT P.id_room FROM player P
+      WHERE id_room IS NOT NULL
+      GROUP BY id_room
+    );
+  ";
+  connect_db_player()->query($sql);
 }

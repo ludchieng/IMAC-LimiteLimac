@@ -1,4 +1,11 @@
 <?php
+/**
+ * Functions about accessing database to retrieve,
+ * update or delete data.
+ * 
+ * @package DataAccess
+ */
+
 require_once('api_response.php');
 require_once('../_private/env.php');
 
@@ -96,7 +103,7 @@ function get(string $table, $id, string $attr)
  *
  * @param string $table
  * @param string $identifier
- * @param [type] $identifierValue
+ * @param mixed $identifierValue
  * @param string $attr
  * @return void
  * @throws PDOException
@@ -169,4 +176,16 @@ function set(string $table, $id, string $attr, $value): void
   $pst->bindValue(':id', $id);
   $pst->execute();
   $pst->closeCursor();
+}
+
+
+function del(string $table, $id): void
+{
+  global $DB_DATA_PK;
+  $sql = "DELETE FROM {$table}
+  WHERE {$DB_DATA_PK[$table]} = :id ;
+  ";
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->execute(['id' => $id]);
 }

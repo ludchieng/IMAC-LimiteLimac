@@ -5,4 +5,4 @@ require_once('../model/room.php');
 require_once('../model/player.php');
 require_once('../model/data_access.php');
 
-echo get_player($_GET['pname'], 'token');
+echo json_encode(get_player($_GET['pname'], 'token'));

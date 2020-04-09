@@ -1,4 +1,9 @@
 <?php
+/**
+ * Functions about handling client request on API.
+ * 
+ * @package APIResponse
+ */
 
 $API_ERROR_MSG = [
   666 => 'Something wrong occured',
