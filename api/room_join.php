@@ -25,7 +25,7 @@ try {
   $pname = $_POST['pname'];
   $pass = $_POST['pass'];
 
-  if (FALSE == $pname = authenticate_player($pname, $pass))
+  if (false == authenticate_player($pname, $pass))
     push_error($r, 403);
 
   $r['response'] = [];

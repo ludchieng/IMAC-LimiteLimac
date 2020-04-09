@@ -1,8 +1,14 @@
 <?php
 require_once('../model/data_access.php');
 
-
-function create_player(string $pname, string $pass): int
+/**
+ * Inserts a new player in database.
+ *
+ * @param string $pname player name
+ * @param string $pass password
+ * @return void 
+ */
+function create_player(string $pname, string $pass): void
 {
   $sql = "INSERT INTO player (pname, pass)
     VALUES (:pname, :pass);
@@ -13,10 +19,16 @@ function create_player(string $pname, string $pass): int
   $pst->bindValue(':pass', password_hash($pass, PASSWORD_DEFAULT), PDO::PARAM_STR);
   $pst->execute();
   $pst->closeCursor();
-  return $pdo->lastInsertId();
 }
 
-
+/**
+ * Returns true if the given player name matches
+ * with a known player in database
+ *
+ * @param string $pname player name
+ * @return boolean true if the given player name matches
+ * with a known player in database
+ */
 function is_known_player(string $pname): bool
 {
   try {
@@ -27,33 +39,70 @@ function is_known_player(string $pname): bool
   }
 }
 
-
+/**
+ * Returns the value of a given attribute for
+ * the specified player.
+ *
+ * @param string $pname player name
+ * @param string $attr
+ * @return void value of a given attribute for
+ * the specified player
+ */
 function get_player(string $pname, string $attr)
 {
   return get('player', $pname, $attr);
 }
 
-
-function set_player(string $pname, string $attr, $value): bool
+/**
+ * Updates the value of a given attribute for
+ * the specified room.
+ *
+ * @param string $pname player name
+ * @param string $attr
+ * @param mixed $value 
+ * @return void
+ */
+function set_player(string $pname, string $attr, $value): void
 {
-  return set('player', $pname, $attr, $value);
+  set('player', $pname, $attr, $value);
 }
 
-
-function authenticate_player(string $pname, string $pass): string
+/**
+ * Returns true if the given input matches with
+ * the password for the specified player.
+ *
+ * @param string $pname player name
+ * @param string $pass input password
+ * @return boolean if the given input matches with
+ * the password for the specified player
+ */
+function authenticate_player(string $pname, string $pass): bool
 {
-  if (!password_verify($pass, get_player($pname, 'pass')))
-    return FALSE;
-  return get_player($pname, 'pname');
+  return password_verify($pass, get_player($pname, 'pass'));
 }
 
-
+/**
+ * Returns true if the given input matches with
+ * the token for the specified player.
+ *
+ * @param string $pname player name
+ * @param string $token
+ * @return boolean true if the given input matches with
+ * the token for the specified player
+ */
 function is_valid_token(string $pname, string $token): bool
 {
   return get_player($pname, 'token') == $token;
 }
 
-
+/**
+ * Pick a specific number of random white cards
+ * for the given player.
+ *
+ * @param string $pname player name
+ * @param integer $amount number of cards
+ * @return array the drawn cards' attributes
+ */
 function draw_card(string $pname, int $amount = 1): array
 {
   $id_room = get_player($pname, 'id_room');
@@ -82,14 +131,20 @@ function draw_card(string $pname, int $amount = 1): array
   $sql = substr($sql, 0, -1);
   $sql .= ';';
 
-  $pst = $pdo->prepare($sql);
-  $pst->execute();
+  $pst = $pdo->query($sql);
   $pst->closeCursor();
 
   return $cards;
 }
 
-
+/**
+ * Returns the cards' attributes of the
+ * specified player.
+ *
+ * @param string $pname player name
+ * @return array the cards' attributes of the
+ * specified player
+ */
 function get_player_cards(string $pname): array
 {
   $sql = 'SELECT H.id_card, C.content
@@ -97,11 +152,22 @@ function get_player_cards(string $pname): array
     WHERE H.pname = :pname
     AND H.id_card = C.id_card;
   ';
+  $data = get_multiple($sql, ['pname' => $pname]);
+  return $data;
+}
+
+/**
+ * Drop the white cards of a given player
+ *
+ * @param string $pname player name
+ * @return void
+ */
+function purge_player_cards(string $pname): void
+{
+  $sql = "DELETE FROM handcard
+  WHERE pname = :pname ;
+  ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
-  $pst->bindValue(':pname', $pname, PDO::PARAM_STR);
-  $pst->execute();
-  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
-  $pst->closeCursor();
-  return $data;
+  $pst->execute(['pname' => $pname]);
 }

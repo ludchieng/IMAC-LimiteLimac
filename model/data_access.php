@@ -9,7 +9,14 @@ $DB_DATA_PK = [
   'card' => 'id_card',
 ];
 
-
+/**
+ * Initiates a connection with a database.
+ *
+ * @param string $dsn data source name
+ * @param string $user database user
+ * @param string $pass database password
+ * @return PDO
+ */
 function connect_db(string $dsn, string $user, string $pass): PDO
 {
   return new PDO($dsn, $user, $pass, array(
@@ -17,7 +24,12 @@ function connect_db(string $dsn, string $user, string $pass): PDO
   ));
 }
 
-
+/**
+ * Initiates a connection with the database
+ * as admin.
+ *
+ * @return PDO
+ */
 function connect_db_admin(): PDO
 {
   global $DB_CONNECTION, $DB_DATABASE, $DB_CHARSET;
@@ -30,14 +42,33 @@ function connect_db_admin(): PDO
   return connect_db($dsn, $DB_USERNAME, $DB_PASSWORD);
 }
 
-
+/**
+ * Initiates a connection with the database
+ * as player.
+ *
+ * @return PDO
+ */
 function connect_db_player(): PDO
 {
   // TODO Add user player in db
   return connect_db_admin();
 }
 
-
+/**
+ * Returns the value of a given attribute for a
+ * tuple identified by its primary key value in the
+ * specified table.
+ *
+ * @param string $table table name
+ * @param mixed $id primary key value
+ * @param string $attr
+ * @return mixed the value of a given attribute for a
+ * tuple identified by its primary key value in the
+ * specified table
+ * @throws PDOException
+ *  if database encounter error
+ *  OR if the identifier value leads to no match
+ */
 function get(string $table, $id, string $attr)
 {
   global $DB_DATA_PK;
@@ -58,7 +89,21 @@ function get(string $table, $id, string $attr)
   return $data[$attr];
 }
 
-
+/**
+ * Returns the value of a given attribute for a
+ * tuple identified by another attribute (called
+ * identifier) in the specified table.
+ *
+ * @param string $table
+ * @param string $identifier
+ * @param [type] $identifierValue
+ * @param string $attr
+ * @return void
+ * @throws PDOException
+ *  if database encounter error
+ *  OR if the identifier value leads to no match
+ *  OR if the identifier value leads to multiple matches
+ */
 function get_by(string $table, string $identifier, $identifierValue, string $attr)
 {
   $sql = "SELECT {$attr} FROM {$table}
@@ -82,8 +127,37 @@ function get_by(string $table, string $identifier, $identifierValue, string $att
   return $data[0][$attr];
 }
 
+/**
+ * Returns an associative array resulting from
+ * an SQL select query with its parameters.
+ *
+ * @param string $sql
+ * @param array $params
+ * @return array an associative array resulting from
+ * an SQL select query with its parameters
+ */
+function get_multiple(string $sql, array $params = []): array
+{
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->execute($params);
+  $data = $pst->fetchAll(PDO::FETCH_ASSOC);
+  $pst->closeCursor();
+  return $data;
+}
 
-function set(string $table, $id, string $attr, $value): bool
+/**
+ * Updates in database the specified attribute
+ * of a tuple identified by its primary key value
+ * in the specified value
+ *
+ * @param string $table
+ * @param mixed $id
+ * @param string $attr
+ * @param mixed $value
+ * @return void
+ */
+function set(string $table, $id, string $attr, $value): void
 {
   global $DB_DATA_PK;
   $sql = "UPDATE {$table} SET {$attr} = :value
@@ -93,7 +167,6 @@ function set(string $table, $id, string $attr, $value): bool
   $pst = $pdo->prepare($sql);
   $pst->bindValue(':value', $value);
   $pst->bindValue(':id', $id);
-  $isSuccess = $pst->execute();
+  $pst->execute();
   $pst->closeCursor();
-  return $isSuccess;
 }
