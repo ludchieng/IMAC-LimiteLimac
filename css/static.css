@@ -4,7 +4,7 @@ body {
     max-height: 100vh;
     min-height: 100vh;
     background: linear-gradient(135deg,#E83178, #170F4A 80%);
-    font-family: Cocogoose;
+    font-family: arial;
     overflow-y: hidden;
 }
 
@@ -21,6 +21,7 @@ body {
     width: 250px;
     transition: all 0.4s;
     cursor: pointer;
+    text-decoration: none;
     /*margin: 5px;*/
   }
   .sub span {
@@ -175,6 +176,10 @@ form .sub {
     margin: auto;
 }
 
+form a {
+    text-decoration: none;
+    color: #fff;
+}
 
 footer {
   height: 10vh;
