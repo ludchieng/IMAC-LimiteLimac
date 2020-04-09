@@ -80,11 +80,11 @@ body {
 }
 
 #left img {
-    -webkit-animation: svgAnimScale 5s ease infinite;
-    -webkit-animation: svgAnimPosition 5s ease infinite;
+    animation: svgAnimScale 5s ease infinite;
+    animation: svgAnimPosition 5s ease infinite;
 }
 
-@-webkit-keyframes svgAnimScale {
+@keyframes svgAnimScale {
     0% {
         -webkit-transform: scale(100%);
     }
@@ -97,7 +97,7 @@ body {
     }
 }
 
-@-webkit-keyframes svgAnimPosition {
+@keyframes svgAnimPosition {
     0% {
         -webkit-transform: translateY(0px);
     }
