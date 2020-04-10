@@ -9,8 +9,6 @@ require_once('../model/data_access.php');
 require_once('../model/player.php');
 require_once('../model/room.php');
 
-define('ROUND_DURATION', 45); // seconds
-
 /**
  * Initiates a new round in the specified room
  * by reseting players cards, assigning game master,
@@ -24,9 +22,9 @@ define('ROUND_DURATION', 45); // seconds
 function start_round(int $id_room, string $pnameGM): void
 {
   set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
+  del_players_selected_cards($id_room);
   $players = get_room_players($id_room);
   foreach ($players as $p) {
-    purge_player_cards($p);
     if ($p === $pnameGM) {
       set_player($p, 'isGameMaster', 1);
     } else {
@@ -113,6 +111,18 @@ function get_round_card(int $id_room): ?array
   return get_multiple($sql, ['id_room' => $id_room])[0];
 }
 
+
+function get_round_selected_cards(int $id_room): array
+{
+  $sql = 'SELECT H.pname, C.id_card, C.content
+    FROM card C, handcard H
+    WHERE C.id_card = H.id_card
+    AND H.id_room = :id_room
+    AND H.isSelected <> 0;
+  ';
+  return get_multiple($sql, ['id_room' => $id_room]);
+}
+
 /**
  * Returns the game master player name of the current round
  * in the specified room.
@@ -154,7 +164,7 @@ function get_round_competitors(int $id_room): array
 
 function get_round_remaining_time(int $id_room): ?int
 {
-  $rd = ROUND_DURATION;
+  $rd = get_room($id_room, 'roundDuration');
   $sql  ="SELECT UNIX_TIMESTAMP(R.lastRoundStart)
   - UNIX_TIMESTAMP(current_timestamp()) + {$rd} as diff
   FROM room R WHERE id_room = :id_room;

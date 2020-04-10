@@ -217,3 +217,13 @@ function purge_empty_rooms(): void
   ";
   connect_db_player()->query($sql);*/
 }
+
+
+function del_players_selected_cards($id_room): void
+{
+  $sql = "DELETE from handcard
+    WHERE id_room = :id_doom
+    AND isSelected <> 0;
+  ";
+  set_multiple($sql, ['id_room' => $id_room]);
+}

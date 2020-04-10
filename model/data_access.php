@@ -178,6 +178,22 @@ function set(string $table, $id, string $attr, $value): void
   $pst->closeCursor();
 }
 
+/**
+ * Updates in database the specified attribute
+ * of several tuples thanks to an SQL update query
+ * with its parameters.
+ *
+ * @param string $sql
+ * @param array $params
+ * @return void
+ */
+function set_multiple(string $sql, array $params = []): void
+{
+  $pdo = connect_db_player();
+  $pst = $pdo->prepare($sql);
+  $pst->execute($params);
+}
+
 
 function del(string $table, $id): void
 {

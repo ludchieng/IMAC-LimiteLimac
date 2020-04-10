@@ -1,7 +1,7 @@
 <?php
 require_once('../model/api_response.php');
-require_once('../model/player.php');
 require_once('../model/room.php');
+require_once('../model/player.php');
 
 $r = create_response();
 
@@ -16,33 +16,31 @@ try {
   if (!isset($_POST['token']))
     throw_error($r, 101, 'token', API_ERROR_DONT_ABORT);
 
+  abort_if_errors($r);
+
   if (null == $id_room = get_player($_POST['pname'], 'id_room'))
     throw_error($r, 404, 'player does not have any room');
 
-  if (ROOM_STATUS_STANDBY != $s = get_room($id_room, 'status'))
+  if (ROOM_STATUS_END_ROUND != $s = get_room($id_room, 'status'))
     throw_error($r, 402, "Round status is {$s}");
+
+  if (!isset($_POST['id_card']))
+    throw_error($r, 101, 'id_card', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
   $pname = $_POST['pname'];
   $token = $_POST['token'];
-  $ready = strtolower($_POST['ready'] ?? 'yes');
+  $id_card = $_POST['id_card'];
 
+  $cards = get_round_selected_cards($id_room);
+  if (!in_array($id_card, array_column($cards, 'id_card')))
+    throw_error($r, 402, "Competitors cards does not include card ${id_card}");
 
-  if (!is_valid_token($pname, $token))
-    throw_error($r, 401);
-
-  if (in_array($ready, ['yes', 'true', 1, 'y'], true)) {
-    set_player($pname, 'isReady', 1);
-  } else if (in_array($ready, ['no', 'false', 0, 'n'], true)) {
-    set_player($pname, 'isReady', 0);
-  } else {
-    throw_error($r, 300, 'ready: expected \'yes\' or \'no\'');
-  }
-    
-  if (can_room_start($id_room))
-    start_room($id_room);
-
+  $idx = array_search($id_card, array_column($cards, 'id_card'));
+  $winner = $cards[$idx]['pname'];
+  set_player($winner, 'hasWon', 1);
+  
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

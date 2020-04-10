@@ -206,7 +206,7 @@ function get_player_cards(string $pname): array
 }
 
 
-function get_player_selected_card($pname): ?array
+function get_player_selected_cards($pname): ?array
 {
   $sql = 'SELECT C.id_card, C.content
     FROM handcard H, card C
@@ -214,9 +214,7 @@ function get_player_selected_card($pname): ?array
     AND H.pname = :pname
     AND H.isSelected <> 0;
   ';
-  if (null != $card = get_multiple($sql, ['pname' => $pname]))
-    return $card[0];
-  return null;
+  return get_multiple($sql, ['pname' => $pname]);
 }
 
 /**
@@ -233,4 +231,24 @@ function purge_player_cards(string $pname): void
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->execute(['pname' => $pname]);
+}
+
+
+function set_player_deselected_cards($pname): void
+{
+  $sql = "UPDATE handcard SET isSelected = 0
+    WHERE pname = :pname;
+  ";
+  set_multiple($sql, ['pname' => $pname]);
+}
+
+
+function set_player_isSelected_card($pname, $id_card, bool $value = true): void
+{
+  $v = $value ? 1 : 0;
+  $sql = "UPDATE handcard SET isSelected = {$v}
+    WHERE pname = :pname
+    AND id_card = :id_card;
+  ";
+  set_multiple($sql, ['pname' => $pname, 'id_card' => $id_card]);
 }

@@ -38,7 +38,7 @@ function create_response(): array
 }
 
 
-function push_error(array &$r, int $code, string $detail = null, int $option = API_ERROR_DO_ABORT): void
+function throw_error(array &$r, int $code, string $detail = null, int $option = API_ERROR_DO_ABORT): void
 {
   global $API_ERROR_MSG;
 

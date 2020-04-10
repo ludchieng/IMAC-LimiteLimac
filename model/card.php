@@ -16,7 +16,7 @@ require_once('../model/data_access.php');
  * @param string $id_card
  * @return integer number of blanks for the black card
  */
-function card_blanks_count(string $id_card): int
+function get_card_blanks_count(string $id_card): int
 {
   if ('B' !== substr($id_card, 0, 1))
     throw new Exception('Invalid card: Expected Black card');

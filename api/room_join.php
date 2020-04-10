@@ -8,16 +8,16 @@ $r = create_response();
 try {
 
   if ('POST' !== $_SERVER['REQUEST_METHOD'])
-    push_error($r, 502, "had {$_SERVER['REQUEST_METHOD']}");
+    throw_error($r, 502, "had {$_SERVER['REQUEST_METHOD']}");
 
   if (!isset($_POST['idroom']))
-    push_error($r, 101, 'idroom', API_ERROR_DONT_ABORT);
+    throw_error($r, 101, 'idroom', API_ERROR_DONT_ABORT);
 
   if (!isset($_POST['pname']))
-    push_error($r, 101, 'pname', API_ERROR_DONT_ABORT);
+    throw_error($r, 101, 'pname', API_ERROR_DONT_ABORT);
 
   if (!isset($_POST['pass']))
-    push_error($r, 101, 'pass', API_ERROR_DONT_ABORT);
+    throw_error($r, 101, 'pass', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
@@ -26,14 +26,14 @@ try {
   $pass = $_POST['pass'];
 
   if (false == authenticate_player($pname, $pass))
-    push_error($r, 403);
+    throw_error($r, 403);
 
   $r['response'] = [];
   $r['response']['token'] = join_room($id_room, $pname);
 } catch (PDOException $e) {
-  push_error($r, 201, $e->getMessage());
+  throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {
-  push_error($r, 666);
+  throw_error($r, 666);
 }
 
 send_response($r);
