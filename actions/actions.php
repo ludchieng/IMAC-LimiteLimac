@@ -10,6 +10,7 @@ $listeDesActions = array(
     "registerGo" => "actions/register.php",
 
     "welcome" => "views/motherbase.php",
+    "play" => "views/board.php",
 
 
     /*"deconnexion" => "traitement/deconnexion.php",

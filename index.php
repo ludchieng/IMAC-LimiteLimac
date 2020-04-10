@@ -32,7 +32,7 @@
 
             // Est ce que cette action existe dans la liste des actions
             if (array_key_exists($action, $listeDesActions) == false) {
-                include("vues/404.php"); // NON : page 404
+                include("views/404.php"); // NON : page 404
             }
             else {
                 include($listeDesActions[$action]); // Oui, on la charge
@@ -54,6 +54,8 @@
         <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
         <script src="js/particle.js"></script>
         <script src="js/colorpicker.js"></script>
+        <script src="js/script.js"></script>
+        
         
         
         </body></html>');

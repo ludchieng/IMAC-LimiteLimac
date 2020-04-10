@@ -1,11 +1,18 @@
+:root {
+    --P: #E83178; 
+    --B: #170F4A;
+    --W: #FFFFFF;
+}
+
 body {
     margin: 0;
     padding: 0;
     max-height: 100vh;
     min-height: 100vh;
-    background: linear-gradient(135deg,#E83178, #170F4A 80%);
+    background: linear-gradient(135deg,var(--P), var(--B) 80%);
     font-family: Cocogoose;
     overflow-y: hidden;
+    color: var(--W);
 }
 
 
@@ -22,8 +29,7 @@ canvas {
 
 .sub, .minisub {
     border-radius: 4px;
-    background-color: #fff;
-    border: 2px solid #fff;
+    border: 2px solid var(--W);
     text-align: center;
     text-transform: uppercase;
     font-size: 22px;
@@ -35,7 +41,7 @@ canvas {
     /*margin: 5px;*/
   }
   .sub span, .minisub span {
-    color: #170F4A;
+    color: var(--B);
     cursor: pointer;
     display: inline-block;
     position: relative;
@@ -54,8 +60,8 @@ canvas {
       background-color: transparent;
   }
   .sub:hover span, .minisub:hover span {
-    color: #fff;
     padding-right: 25px;
+    color: var(--W);
   }
   .sub:hover span:after, .minisub:hover span:after {
     opacity: 1;
@@ -70,10 +76,10 @@ canvas {
 
   .party-name {
       border-radius: 5px;
-      border: 2px solid #fff;
+      border: 2px solid var(--W);
       padding: 5px;
       background-color: rgba(255, 255, 255, 0.2);
-      color: #fff;
+      color: var(--W);
       width: 50%;
   }
 
@@ -147,7 +153,6 @@ canvas {
     display: flex;
     flex-direction: row-reverse;
     flex-flow: row-reverse wrap;
-    color: #fff;
     padding: 0;
     font-size: 1.2em;
 }
@@ -160,7 +165,7 @@ canvas {
     width: 67%;
     font-size: 0.8em;
     padding: 50px 0px;
-    border-top: 2px solid #fff;
+    border-top: 2px solid var(--W);
 }
 
 .title {
@@ -168,7 +173,6 @@ canvas {
     margin-top: 3%;
     margin-bottom: 3%;
     font-size: 3em;
-    color: #fff;
     flex-basis: 100%;
 }
 
@@ -187,10 +191,9 @@ canvas {
     margin: 0;
     width: 25%;
     margin: auto;
-    border: 3px solid #fff;
+    border: 3px solid var(--W);
     border-radius: 10px;
     padding: 2% 4%;
-    color: #fff;
     font-size: 1.5em;
     text-align: center;
     flex-basis: 100%;
@@ -204,7 +207,7 @@ canvas {
     border-radius: 10px;
     border: none;
     font-family: Cocogoose;
-    color: #170F4A;
+    color: var(--B);
     margin-bottom: 60px;
 }
 
@@ -219,7 +222,7 @@ canvas {
 
 .initForm a {
     text-decoration: none;
-    color: #fff;
+    color: var(--W);
 }
 
 .container {
@@ -230,7 +233,6 @@ canvas {
 }
 
 .centerDiv {
-    border: 2px solid #fff;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
@@ -248,7 +250,10 @@ canvas {
 
 .rightDiv, .leftDiv {
     height: 90vh;
+    width: 20vw;
+    padding-top: 20vh;
     flex-grow: 1;
+    text-align: center;
 }
 
 .column-break {
@@ -260,6 +265,37 @@ canvas {
     width: 100%;
 }
 
+#create-form, #join-form {
+    display: none;
+}
+
+.lezami {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.lezami-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dot {
+  height: 20px;
+  width: 20px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid var(--W);
+}
+
+.modal {
+    color: var(--B);
+}
 
 footer {
   height: 10vh;
@@ -267,7 +303,8 @@ footer {
   padding: 0%;
   text-align: center;
   position: absolute; bottom: 0; left: 0;
-  background-color: #fff;
+  background-color: var(--W);
+  color: var(--B);
 }
 footer p {
     margin: 0%;
@@ -277,7 +314,7 @@ footer p {
     transform: translateY(75%);
 }
 footer a {
-    color: #E83178;
+    color: var(--P);
     font-style: italic;
 }
 
@@ -349,14 +386,14 @@ footer a {
 
     .sub {
         background-color: rgba(255, 255, 255, 0.15);
-        border: 5px solid white;
+        border: 5px solid var(--W);
         width: 90%;
         font-size: 1em;;
         box-shadow : black 5px 5px 5px;
     }
 
     .sub span {
-        color: #fff;
+        color: var(--W);
     }
 }
 
