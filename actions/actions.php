@@ -12,7 +12,7 @@ $listeDesActions = array(
     "welcome" => "views/motherbase.php",
 
 
-    "deconnexion" => "traitement/deconnexion.php",
+    /*"deconnexion" => "traitement/deconnexion.php",
     "mur" => "views/mur.php",
     "friends" => "views/friends.php",
     "myProfile" => "views/myProfile.php",
@@ -29,5 +29,5 @@ $listeDesActions = array(
     "uploadProfile" => "traitement/uploadProfile.php",
     "changeinfos" => "traitement/changeInfos.php",
     "actus" => "views/filsActus.php",
-    "updatemdp" => "traitement/updatemdp.php",
+    "updatemdp" => "traitement/updatemdp.php",*/
 );

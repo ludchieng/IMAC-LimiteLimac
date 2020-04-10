@@ -4,13 +4,23 @@ body {
     max-height: 100vh;
     min-height: 100vh;
     background: linear-gradient(135deg,#E83178, #170F4A 80%);
-    font-family: arial;
+    font-family: Cocogoose;
     overflow-y: hidden;
 }
 
 
+canvas {
+    position: absolute; top: 0; left: 0;
+}
 
-.sub {
+#particles-js {
+    position: absolute; top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+.sub, .minisub {
     border-radius: 4px;
     background-color: #fff;
     border: 2px solid #fff;
@@ -24,14 +34,14 @@ body {
     text-decoration: none;
     /*margin: 5px;*/
   }
-  .sub span {
+  .sub span, .minisub span {
     color: #170F4A;
     cursor: pointer;
     display: inline-block;
     position: relative;
     transition: 0.4s;
   }
-  .sub span:after {
+  .sub span:after, .minisub span:after {
     content: '\00bb';
     position: absolute;
     opacity: 0;
@@ -40,33 +50,51 @@ body {
     transition: 0.5s;
   }
 
-  .sub:hover {
+  .sub:hover, .minisub:hover {
       background-color: transparent;
   }
-  .sub:hover span {
+  .sub:hover span, .minisub:hover span {
     color: #fff;
     padding-right: 25px;
   }
-  .sub:hover span:after {
+  .sub:hover span:after, .minisub:hover span:after {
     opacity: 1;
     right: 0;
   }
 
+  .minisub {
+    width: 100px;
+    padding: 5px 10px;
+    font-size: 1em;
+  }
+
+  .party-name {
+      border-radius: 5px;
+      border: 2px solid #fff;
+      padding: 5px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      width: 50%;
+  }
 
 .logo {
     position: absolute; top: 50px; left:50px;
     width: 5%;
 }
 
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
 
-#main {
-    width: 75%;
-    height: 75vh;
+
+.main {
+    width: 100%;
+    height: 90vh;
     position: relative;
     margin: auto;
     display: flex;
     flex-direction: row;
-    vertical-align: middle;
     align-items: center;
     justify-content: space-between;
 }
@@ -141,9 +169,21 @@ body {
     margin-bottom: 3%;
     font-size: 3em;
     color: #fff;
+    flex-basis: 100%;
 }
 
-form {
+.landing-container {
+    display: flex;
+    width: 75%;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.form-container {
+    flex-grow: 1;
+}
+
+.initForm {
     margin: 0;
     width: 25%;
     margin: auto;
@@ -153,12 +193,13 @@ form {
     color: #fff;
     font-size: 1.5em;
     text-align: center;
+    flex-basis: 100%;
 }
 
-form input {
+.initForm input {
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
+    width: 100%;
     padding: 20px;
     border-radius: 10px;
     border: none;
@@ -167,19 +208,58 @@ form input {
     margin-bottom: 60px;
 }
 
-form > label {
+.initForm > label {
     display: block;
     margin-bottom: 20px;
 }
 
-form .sub {
+.initForm .sub {
     margin: auto;
 }
 
-form a {
+.initForm a {
     text-decoration: none;
     color: #fff;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20%;
+}
+
+.centerDiv {
+    border: 2px solid #fff;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 90vh;
+    flex-grow: 3;
+    padding-top: 10%;
+    padding: 10% 12% 0 12%;
+}
+
+.centerDiv h1 {
+    margin-bottom: 10%;
+    flex-basis: 100%;
+}
+
+.rightDiv, .leftDiv {
+    height: 90vh;
+    flex-grow: 1;
+}
+
+.column-break {
+    flex-basis: 100%;
+    width: 0;
+}
+
+.party-name {
+    width: 100%;
+}
+
 
 footer {
   height: 10vh;
@@ -249,14 +329,14 @@ footer a {
         display: none;
     }
 
-    form {
-        width: 80%;
+    .initForm {
+        width: 75%;
         font-size: 1em;
         text-align: center;
         border: none;
     }
 
-    form input {
+    .initForm input {
         margin-bottom: 20px;
         box-shadow: black 5px 5px 7px;
     }
