@@ -36,8 +36,7 @@ try {
   }
 
   $id_room = get_player($pname, 'id_room');
-  if (can_room_start($id_room))
-    start_room($id_room);
+  // TODO
 
 } catch (PDOException $e) {
   push_error($r, 201, $e->getMessage());

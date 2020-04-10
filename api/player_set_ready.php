@@ -34,7 +34,9 @@ try {
     push_error($r, 300, 'ready: expected \'yes\' or \'no\'');
   }
 
-  $id_room = get_player($pname, 'id_room');
+  if (null === $id_room = get_player($pname, 'id_room'))
+    push_error($r, 404, 'player does not have any room');
+    
   if (can_room_start($id_room))
     start_room($id_room);
 

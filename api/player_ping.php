@@ -1,6 +1,7 @@
 <?php
 require_once('../model/api_response.php');
 require_once('../model/session.php');
+require_once('../model/room.php');
 require_once('../model/player.php');
 
 $r = create_response();
@@ -29,7 +30,23 @@ try {
   if ($r['response']['stillInGame'] = ping($pname)) {
     $id_room = get_player($pname, 'id_room');
     check_for_end_round($id_room);
-    $r['response']['remainingTime'] = get_round_remaining_time($id_room);
+    $r['response']['status'] = $status = get_room($id_room, 'status');
+    $r['response']['blackCard'] = get_round_card($id_room);
+    switch ($status) {
+      case ROOM_STATUS_PLAYING_ROUND:
+        $r['response']['remainingTime'] = get_round_remaining_time($id_room);
+        $r['response']['players'] = get_room_players_details($id_room);
+        break;
+
+      case ROOM_STATUS_END_ROUND:
+        $players = get_room_players_details($id_room);
+        for ($i=0; $i < count($players); $i++) { 
+          if (!$players[$i]['isGameMaster'])
+            $players[$i]['selectedCard'] = get_player_selected_card($players[$i]['pname']);
+          $r['response']['players'][] = $players[$i];
+        }
+        break;
+    }
   }
   // TODO
 } catch (PDOException $e) {

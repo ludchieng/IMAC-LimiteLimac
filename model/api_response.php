@@ -19,6 +19,7 @@ $API_ERROR_MSG = [
   401 => 'Unauthorized: token does not match',
   402 => 'Unauthorized: illegal game move',
   403 => 'Unauthorized: password does not match',
+  404 => 'Unauthorized: illegal state',
   500 => 'Wrong HTTP method',
   501 => 'Wrong HTTP method: GET required',
   502 => 'Wrong HTTP method: POST required',

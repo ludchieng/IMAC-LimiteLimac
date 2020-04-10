@@ -25,6 +25,7 @@ try {
 
   $r['response'] = [];
   $r['response']['cards'] = get_player_cards($pname);
+  $r['response']['isGameMaster'] = '0' !== get_player($pname, 'isGameMaster');
 } catch (PDOException $e) {
   push_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

@@ -205,6 +205,20 @@ function get_player_cards(string $pname): array
   return $data;
 }
 
+
+function get_player_selected_card($pname): ?array
+{
+  $sql = 'SELECT C.id_card, C.content
+    FROM handcard H, card C
+    WHERE H.id_card = C.id_card
+    AND H.pname = :pname
+    AND H.isSelected <> 0;
+  ';
+  if (null != $card = get_multiple($sql, ['pname' => $pname]))
+    return $card[0];
+  return null;
+}
+
 /**
  * Drop the white cards of a given player
  *

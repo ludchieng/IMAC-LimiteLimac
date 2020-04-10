@@ -84,23 +84,28 @@ function get_room_players(int $id_room): array
 }
 
 /**
- * Returns an array of competitors for
- * the specified room. Competitors are players
- * that are not the game master of the current round.
+ * Returns an array of player objects for
+ * the specified room. The objects describe the
+ * attributes of the players
  *
  * @param integer $id_room
- * @return array an array of competitors for
- * the specified room. Competitors are players
- * that are not the game master of the current round
+ * @return array an array of players for
+ * the specified room
  */
-function get_room_competitors(int $id_room): array
+function get_room_players_details(int $id_room): array
 {
-  $sql = 'SELECT P.pname FROM player P
+  $sql = 'SELECT P.pname, P.isReady, P.isGameMaster,
+    P.hasPlayed, P.hasWon FROM player P
     WHERE P.id_room = :id_room
-    AND P.isGameMaster = 0;
   ';
   $data = get_multiple($sql, ['id_room' => $id_room]);
-  return array_column($data, 'pname');
+  for ($i = 0; $i < count($data) ; $i++) {
+    $data[$i]['isReady'] = $data[$i]['isReady'] !== '0';
+    $data[$i]['isGameMaster'] = $data[$i]['isGameMaster'] !== '0';
+    $data[$i]['hasPlayed'] = $data[$i]['hasPlayed'] !== '0';
+    $data[$i]['hasWon'] = $data[$i]['hasWon'] !== '0';
+  }
+  return $data;
 }
 
 /**
@@ -200,6 +205,7 @@ function purge_room_cards_history(int $id_room): void
 
 function purge_empty_rooms(): void
 {
+  /*
   $sql = "DELETE FROM room
     WHERE (
       SELECT R.id_room FROM room R
@@ -209,5 +215,5 @@ function purge_empty_rooms(): void
       GROUP BY id_room
     );
   ";
-  connect_db_player()->query($sql);
+  connect_db_player()->query($sql);*/
 }
