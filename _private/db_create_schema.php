@@ -26,27 +26,27 @@ if ($db->connect_error)
 echo '<pre>' . 'Database connection opened.' . '</pre>';
 
 // Query db to create schema
-$sql = "CREATE SCHEMA ${DB_DATABASE} CHARACTER SET ${DB_CHARSET} COLLATE ${DB_COLLATION};";
+$sql = "CREATE SCHEMA {$DB_DATABASE} CHARACTER SET {$DB_CHARSET} COLLATE {$DB_COLLATION};";
 if (TRUE === $db->query($sql)) {
-	echo '<pre>' . "Schema '${DB_DATABASE}' has been created successfully." . '</pre>';
+	echo '<pre>' . "Schema '{$DB_DATABASE}' has been created successfully." . '</pre>';
 } else {
 	$db->close();
 	die('Error: Could not create schema: ' . $DB_DATABASE);
 }
 
 // Query db to create user
-$sql = "CREATE USER '${DB_USERNAME}'@'${DB_HOST}' IDENTIFIED BY '${DB_PASSWORD}';";
+$sql = "CREATE USER '{$DB_USERNAME}'@'{$DB_HOST}' IDENTIFIED BY '{$DB_PASSWORD}';";
 if (TRUE === $db->query($sql)) {
-	echo '<pre>' . "User '${DB_USERNAME}' has been created successfully." . '</pre>';
+	echo '<pre>' . "User '{$DB_USERNAME}' has been created successfully." . '</pre>';
 } else {
 	$db->close();
 	die('Error: Could not create user: ' . $DB_USERNAME);
 }
 
 // Query db to grant user
-$sql = "GRANT ALL PRIVILEGES ON ${DB_DATABASE}.* TO '${DB_USERNAME}'@'${DB_HOST}';";
+$sql = "GRANT ALL PRIVILEGES ON {$DB_DATABASE}.* TO '{$DB_USERNAME}'@'{$DB_HOST}';";
 if (TRUE === $db->query($sql)) {
-	echo '<pre>' . "User '${DB_USERNAME}' has been granted successfully." . '</pre>';
+	echo '<pre>' . "User '{$DB_USERNAME}' has been granted successfully." . '</pre>';
 } else {
 	$db->close();
 	die('Error: Could not grant user: ' . $DB_USERNAME);

@@ -53,6 +53,7 @@ function reset_player($pname): void
   set_player($pname, 'isReady', 0);
   set_player($pname, 'isGameMaster', 0);
   set_player($pname, 'hasPlayed', 0);
+  set_player($pname, 'hasWon', 0);
   set_player($pname, 'lastping', null);
   set_player($pname, 'id_room', null);
 }

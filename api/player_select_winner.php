@@ -24,25 +24,27 @@ try {
   if (ROOM_STATUS_END_ROUND != $s = get_room($id_room, 'status'))
     throw_error($r, 402, "Round status is {$s}");
 
-  if (!isset($_POST['id_card']))
-    throw_error($r, 101, 'id_card', API_ERROR_DONT_ABORT);
+  if (!isset($_POST['idcard']))
+    throw_error($r, 101, 'idcard', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
   $pname = $_POST['pname'];
   $token = $_POST['token'];
-  $id_card = $_POST['id_card'];
+  $id_card = $_POST['idcard'];
 
   $cards = get_round_selected_cards($id_room);
   if (!in_array($id_card, array_column($cards, 'id_card')))
-    throw_error($r, 402, "Competitors cards does not include card ${id_card}");
+    throw_error($r, 402, "Competitors selected cards does not include card {$id_card}");
 
   $idx = array_search($id_card, array_column($cards, 'id_card'));
   $winner = $cards[$idx]['pname'];
   set_player($winner, 'hasWon', 1);
-  
+
+  set_current_timestamp('room', $id_room, 'lastRoundEnd');
+
 } catch (PDOException $e) {
-  throw_error($r, 201, $e->getMessage());
+  throw_error($r, 201, $e->getMessage() . '\n\n' . $e->getTraceAsString());
 } catch (Exception $e) {
   throw_error($r, 666);
 }

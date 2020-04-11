@@ -25,18 +25,21 @@ try {
   if (ROOM_STATUS_PLAYING_ROUND != $s = get_room($id_room, 'status'))
     throw_error($r, 402, "Round status is {$s}");
 
-  if (!isset($_POST['id_card']))
-    throw_error($r, 101, 'id_card', API_ERROR_DONT_ABORT);
+  if (!isset($_POST['idcard']))
+    throw_error($r, 101, 'idcard', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
   $pname = $_POST['pname'];
   $token = $_POST['token'];
-  $id_card = $_POST['id_card'];
+  $id_card = $_POST['idcard'];
+
+  if ($pname == get_round_game_master($id_room))
+    throw_error($r, 402, 'Game master is not allowed to select a card');
 
   $handcards = array_column(get_player_cards($pname), 'id_card');
   if (!in_array($id_card, $handcards))
-    throw_error($r, 402, "{$pname} does not have card ${id_card}");
+    throw_error($r, 402, "{$pname} does not have card {$id_card}");
 
   $blanksCount = get_card_blanks_count(get_room($id_room, 'id_card'));
 
@@ -53,6 +56,10 @@ try {
   } else {
     set_player($pname, 'hasPlayed', 0);
   }
+
+  if (!in_array($id_card, array_column(get_player_selected_cards($pname), 'id_card')))
+    throw_error($r, 666, "Could not select {$id_card}");
+
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

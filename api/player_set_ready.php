@@ -39,6 +39,9 @@ try {
   } else {
     throw_error($r, 300, 'ready: expected \'yes\' or \'no\'');
   }
+
+  if (1 != get_player($pname, 'isReady'))
+    throw_error($r, 666);
     
   if (can_room_start($id_room))
     start_room($id_room);

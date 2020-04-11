@@ -21,9 +21,13 @@ try {
   $pass = $_POST['pass'];
 
   if (is_known_player($pname))
-    throw_error($r, 202, "Player '{$pname}' already exists");
+    throw_error($r, 202, "Player {$pname} already exists");
   
   create_player($pname, $pass);
+
+  if (!is_known_player($pname))
+    throw_error($r, 666);
+
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

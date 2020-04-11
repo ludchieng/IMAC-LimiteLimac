@@ -47,16 +47,23 @@ try {
         for ($i=0; $i < count($players); $i++) { 
           if (!$players[$i]['isGameMaster']) {
             $players[$i]['selectedCards'] = get_player_selected_cards($players[$i]['pname']);
-            // TODO delHandCardFromHand
           }
           $r['response']['players'][] = $players[$i];
         }
+
+        // Check to restart round
+        if (null != $winner = get_round_winner($id_room)) {
+          if (can_round_start($id_room)) {
+            start_round($id_room, $winner);
+          }
+        }
+
         break;
     }
   }
   // TODO
 } catch (PDOException $e) {
-  throw_error($r, 201, $e->getMessage());
+  throw_error($r, 201, $e->getMessage() . '\n\n' . $e->getTraceAsString());
 } catch (Exception $e) {
   throw_error($r, 666);
 }

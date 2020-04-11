@@ -29,7 +29,12 @@ try {
     throw_error($r, 403);
 
   $r['response'] = [];
-  $r['response']['token'] = join_room($id_room, $pname);
+  $token = join_room($id_room, $pname);
+  
+  if ($id_room != get_player($pname, 'id_room'))
+    throw_error($r, 666, "Does the room {$id_room} exist?");
+
+  $r['response']['token'] = $token;
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

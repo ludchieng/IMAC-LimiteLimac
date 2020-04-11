@@ -205,3 +205,14 @@ function del(string $table, $id): void
   $pst = $pdo->prepare($sql);
   $pst->execute(['id' => $id]);
 }
+
+
+function set_current_timestamp(string $table, $id, string $attr): void
+{
+  global $DB_DATA_PK;
+  $sql = "UPDATE {$table}
+  SET {$attr} = current_timestamp()
+  WHERE {$DB_DATA_PK[$table]} = {$id};
+  ";
+  connect_db_player()->query($sql);
+}

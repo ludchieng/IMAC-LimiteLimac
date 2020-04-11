@@ -32,18 +32,18 @@ if (TRUE === $db->query($sql)) {
 }
 
 // Query db to delete user
-$sql = "DROP USER IF EXISTS '${DB_USERNAME}'@'${DB_HOST}';";
+$sql = "DROP USER IF EXISTS '{$DB_USERNAME}'@'{$DB_HOST}';";
 if (TRUE === $db->query($sql)) {
-  echo '<pre>' . "User '${DB_USERNAME}' has been dropped successfully if he did exist." . '</pre>';
+  echo '<pre>' . "User '{$DB_USERNAME}' has been dropped successfully if he did exist." . '</pre>';
 } else {
   $db->close();
   die('Error: Could not drop user: ' . $DB_USERNAME);
 }
 
 // Query db to delete schema
-$sql = "DROP SCHEMA IF EXISTS ${DB_DATABASE};";
+$sql = "DROP SCHEMA IF EXISTS {$DB_DATABASE};";
 if (TRUE === $db->query($sql)) {
-  echo '<pre>' . "Schema '${DB_DATABASE}' has been dropped successfully if it did exist." . '</pre>';
+  echo '<pre>' . "Schema '{$DB_DATABASE}' has been dropped successfully if it did exist." . '</pre>';
 } else {
   $db->close();
   die('Error: Could not drop schema: ' . $DB_DATABASE);

@@ -77,7 +77,27 @@ function set_room(int $id_room, string $attr, $value): void
 function get_room_players(int $id_room): array
 {
   $sql = 'SELECT P.pname FROM player P
+    WHERE P.id_room = :id_room;
+  ';
+  $data = get_multiple($sql, ['id_room' => $id_room]);
+  return array_column($data, 'pname');
+}
+
+/**
+ * Returns an array of players which have
+ * their isReady value set to true for
+ * the specified room.
+ *
+ * @param integer $id_room
+ * @return array an array of players which have
+ * their isReady value set to true for
+ * the specified room
+ */
+function get_room_ready_players(int $id_room): array
+{
+  $sql = 'SELECT P.pname FROM player P
     WHERE P.id_room = :id_room
+    AND P.isReady <> 0;
   ';
   $data = get_multiple($sql, ['id_room' => $id_room]);
   return array_column($data, 'pname');
@@ -219,11 +239,21 @@ function purge_empty_rooms(): void
 }
 
 
-function del_players_selected_cards($id_room): void
+function del_players_selected_cards(int $id_room): void
 {
   $sql = "DELETE from handcard
-    WHERE id_room = :id_doom
+    WHERE id_room = :id_room
     AND isSelected <> 0;
   ";
   set_multiple($sql, ['id_room' => $id_room]);
+}
+
+
+function set_room_players(int $id_room, string $attr, $value): void
+{
+  $sql = "UPDATE player
+    SET {$attr} = :val
+    WHERE id_room = :id_room;
+  ";
+  set_multiple($sql, ['val' => $value, 'id_room' => $id_room]);
 }

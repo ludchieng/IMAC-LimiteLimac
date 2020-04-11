@@ -23,29 +23,38 @@ function start_round(int $id_room, string $pnameGM): void
 {
   set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   del_players_selected_cards($id_room);
-  $players = get_room_players($id_room);
+  set_room_players($id_room, 'hasPlayed', 0);
+  set_room_players($id_room, 'hasWon', 0);
+  // Changing game master
+  $players = get_room_ready_players($id_room);
   foreach ($players as $p) {
+    $cardsCount = count(get_player_cards($p));
+    if (0 < $numberToDraw = ROOM_MAX_HAND_CARDS_COUNT - $cardsCount)
+      draw_card($p, $numberToDraw);
     if ($p === $pnameGM) {
       set_player($p, 'isGameMaster', 1);
     } else {
       set_player($p, 'isGameMaster', 0);
-      draw_card($p, ROOM_MAX_HAND_CARDS_COUNT);
     }
   }
   draw_black_card($id_room);
-  // Update room attribute 'lastRoundStart'
-  $sql = "UPDATE room
-  SET lastRoundStart = current_timestamp()
-  WHERE id_room = {$id_room};
-  ";
-  $pdo = connect_db_player()->query($sql);
+  set_current_timestamp('room', $id_room, 'lastRoundStart');
+}
+
+
+function can_round_start(int $id_room): bool
+{
+  if (get_room($id_room, 'status') == ROOM_STATUS_PLAYING_ROUND)
+    return false;
+  if (get_round_end_time($id_room) > 0)
+    return false;
+  return true;
 }
 
 
 function end_round($id_room): void
 {
   set_room($id_room, 'status', ROOM_STATUS_END_ROUND);
-  // TODO
 }
 
 /**
@@ -108,7 +117,9 @@ function get_round_card(int $id_room): ?array
     WHERE C.id_card = R.id_card
     AND R.id_room = :id_room
   ';
-  return get_multiple($sql, ['id_room' => $id_room])[0];
+  if (null != $data = get_multiple($sql, ['id_room' => $id_room]))
+    return $data[0];
+  return null;
 }
 
 
@@ -137,8 +148,9 @@ function get_round_game_master(int $id_room): ?string
     WHERE P.id_room = :id_room
     AND P.isGameMaster <> 0
   ";
-  $gameMaster = get_multiple($sql, ['id_room' => $id_room])[0];
-  return $gameMaster['pname'];
+  if (null != $gameMaster = get_multiple($sql, ['id_room' => $id_room]))
+    return $gameMaster[0]['pname'];
+  return null;
 }
 
 /**
@@ -162,6 +174,18 @@ function get_round_competitors(int $id_room): array
 }
 
 
+function get_round_winner(int $id_room): ?string
+{
+  $sql = "SELECT P.pname FROM player P
+    WHERE P.hasWon <> 0
+    AND id_room = :id_room;
+  ";
+  if (null != $winner = get_multiple($sql, ['id_room' => $id_room]))
+    return $winner[0]['pname'];
+  return null;
+}
+
+
 function get_round_remaining_time(int $id_room): ?int
 {
   $rd = get_room($id_room, 'roundDuration');
@@ -169,8 +193,22 @@ function get_round_remaining_time(int $id_room): ?int
   - UNIX_TIMESTAMP(current_timestamp()) + {$rd} as diff
   FROM room R WHERE id_room = :id_room;
   ";
-  $diff = get_multiple($sql, ['id_room' => $id_room])[0]['diff'];
-  return $diff;
+  if (null != $diff = get_multiple($sql, ['id_room' => $id_room]))
+    return $diff[0]['diff'];
+  return null;
+}
+
+
+function get_round_end_time(int $id_room): ?int
+{
+  $rd = get_room($id_room, 'endRoundDuration');
+  $sql  ="SELECT UNIX_TIMESTAMP(R.lastRoundEnd)
+  - UNIX_TIMESTAMP(current_timestamp()) + {$rd} as diff
+  FROM room R WHERE id_room = :id_room;
+  ";
+  if (null != $diff = get_multiple($sql, ['id_room' => $id_room]))
+    return $diff[0]['diff'];
+  return null;
 }
 
 
@@ -178,7 +216,7 @@ function check_for_end_round(int $id_room): void
 {
   if (get_room($id_room, 'status') === ROOM_STATUS_PLAYING_ROUND
       && (get_round_remaining_time($id_room) <= 0
-        || have_players_all_played($id_room)
+        //TODO|| have_players_all_played($id_room)
       )
   ) {
     end_round($id_room);
