@@ -86,7 +86,7 @@ INSERT INTO `card` (`id_card`, `content`) VALUES
 	('W0018', 'Keven qui fait une référence à Star Wars'),
 	('W0019', 'Boire un Adios Motha Fucka'),
 	('W0020', 'Mes incroyables skills en dessin sur OpenGL'),
-	('W0021', 'Épeler le nom de famille d\'Eva pour 200â‚¬'),
+	('W0021', 'Épeler le nom de famille d\'Eva pour 200€'),
 	('W0022', 'Connaître la signification du sigle UQAT'),
 	('W0023', 'Revenir du Québec avec l\'accent'),
 	('W0024', 'les pâtes au beurre du WEI'),
@@ -149,68 +149,98 @@ CREATE TABLE IF NOT EXISTS `had` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `had` DISABLE KEYS */;
+INSERT INTO `had` (`id_room`, `id_card`) VALUES
+	(4, 'B1001'),
+	(4, 'B1003'),
+	(4, 'B1004'),
+	(4, 'B1007'),
+	(4, 'B1008'),
+	(4, 'B1009'),
+	(4, 'B1010'),
+	(4, 'B1012'),
+	(4, 'B1015'),
+	(4, 'B1016'),
+	(4, 'B1018'),
+	(4, 'B1021'),
+	(4, 'B1024'),
+	(4, 'B1025'),
+	(4, 'B1028'),
+	(4, 'B1032'),
+	(4, 'B1037'),
+	(4, 'B1038'),
+	(4, 'B1042'),
+	(4, 'B1043'),
+	(4, 'B1045'),
+	(4, 'B1046'),
+	(4, 'B1047'),
+	(4, 'B2001'),
+	(4, 'B2002'),
+	(4, 'B2003'),
+	(4, 'B2004');
 /*!40000 ALTER TABLE `had` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `handcard` (
   `id_room` int(11) NOT NULL,
-  `id_card` char(5) NOT NULL,
   `pname` varchar(50) NOT NULL,
+  `id_card` char(5) NOT NULL,
   `isSelected` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_room`,`id_card`,`pname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `handcard` DISABLE KEYS */;
-INSERT INTO `handcard` (`id_room`, `id_card`, `pname`, `isSelected`) VALUES
-	(1, 'W0005', 'GotchiT', 0),
-	(1, 'W0006', 'GotchiT', 0),
-	(1, 'W0007', 'GotchiT', 0),
-	(1, 'W0008', 'GotchiT', 0),
-	(1, 'W0009', 'GotchiT', 0),
-	(1, 'W0010', 'GotchiT', 0),
-	(1, 'W0017', 'Kysios', 0),
-	(1, 'W0018', 'Kysios', 0),
-	(1, 'W0019', 'Kysios', 0),
-	(1, 'W0020', 'Kysios', 0),
-	(1, 'W0021', 'Kysios', 0),
-	(1, 'W0022', 'Kysios', 0),
-	(2, 'W0011', 'PandaDesSteppes', 0),
-	(2, 'W0012', 'PandaDesSteppes', 0),
-	(2, 'W0013', 'PandaDesSteppes', 0),
-	(2, 'W0014', 'PandaDesSteppes', 0),
-	(2, 'W0015', 'PandaDesSteppes', 0),
-	(2, 'W0016', 'PandaDesSteppes', 0);
+INSERT INTO `handcard` (`id_room`, `pname`, `id_card`, `isSelected`) VALUES
+	(1, 'GotchiT', 'W0005', 0),
+	(1, 'GotchiT', 'W0006', 0),
+	(1, 'GotchiT', 'W0007', 0),
+	(1, 'GotchiT', 'W0008', 0),
+	(1, 'GotchiT', 'W0009', 0),
+	(1, 'GotchiT', 'W0010', 0),
+	(1, 'Kysios', 'W0017', 0),
+	(1, 'Kysios', 'W0018', 0),
+	(1, 'Kysios', 'W0019', 0),
+	(1, 'Kysios', 'W0020', 0),
+	(1, 'Kysios', 'W0021', 0),
+	(1, 'Kysios', 'W0022', 0);
 /*!40000 ALTER TABLE `handcard` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `player` (
   `pname` varchar(50) NOT NULL,
   `pass` varchar(60) NOT NULL,
-  `token` char(24) DEFAULT NULL,
+  `color` char(6) DEFAULT NULL,
+  `token` char(7) DEFAULT NULL,
   `isReady` tinyint(1) NOT NULL DEFAULT '0',
-  `isGameMaster` tinyint(4) NOT NULL DEFAULT '0',
+  `isGameMaster` tinyint(1) NOT NULL DEFAULT '0',
+  `hasPlayed` tinyint(1) NOT NULL DEFAULT '0',
+  `hasWon` tinyint(1) NOT NULL DEFAULT '0',
   `lastPing` datetime DEFAULT NULL,
   `id_room` int(11) DEFAULT NULL,
   PRIMARY KEY (`pname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` (`pname`, `pass`, `token`, `isReady`, `isGameMaster`, `lastPing`, `id_room`) VALUES
-	('GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', 'vf5j5pn14PkCy8WFRGayuDhq', 0, 0, NULL, 1),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'puxLtJe1GcYM6YFJK#JstraC', 0, 0, NULL, 1),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'OR2$a34iVAA0lzEb2kYPcsTk', 0, 0, NULL, 2);
+INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
+	('GotchiT', '$2y$10$r7dpZ6MqFZjE3J9xL4Djiu.oQggrI9wurJAJd9VIDhODHMc2Iuf9.', NULL, NULL, 0, 0, 0, 0, NULL, 1),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', NULL, NULL, 0, 1, 0, 0, NULL, 3),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', NULL, NULL, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (
   `id_room` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `status` enum('STANDBY','PLAYING_ROUND','END_ROUND') NOT NULL DEFAULT 'STANDBY',
+  `roundDuration` int(11) NOT NULL DEFAULT '45',
+  `endRoundDuration` int(11) NOT NULL DEFAULT '8',
+  `lastRoundStart` timestamp NULL DEFAULT NULL,
+  `lastRoundEnd` timestamp NULL DEFAULT NULL,
   `id_card` char(5) DEFAULT NULL,
   PRIMARY KEY (`id_room`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` (`id_room`, `name`, `id_card`) VALUES
-	(1, 'Salon du sale', 'B1005'),
-	(2, 'Carré VIP', 'B1007'),
-	(3, 'Le Mils', 'B2002');
+INSERT INTO `room` (`id_room`, `name`, `status`, `roundDuration`, `endRoundDuration`, `lastRoundStart`, `lastRoundEnd`, `id_card`) VALUES
+	(1, 'Salon du sale', 'STANDBY', 45, 8, NULL, NULL, NULL),
+	(2, 'Carré VIP', 'STANDBY', 45, 8, NULL, NULL, NULL),
+	(3, 'Le Mils', 'STANDBY', 45, 8, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
