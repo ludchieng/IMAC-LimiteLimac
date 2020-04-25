@@ -16,30 +16,25 @@ try {
   if (!isset($_POST['pname']))
     throw_error($r, 101, 'pname', API_ERROR_DONT_ABORT);
 
-  if (!isset($_POST['pass']) && !isset($_POST['token']))
-    throw_error($r, 101, 'pass or token', API_ERROR_DONT_ABORT);
+  if (!isset($_POST['pass']))
+    throw_error($r, 101, 'pass', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
   $id_room = $_POST['idroom'];
   $pname = $_POST['pname'];
+  $pass = $_POST['pass'];
 
-  if (isset($_POST['pass'])) {
-    if (!authenticate_player($pname, $_POST['pass']))
-      throw_error($r, 403);
-
-    $token = join_room($id_room, $pname);
-  } else if (isset($_POST['token'])) {
-    if (!is_valid_token($pname, $_POST['token']))
-      throw_error($r, 401);
-
-    $token = join_room($id_room, $pname, $_POST['token']);
-  }
+  if (false == authenticate_player($pname, $pass))
+    throw_error($r, 403);
 
   $r['response'] = [];
+  
+  $token = player_generate_token();
+  set_player($pname, 'token', $token);
 
-  if ($id_room != get_player($pname, 'id_room'))
-    throw_error($r, 666, "Does the room {$id_room} exist?");
+  if ($token != get_player($pname, 'token'))
+    throw_error($r, 666);
 
   $r['response']['token'] = $token;
 } catch (PDOException $e) {

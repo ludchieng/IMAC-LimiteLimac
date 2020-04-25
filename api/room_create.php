@@ -26,15 +26,21 @@ try {
   if (isset($_POST['pass'])) {
     if (!authenticate_player($pname, $_POST['pass']))
       throw_error($r, 403);
+
+    $id = create_room($roomname);
+    $token = join_room($id, $pname);
   } else if (isset($_POST['token'])) {
     if (!is_valid_token($pname, $_POST['token']))
       throw_error($r, 401);
+      
+    $id = create_room($roomname);
+    $token = join_room($id, $pname, $_POST['token']);
   }
 
   $r['response'] = [];
-  $r['response']['idroom'] = $id = create_room($roomname);
+  $r['response']['idroom'] = $id;
   $r['response']['share'] = "https://{$_SERVER['HTTP_HOST']}/join_room.php?idroom=" . $id;
-  $r['response']['token'] = join_room($id, $pname);
+  $r['response']['token'] = $token;
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

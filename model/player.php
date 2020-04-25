@@ -114,21 +114,26 @@ function is_valid_token(string $pname, string $token): bool
   return get_player($pname, 'token') == $token;
 }
 
+function player_generate_token(): string
+{
+  return substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$', TOKEN_LENGTH * strlen($x))), 1, TOKEN_LENGTH);
+}
+
 /**
  * Assigns the specified player to the given room
- * and generating a token for authenticating towards
- * his future requests with the server.
  *
  * @param integer $id_room
  * @param string $pname
- * @return string generated token
+ * @param boolean $name
+ * @return string updated token
  */
-function join_room(int $id_room, string $pname): string
+function join_room(int $id_room, string $pname, string $token = null): string
 {
   reset_player($pname);
-  // Generate token
-  $token = substr(str_shuffle(str_repeat($x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@$', TOKEN_LENGTH * strlen($x))), 1, TOKEN_LENGTH);
   set_player($pname, 'id_room', $id_room);
+  if (is_null($token)) {
+    $token = player_generate_token();
+  }
   set_player($pname, 'token', $token);
   return $token;
 }
