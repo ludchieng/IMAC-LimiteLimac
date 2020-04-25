@@ -4,6 +4,11 @@
     --W: #FFFFFF;
 }
 
+@font-face {
+    font-family: "Cocogoose";
+    src: url("fonts/COCOGOOSE PRO-TRIAL.TTF");
+}
+
 body {
     margin: 0;
     padding: 0;
