@@ -75,12 +75,12 @@ function abort_if_errors(array &$r): void
 function abort(array &$r): void
 {
   header('Content-Type: application/json');
-  die(json_encode($r, JSON_UNESCAPED_UNICODE));
+  die(json_encode($r, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK));
 }
 
 
 function send_response(array &$r): void
 {
   header('Content-Type: application/json');
-  echo json_encode($r, JSON_UNESCAPED_UNICODE);
+  echo json_encode($r, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
 }

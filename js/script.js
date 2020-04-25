@@ -1,22 +1,11 @@
-let create_form = document.getElementById("create-form");
-let join_form = document.getElementById("join-form");
-let create_button = document.getElementById("create-button");
-let join_button = document.getElementById("join-button");
+jQuery("#create-button").click(() => {
+    jQuery("#create-form").css('display', "inline-block");
+    jQuery("#create-form").addClass('fade-in');
+    jQuery("#join-form").css('display', "none");
+});
 
-
-document.getElementById("create-button").addEventListener("click", dispCreateForm);
-
-document.getElementById("join-button").addEventListener("click", dispJoinForm);
-
-function dispCreateForm() {
-    create_form.style.display = "inline-block";
-    join_form.style.display = "none";
-    return;
-}
-
-function dispJoinForm(){
-    join_form.style.display = "inline-block";
-    create_form.style.display = "none";
-    return;
-
-}
+jQuery("#join-button").click(() => {
+    jQuery("#join-form").css('display', "inline-block");
+    jQuery("#join-form").addClass('fade-in');
+    jQuery("#create-form").css('display', "none");
+});
