@@ -40,6 +40,9 @@ try {
   $idx = array_search($id_card, array_column($cards, 'id_card'));
   $winner = $cards[$idx]['pname'];
   set_player($winner, 'hasWon', 1);
+  $rPts = get_player($winner, 'roomPoints');
+  set_player($winner, 'roomPoints', $rPts+1);
+  
 
   set_current_timestamp('room', $id_room, 'lastRoundEnd');
 
