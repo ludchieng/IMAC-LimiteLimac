@@ -1,5 +1,5 @@
 #register-info {
   margin-bottom: 8px;
   font-size: 16px;
-  color: rgb(247, 212, 212);
+  color: var(--W);
 }

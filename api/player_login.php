@@ -10,9 +10,6 @@ try {
   if ('POST' !== $_SERVER['REQUEST_METHOD'])
     throw_error($r, 502, "had {$_SERVER['REQUEST_METHOD']}");
 
-  if (!isset($_POST['idroom']))
-    throw_error($r, 101, 'idroom', API_ERROR_DONT_ABORT);
-
   if (!isset($_POST['pname']))
     throw_error($r, 101, 'pname', API_ERROR_DONT_ABORT);
 
@@ -21,15 +18,17 @@ try {
 
   abort_if_errors($r);
 
-  $id_room = $_POST['idroom'];
   $pname = $_POST['pname'];
   $pass = $_POST['pass'];
+
+  if (!is_known_player($pname))
+    throw_error($r, 203);
 
   if (false == authenticate_player($pname, $pass))
     throw_error($r, 403);
 
   $r['response'] = [];
-  
+
   $token = player_generate_token();
   set_player($pname, 'token', $token);
 

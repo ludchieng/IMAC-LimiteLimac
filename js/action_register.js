@@ -1,12 +1,12 @@
-$('#register').submit((e) => {
+jQuery('#register').submit((e) => {
   e.preventDefault();
 
-  let pname = document.getElementById('pseudo').value;
-  let pass = document.getElementById('passwd').value;
-  let vpass = document.getElementById('vpasswd').value;
+  let pname = jQuery('#pseudo').val();
+  let pass = jQuery('#passwd').val();
+  let vpass = jQuery('#vpasswd').val();
 
   if (pass !== vpass) {
-    document.getElementById('register-info').innerText = 'Les mots de passe ne correspondent pas :(';
+    jQuery('#register-info').text('Les mots de passe ne correspondent pas :(');
   } else {
     jQuery.ajax({
       type: "POST",
@@ -15,11 +15,13 @@ $('#register').submit((e) => {
         pname: pname,
         pass: pass,
       }
-    }).done( (r) => {
+    }).done((r) => {
       if (r.success) {
-        window.location.replace("index.php?action=registerGo");
+        location.href = "index.php?action=registerGo";
+      } else if (r.errors[0].code == 202) {
+        jQuery('#register-info').text('Ce pseudo est déjà pris :(');
       } else {
-        document.getElementById('register-info').innerText = 'Ce pseudo est déjà pris :(';
+        jQuery('#register-info').text("Quelque chose s'est mal passé :(");
       }
     });
   }
