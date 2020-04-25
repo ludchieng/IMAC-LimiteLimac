@@ -4,13 +4,60 @@
     --W: #FFFFFF;
 }
 
-.leftDivBoard {
-    height: 90vh;
-    width: 50%;
-    padding-top: 20vh;
-    flex-grow: 1;
+.main {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: space-between;
+    -ms-flex-line-pack: justify;
+    align-content: space-between;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+aside {
+    padding-top: 10%;
     text-align: center;
 }
+
+.leftDivBoard .rightDivBoard {
+    height: 90vh;
+    padding-top: 10%;
+    flex: 0 1 20%;
+    text-align: center;
+    align-self: auto;
+}
+
+.rightDivBoard {
+    padding-right: 5%;
+}
+
+.centerDivBoard {
+    height: 90vh;
+    flex: 1 1 40%;
+    align-self: auto;
+    padding-top: 5%;
+}
+
+.whiteCardBoard-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10% 20%;
+}
+
+
 
 .round, .time{
     font-family: roboto;
@@ -33,7 +80,12 @@
     border-radius: 20px;
 }
 
-.whiteCardGroup {
+.leader_name {
+    font-style: italic;
+    color: darkgoldenrod;
+}
+
+/*.whiteCardGroup {
     padding: 0;
     margin: auto;
     list-style: none;
@@ -46,7 +98,7 @@
     justify-content: space-around;
    
     line-height:30px;
-}
+} */
 
 .whiteCard {
     background-color: var(--W);
@@ -57,7 +109,7 @@
     padding: 5%;
     position: relative;
     border-radius: 20px;
-    flex: 1 0 auto;
+    flex: 0 0 25%;
     transition: 2s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
@@ -66,7 +118,7 @@
 }
 
 .whiteCard-content {
-    transform: translateY(200%);
+    /*transform: translateY(200%);*/
 }
 
 .whiteCard:before {
@@ -80,3 +132,13 @@
     width: 25px;
 }
 
+.lezami {
+    width: 100%;
+}
+.lezami-content {
+    width: 100%;
+}
+
+.score {
+    font-family: roboto;
+}

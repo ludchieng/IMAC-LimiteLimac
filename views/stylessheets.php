@@ -11,3 +11,6 @@ echo '<link rel="stylesheet" href="css/colorpicker.css">
 
 echo '<link rel="stylesheet" href="css/board.css">
 ';
+
+echo '<link rel="stylesheet" href="css/fireworks.css">
+';
