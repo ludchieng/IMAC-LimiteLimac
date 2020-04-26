@@ -17,7 +17,7 @@ require_once('actions/actions.php');
     <!-- particles.js container -->
     <div id="particles-js"></div>
 
-    <a id="logo" href="index.php?action=landing"><img src="img/imac_logo.png" alt="Logo IMAC"></a>
+    <a id="logo" href="index.php?action=landing"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
 
     <div class="main">
         <?php

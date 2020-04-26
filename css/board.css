@@ -49,14 +49,6 @@ aside {
     padding-top: 5%;
 }
 
-.whiteCardBoard-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 10% 20%;
-}
-
 
 
 .round, .time{
@@ -66,18 +58,6 @@ aside {
 
 .time {
     font-size: 3em;
-}
-
-
-.blackCard {
-    margin: auto;
-    width: 80%;
-    height: 50vh;
-    background-color: var(--B);
-    padding: 12%;
-    padding-top: 30%;
-    position: relative;
-    border-radius: 20px;
 }
 
 .leader_name {
@@ -99,38 +79,6 @@ aside {
    
     line-height:30px;
 } */
-
-.whiteCard {
-    background-color: var(--W);
-    cursor: pointer; 
-    margin: 5px;
-    height: auto;
-    color: var(--B);
-    padding: 5%;
-    position: relative;
-    border-radius: 20px;
-    flex: 0 0 25%;
-    transition: 2s cubic-bezier(0.23, 1, 0.320, 1);
-}
-
-.whiteCard:hover {
-    opacity: 0.3;
-}
-
-.whiteCard-content {
-    /*transform: translateY(200%);*/
-}
-
-.whiteCard:before {
-    content:'';
-    float:left;
-    padding-top:100%;
-}
-
-.blackCard img, .whiteCard img {
-    position: absolute; top: 10%;left: 10%;
-    width: 25px;
-}
 
 .lezami {
     width: 100%;

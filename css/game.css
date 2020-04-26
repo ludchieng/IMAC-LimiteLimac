@@ -1,0 +1,153 @@
+#game {
+  display: flex;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
+
+#game main {
+  flex: 1 1 auto;
+  padding-top: 5vh; /* fallback */
+  padding-top: max(5vh, min(20vh, calc(5vh + (50vw - 500px))));
+}
+
+#game-title {
+  display: block;
+  height: 40px;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+#white-cards-panel {
+  display: flex;
+  margin: 0 auto;
+  max-width: 680px;
+  max-height: calc(100vh - 10vh - 42px - 10vh);
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(78, 40, 49, 0.4);
+}
+
+.white-card {
+  position: relative;
+  flex: 0 0 160px;
+  margin: 5px;
+  padding: 10px;
+  height: 190px;
+  opacity: 0.9;
+  color: var(--B);
+  font-size: 0.9em;
+  border-radius: 12px;
+  background-color: var(--W);
+  transition: .1s cubic-bezier(0.23, 1, 0.320, 1);
+  cursor: pointer;
+}
+
+.white-card:hover {
+    opacity: 1;
+}
+
+.white-card-selected {
+    opacity: 1;
+    color: #ec1e52;
+    box-shadow: 0 0 10px #ff4977ee;
+}
+
+.white-card img {
+  position: absolute;
+  bottom: 7%;
+  left: 10%;
+  width: 12%;
+}
+
+#room-panel {
+  flex: 0 0 auto;
+  padding: 20vh 12px 0 54px;
+  height: 100vh;
+  width: 300px;
+  max-height: 90vh;
+}
+
+#black-card {
+  position: relative;
+  margin: 0;
+  height: 350px;
+  max-height: 40vh;
+  padding: 32px 24px 24px 24px;
+  background-color: var(--B);
+  border-radius: 20px;
+  text-align: left;
+}
+
+#black-card img {
+  position: absolute;
+  bottom: 7%;
+  left: 10%;
+  width: 12%;
+}
+
+#room-players {
+  padding: 96px 8px 0 16px;
+  margin: 0;
+  height: 100vh;
+  width: 200px;
+  background: linear-gradient(-90deg, #1125, #1120);
+}
+
+#room-players h1 {
+  text-align: left;
+  margin: 24px auto;
+  font-size: 1.5em;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#room-players ul {
+  margin: 0;
+  padding: 0;
+  max-height: calc(100vh - 10vh - 96px - 96px);
+  list-style-type: none;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(84, 23, 36, 0.133);
+}
+
+#room-players ul li {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+#room-players ul p {
+  margin: 0;
+  align-self: center;
+  font-family: Roboto;
+}
+
+.room-players-dot {
+  display: inline-block;
+  flex-shrink: 0;
+  align-self: center;
+  margin-right: 10px;
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00000055;
+}
+
+#room-round {
+  font-size: 1.5em;
+  font-family: roboto;
+  font-weight: 600;
+}
+
+#room-time {
+  font-size: 2.5em;
+  font-family: roboto;
+  font-weight: 600;
+}

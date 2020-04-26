@@ -12,9 +12,10 @@ $(document).ready(() => {
         let u = users.pop();
         
         if (u.pname != getCookie('pname')) {
-          jQuery('#lezami-container').append(`<li class="lezami-content fade-in">
+          jQuery('#lezami ul').append(`
+          <li class="fade-in">
               <div class="dot" style="background-color: #${u.color}"></div>
-              <p class="lezami-text">${u.pname}</p>
+              <p>${u.pname}</p>
           </li>`);
         }
 

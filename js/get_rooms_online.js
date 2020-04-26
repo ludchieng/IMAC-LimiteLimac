@@ -11,8 +11,10 @@ $(document).ready(() => {
 
         let r = rooms.pop();
         
-        jQuery('#lezalons-container').append(`
-          <li class="lezalons-content fade-in">${r.name} <span class="txt-gold">#${r.id_room}</span></li>
+        jQuery('#lezalons ul').append(`
+          <li class="fade-in">
+            ${r.name} <span class="txt-gold">#${r.id_room}</span>
+          </li>
         `);
 
         if (rooms.length == 0) 

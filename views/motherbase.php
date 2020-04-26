@@ -1,16 +1,15 @@
-<div id="welcome">
-    <header>
-        <button type="button" data-toggle="modal" data-target="#settingsModal" data-whatever="@getbootstrap">Settings</button>
-        <button type="button" data-toggle="modal" data-target="#newCardModal" data-whatever="@getbootstrap">New Card</button>
-    </header>
-    <?php
-    require_once('views/modals.php');
-    ?>
+<header>
+    <button type="button" data-toggle="modal" data-target="#settingsModal" data-whatever="@getbootstrap">Settings</button>
+    <button type="button" data-toggle="modal" data-target="#newCardModal" data-whatever="@getbootstrap">New Card</button>
+</header>
+<?php
+require_once('views/modals.php');
+?>
 
+<div id="welcome">
     <aside id="lezami">
         <h1>Joueurs</h1>
-        <ul id="lezami-container">
-        </ul>
+        <ul></ul>
     </aside>
 
     <main>
@@ -35,8 +34,7 @@
 
     <aside id="lezalons">
         <h1>Salons</h1>
-        <ul id="lezalons-container">
-        </ul>
+        <ul></ul>
     </aside>
 </div>
 

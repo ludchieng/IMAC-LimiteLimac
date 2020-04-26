@@ -6,8 +6,8 @@ jQuery('#login').submit((e) => {
 function login(requireHTTPS) {
     if (requireHTTPS && !isCertifiedConnection()) {
         jQuery('#form-fullscreen-info').html(`
-            Sans HTTPS, votre mot de passe se balade dans la nature, continuer ? 
-            <button id="login-force" class="form-fullscreen-info-btn">Oui</button>`
+            Sans HTTPS, ton mot de passe se balade dans la nature, continuer ? 
+            <button id="login-force" class="form-fullscreen-info-btn">Of crous</button>`
         );
         jQuery('#login-force').click((e) => {
             e.preventDefault();

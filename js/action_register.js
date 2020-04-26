@@ -6,8 +6,8 @@ jQuery('#register').submit((e) => {
 function register(requireHTTPS = true) {
   if (requireHTTPS && !isCertifiedConnection()) {
     jQuery('#form-fullscreen-info').html(`
-      Sans HTTPS, votre mot de passe se balade dans la nature, continuer ? 
-      <button id="register-force" class="form-fullscreen-info-btn">Oui</button>`
+      Sans HTTPS, ton mot de passe se balade dans la nature, continuer ? 
+      <button id="register-force" class="form-fullscreen-info-btn">Of crous</button>`
     );
     jQuery('#register-force').click((e) => {
       e.preventDefault();

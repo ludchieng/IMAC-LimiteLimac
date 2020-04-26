@@ -20,6 +20,35 @@ body *::selection {
     background: #fff3;
 }
 
+header {
+    display: flex;
+    z-index: 10;
+    position: sticky;
+    margin: 0 auto;
+    width: 100vh;
+    max-width: 1400px;
+    flex-direction: row-reverse;
+}
+
+header .modal-backdrop {
+    z-index: -100;
+}
+
+header>button {
+    margin-left: 12px;
+    padding: 4px 12px;
+    color: var(--W);
+    font-family: 'Roboto';
+    border: 0;
+    border-radius: 0 0 8px 8px;
+    background: linear-gradient(135deg, #3b4ad4, #3d2c9e);
+    cursor: pointer;
+}
+
+header>button:hover {
+    background: linear-gradient(135deg, #4f60ff, #4f3bbe);
+}
+
 #logo {
     position: absolute;
     top: 50px;
@@ -68,12 +97,6 @@ footer *::selection {
     background: #f042;
 }
 
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
 #particles-js {
     z-index: -10;
     position: absolute;
@@ -83,135 +106,13 @@ canvas {
     height: 100%;
 }
 
-.sub, .minisub {
-    border-radius: 4px;
-    border: 2px solid var(--W);
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 22px;
-    font-family: Cocogoose;
-    padding: 20px;
-    width: 250px;
-    transition: all 0.4s;
-    cursor: pointer;
-    text-decoration: none;
-    /*margin: 5px;*/
-}
-
-.sub span, .minisub span {
-    color: var(--B);
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.4s;
-}
-
-.sub span:after, .minisub span:after {
-    content: '\00bb';
+canvas {
     position: absolute;
-    opacity: 0;
     top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-
-.sub:hover, .minisub:hover {
-    background-color: transparent;
-}
-
-.sub:hover span, .minisub:hover span {
-    padding-right: 25px;
-    color: var(--W);
-}
-
-.sub:hover span:after, .minisub:hover span:after {
-    opacity: 1;
-    right: 0;
-}
-
-.minisub {
-    width: 100px;
-    padding: 5px 10px;
-    font-size: 1em;
-}
-
-.break {
-    flex-basis: 100%;
-    height: 0;
-}
-
-.main {
-    width: 100%;
-    height: 90vh;
-    position: relative;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.lighter {
-    font-weight: lighter;
-}
-
-.title {
-    text-align: center;
-    margin: 24px auto;
-    font-size: 3em;
-    flex-basis: 100%;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 20%;
-}
-
-.centerDiv {
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    height: 90vh;
-    flex-grow: 3;
-    padding: 10% 12% 0 12%;
-}
-
-.centerDiv h1 {
-    margin-bottom: 10%;
-    flex-basis: 100%;
-}
-
-.rightDiv, .leftDiv {
-    padding-top: 15vh;
-    height: 90vh;
-    width: 20vw;
-    flex-grow: 1;
-    text-align: center;
-}
-
-.column-break {
-    flex-basis: 100%;
-    width: 0;
-}
-
-#room-create, #room-join {
-    display: none;
-}
-
-.modal {
-    color: var(--B);
+    left: 0;
 }
 
 @media screen and (max-width: 640px) {
-    #main {
-        width: 80%;
-        display: block;
-        padding: 0;
-    }
     #logo {
         top: 20px;
         left: 20px;
@@ -221,21 +122,5 @@ canvas {
     footer {
         height: 0;
         transition: .5s cubic-bezier(.5, 0, 0, 1);
-    }
-    .title {
-        font-size: 1.5em;
-        margin-top: 20%;
-        margin-bottom: 15%;
-    }
-    .sub {
-        padding: 12px 20px;
-        background-color: rgba(255, 255, 255, 0.15);
-        border: 5px solid var(--W);
-        width: 90%;
-        font-size: 1em;
-        box-shadow: 2px 5px 7px #100f1a66;
-    }
-    .sub span {
-        color: var(--W);
     }
 }
