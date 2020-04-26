@@ -6,7 +6,7 @@ function $(el) {
   var inp3 = $("inp3");
   var txt = $("txt");
   var view = $("view");
-  var copy = $("copy");
+  //var copy = $("copy");
   var root = document.documentElement;
   var h, s, l;
   h = [];
@@ -70,11 +70,11 @@ function $(el) {
   inp3.oninput = update;
   txt.oninput = convert;
   
-  copy.onclick = function() {
+  /*copy.onclick = function() {
     txt.select();
     txt.setSelectionRange(0, 99999);
     document.execCommand("copy");
-  };
+  };*/
   
   function convert() {
     var str = this.value;

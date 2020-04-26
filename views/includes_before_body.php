@@ -1,7 +1,8 @@
 <?php
 
 // JQuery
-echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+integrity="sha384-AQhQSZGQWTMJhb/TdS7NWpCmOM/8lIEsaevSU5oZtt8pQKoa+uJL4A2WnQ0O5Zj2" crossorigin="anonymous"></script>
 ';
 
 // Popper
@@ -18,5 +19,23 @@ integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCm
 ';
 
 
-echo '<script src="js/limitelimac.js"></script>
+echo '<link rel="stylesheet" href="css/board.css">
+';
+
+echo '<link rel="stylesheet" href="css/colorpicker.css">
+';
+
+echo '<link rel="stylesheet" href="css/content.css">
+';
+
+echo '<link rel="stylesheet" href="css/effects.css">
+';
+
+echo '<link rel="stylesheet" href="css/fonts.css">
+';
+
+echo '<link rel="stylesheet" href="css/lezami.css">
+';
+
+echo '<link rel="stylesheet" href="css/static.css">
 ';

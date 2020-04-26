@@ -1,4 +1,3 @@
 <?php
-
-require_once('stylessheets.php');
-require_once('frameworks.php');
+require_once('includes_limitelimac.php');
+require_once('includes_frameworks.php');
