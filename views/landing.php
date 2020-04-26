@@ -15,12 +15,12 @@
 </div>
 </div>');*/
 ?>
-<div class="landing-container">
-    <div id="left">
+<div id="landing">
+    <div id="landing-left">
         <img src="img/landing.svg" alt="">
     </div>
 
-    <div id="right">
+    <div id="landing-right">
         <h1>LIMITE_LIMAC</h1>
         <p>Le jeu klakos pour des étudiants rigolos</p>
         <div class="flex_break"></div>

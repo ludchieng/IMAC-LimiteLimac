@@ -34,7 +34,13 @@ echo '<link rel="stylesheet" href="css/effects.css">
 echo '<link rel="stylesheet" href="css/fonts.css">
 ';
 
-echo '<link rel="stylesheet" href="css/lezami.css">
+echo '<link rel="stylesheet" href="css/form-fullscreen.css">
+';
+
+echo '<link rel="stylesheet" href="css/landing.css">
+';
+
+echo '<link rel="stylesheet" href="css/welcome.css">
 ';
 
 echo '<link rel="stylesheet" href="css/static.css">

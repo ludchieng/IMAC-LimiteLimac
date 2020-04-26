@@ -1,0 +1,193 @@
+#welcome {
+  width: 100vw;
+}
+
+#welcome header {
+  z-index: 10;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  max-width: 1400px;
+  flex-direction: row-reverse;
+}
+
+#welcome header .modal-backdrop  {
+  z-index: -100;
+}
+
+#welcome header > button {
+  margin-left: 12px;
+  padding: 4px 12px;
+  color: var(--W);
+  font-family: 'Roboto';
+  border: 0;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(135deg, #3b4ad4, #3d2c9e);
+  cursor: pointer;
+}
+
+#welcome header > button:hover {
+  background: linear-gradient(135deg, #4f60ff, #4f3bbe);
+}
+
+#welcome .title {
+  display: block;
+}
+
+#welcome main {
+  margin: 0 auto;
+  padding: 15vh 10vh 0 10vh;
+  max-width: 800px;
+  height: 90vh;
+  text-align: center;
+}
+
+#room-form-buttons {
+  margin-top: 20vh;
+}
+
+#room-form-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#room-create-info,
+#room-join-info {
+  margin: 0 0 16px 0;
+  width: 100%;
+  font-size: 16px;
+  color: var(--W);
+  background: linear-gradient(135deg, #dd335d, #ff4b4b);
+  border-radius: 6px;
+}
+
+#room-create, #room-join {
+  margin-top: 16px;
+}
+
+#room-create button, #room-join button {
+  margin-top: 12px;
+}
+
+#room-create input, #room-join input {
+  padding: 5px;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid var(--W);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--W);
+  font-family: Roboto;
+}
+
+#lezami {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  padding: 20vh 12px 0 54px;
+  height: 100vh;
+  width: 300px;
+  max-height: 90vh;
+}
+
+#lezami h1 {
+  text-align: left;
+  margin: 24px auto;
+  font-size: 1.5em;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#lezami-container {
+  padding: 0;
+  margin: 0;
+  height: 80%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(84, 23, 36, 0.133);
+}
+
+.lezami-content {
+  display: flex;
+  margin-bottom: 8px;
+  list-style-type: none;
+}
+
+.dot {
+  display: inline-block;
+  align-self: center;
+  margin-right: 10px;
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00000055;
+}
+
+.lezami-text {
+  display: inline-block;
+  margin: 0;
+  align-self: center;
+  font-family: Roboto;
+}
+
+@media screen and (max-width: 800px) {
+  #lezami {
+    display: none;
+  }
+}
+
+#lezalons {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 20vh 54px 0 0;
+  height: 100vh;
+  width: 300px;
+  max-height: 90vh;
+  background: linear-gradient(-90deg, #1125, #1120);
+  overflow: hidden;
+}
+
+#lezalons h1 {
+  text-align: right;
+  margin: 24px auto;
+  font-size: 1.5em;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#lezalons-container {
+  padding: 0;
+  margin: 0;
+  height: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(84, 23, 36, 0.133);
+}
+
+.lezalons-content {
+  display: block;
+  white-space: nowrap;
+  margin: 0 0 8px 0;
+  width: calc(300px - 54px);
+  list-style-type: none;
+  text-align: right;
+  font-family: Roboto;
+}
+
+@media screen and (max-width: 800px) {
+  #lezalons {
+    width: 30px;
+    color: #fff2;
+    transition: .7s ease-in-out;
+    background: linear-gradient(-90deg, #1125, #1120);
+  }
+  #lezalons:hover {
+    width: 300px;
+    color: #ffff;
+    transition: .7s ease-in-out;
+    background: linear-gradient(-90deg, #1129, #1120);
+  }
+}

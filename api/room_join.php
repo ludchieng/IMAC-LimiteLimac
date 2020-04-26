@@ -24,6 +24,9 @@ try {
   $id_room = $_POST['idroom'];
   $pname = $_POST['pname'];
 
+  if (!is_known_room($id_room))
+    throw_error($r, 203, "Does the room {$id_room} exist?");
+
   if (isset($_POST['pass'])) {
     if (!authenticate_player($pname, $_POST['pass']))
       throw_error($r, 403);
@@ -39,7 +42,7 @@ try {
   $r['response'] = [];
 
   if ($id_room != get_player($pname, 'id_room'))
-    throw_error($r, 666, "Does the room {$id_room} exist?");
+    throw_error($r, 666);
 
   $r['response']['token'] = $token;
 } catch (PDOException $e) {

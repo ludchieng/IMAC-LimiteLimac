@@ -10,9 +10,7 @@ try {
   if ('GET' !== $_SERVER['REQUEST_METHOD'])
     throw_error($r, 501, "had {$_SERVER['REQUEST_METHOD']}");
 
-  $sql = 'SELECT P.pname, P.color, P.winCount
-    FROM player P WHERE P.id_room IS NOT NULL;
-  ';
+  $sql = 'SELECT R.id_room, R.name FROM room R;';
 
   $r['response'] = [];
   $r['response']['online'] = get_multiple($sql);

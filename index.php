@@ -10,14 +10,14 @@ require_once('actions/actions.php');
     <?php
     require_once('views/includes_before_body.php');
     ?>
-    <title>TEST CSS</title>
+    <title>Limite Limac</title>
 </head>
 
 <body>
     <!-- particles.js container -->
     <div id="particles-js"></div>
 
-    <a href="index.php?action=landing"><img class="logo" src="img/imac_logo.png" alt="logo_IMAC"></a>
+    <a id="logo" href="index.php?action=landing"><img src="img/imac_logo.png" alt="Logo IMAC"></a>
 
     <div class="main">
         <?php

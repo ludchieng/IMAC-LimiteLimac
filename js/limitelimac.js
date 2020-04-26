@@ -17,5 +17,9 @@ function getCookie(key) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return null;
+}
+
+function isCertifiedConnection() {
+  return location.protocol === 'https:';
 }

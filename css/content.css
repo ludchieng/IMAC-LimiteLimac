@@ -1,15 +1,3 @@
-#register-info {
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: var(--W);
-}
-
-#welcome {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: 90vh;
-  flex-grow: 3;
-  padding-top: 10vh;
+.txt-gold {
+  color: #ffc956;
 }

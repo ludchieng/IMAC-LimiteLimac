@@ -129,6 +129,24 @@ function get_room_players_details(int $id_room): array
 }
 
 /**
+ * Returns true if the given room id matches
+ * with a known room in database
+ *
+ * @param int $id room name
+ * @return boolean true if the given room name matches
+ * with a known room in database
+ */
+function is_known_room(int $id): bool
+{
+  try {
+    get_room($id, 'id_room');
+    return true;
+  } catch (PDOException $e) {
+    return false;
+  }
+}
+
+/**
  * Returns true when the players of the specified room
  * have all their ready status set to true.
  *

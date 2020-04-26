@@ -1,0 +1,94 @@
+.form-fullscreen {
+  position: absolute;
+  transform: translateY(-50%) translateX(-50%);
+  top: 50%;
+  left: 50%;
+  min-width: 350px;
+}
+
+.form-fullscreen-title {
+  text-align: center;
+  margin: 24px auto;
+  font-size: 2em;
+}
+
+.form-fullscreen form {
+  padding: 24px 16px;
+  max-width: 400px;
+  margin: auto;
+  border: 3px solid var(--W);
+  border-radius: 10px;
+  font-size: 1.25em;
+  text-align: center;
+  flex-basis: 100%;
+  font-family: Roboto;
+}
+
+.form-fullscreen input {
+  box-sizing: border-box;
+  margin: 0 auto 30px auto;
+  padding: 12px 20px;
+  width: calc(100% - 32px);
+  border-radius: 10px;
+  border: none;
+  font-size: .75em;
+  color: var(--B);
+}
+
+.form-fullscreen input::selection {
+  background: #E8317833;
+}
+
+.form-fullscreen>label {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.form-fullscreen .sub {
+  margin: auto;
+}
+
+.form-fullscreen a {
+  text-decoration: none;
+  color: var(--W);
+}
+
+#form-fullscreen-info {
+  margin: 0 16px 16px 16px;
+  font-size: 16px;
+  color: var(--W);
+  background: linear-gradient(135deg, #dd335d, #ff4b4b);
+  border-radius: 6px;
+}
+
+.form-fullscreen-info-btn {
+  background-color: #fffe;
+  color: #ff3e3e;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-fullscreen-info-btn:hover {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 640px) {
+  .form-fullscreen-title {
+    text-align: center;
+    margin: 12px auto;
+    font-size: 1.5em;
+  }
+  .form-fullscreen form {
+    padding: 0;
+    font-size: 1em;
+    text-align: center;
+    border: none;
+  }
+  .form-fullscreen input {
+    margin-bottom: 20px;
+    padding: 12px 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 2px 5px 7px #100f1a66;
+  }
+}
