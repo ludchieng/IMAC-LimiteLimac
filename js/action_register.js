@@ -30,6 +30,8 @@ function register(requireHTTPS = true) {
         }
       }).done((r) => {
         if (r.success) {
+          setCookie('pname', pname, 4);
+          setCookie('token', r.response.token, 4);
           location.href = "index.php?action=registerGo";
         } else if (r.errors[0].code == 202) {
           jQuery('#form-fullscreen-info').text('Ce pseudo est déjà pris :(');

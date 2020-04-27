@@ -6,6 +6,7 @@
  */
 
 require_once('../model/data_access.php');
+require_once('../model/room.php');
 
 /**
  * Inserts a new player in database.
@@ -49,7 +50,6 @@ function is_known_player(string $pname): bool
 function reset_player($pname): void
 {
   purge_player_cards($pname);
-  set_player($pname, 'token', null);
   set_player($pname, 'isReady', 0);
   set_player($pname, 'isGameMaster', 0);
   set_player($pname, 'hasPlayed', 0);

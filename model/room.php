@@ -114,7 +114,7 @@ function get_room_ready_players(int $id_room): array
  */
 function get_room_players_details(int $id_room): array
 {
-  $sql = 'SELECT P.pname, P.isReady, P.isGameMaster,
+  $sql = 'SELECT P.pname, P.color, P.isReady, P.isGameMaster,
     P.hasPlayed, P.hasWon FROM player P
     WHERE P.id_room = :id_room
   ';

@@ -7,9 +7,7 @@ require_once('actions/actions.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php
-    require_once('views/includes_before_body.php');
-    ?>
+    <?php require_once('views/includes_before_body.php'); ?>
     <title>Limite Limac</title>
 </head>
 
@@ -17,7 +15,7 @@ require_once('actions/actions.php');
     <!-- particles.js container -->
     <div id="particles-js"></div>
 
-    <a id="logo" href="index.php?action=landing"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
+    <a id="logo" href="index.php?action=welcome"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
 
     <div class="main">
         <?php
@@ -37,12 +35,8 @@ require_once('actions/actions.php');
         ob_end_flush(); // Je ferme le buffer, je vide la mémoire et affiche tout ce qui doit l'être
         ?>
     </div>
-    <?php
-    require_once('views/footer.php');
-    ?>
+    <?php require_once('views/footer.php'); ?>
 </body>
-<?php
-require_once('views/includes_after_body.php');
-?>
+<?php require_once('views/includes_after_body.php'); ?>
 
 </html>

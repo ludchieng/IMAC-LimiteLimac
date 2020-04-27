@@ -33,18 +33,23 @@ try {
     throw_error($r, 401);
 
   if (in_array($ready, ['yes', 'true', 1, 'y'], true)) {
-    set_player($pname, 'isReady', 1);
+    $ready = 1;
   } else if (in_array($ready, ['no', 'false', 0, 'n'], true)) {
-    set_player($pname, 'isReady', 0);
+    $ready = 0;
   } else {
     throw_error($r, 300, 'ready: expected \'yes\' or \'no\'');
   }
 
-  if (1 != get_player($pname, 'isReady'))
+  set_player($pname, 'isReady', $ready);
+
+  if ($ready != get_player($pname, 'isReady'))
     throw_error($r, 666);
     
   if (can_room_start($id_room))
     start_room($id_room);
+
+  $r['response'] = [];
+  $r['response']['isReady'] = $ready;
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());

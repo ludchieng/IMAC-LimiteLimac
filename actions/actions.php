@@ -10,7 +10,7 @@ $listeDesActions = array(
     "registerGo" => "actions/register.php",
 
     "welcome" => "views/motherbase.php",
-    "player" => "views/player_board.php",
+    "player" => "views/game_board.php",
     "master" => "views/master_board.php",
 
 

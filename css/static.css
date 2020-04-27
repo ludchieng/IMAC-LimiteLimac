@@ -50,6 +50,7 @@ header>button:hover {
 }
 
 #logo {
+    z-index: 1;
     position: absolute;
     top: 50px;
     left: 50px;
@@ -58,8 +59,14 @@ header>button:hover {
     -moz-user-select: none;
 }
 
+#logo:hover img {
+    transform: scale(1.1);
+    transition: .2s cubic-bezier(0, 1, 0, 1);
+}
+
 #logo img {
     max-width: 100%;
+    transition: .2s cubic-bezier(0, 1, 0, 1);
 }
 
 footer {

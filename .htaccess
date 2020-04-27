@@ -1,6 +1,14 @@
-Allow from all
+Deny from all
 
-<Files "install.php">  
+<Files "">
+  Allow from all
+</Files>
+
+<Files "index.php">
+  Allow from all
+</Files>
+
+<Files "install.php">
   Order Deny,Allow
   Deny from all
   Allow from localhost

@@ -86,8 +86,10 @@ jQuery('#room-join').submit((e) => {
       if (r.success) {
         setCookie('token', r.response.token, 4);
         location.href = "index.php?action=player";
-      } else if (r.errors[0].code) {
+      } else if (r.errors[0].code == 203) {
         jQuery('#room-join-info').text('Erreur salon inexistant');
+      } else if (r.errors[0].code == 401) {
+        location.href = `index.php?action=login&join=${idroom}`;
       } else {
         jQuery('#room-join-info').text('Erreur accès du salon');
       }

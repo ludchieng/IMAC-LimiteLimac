@@ -26,7 +26,17 @@ try {
   create_player($pname, $pass);
 
   if (!is_known_player($pname))
-    throw_error($r, 666);
+    throw_error($r, 666, 'Could not create player');
+
+  $r['response'] = [];
+
+  $token = player_generate_token();
+  set_player($pname, 'token', $token);
+
+  if ($token != get_player($pname, 'token'))
+    throw_error($r, 666, 'Could not set token');
+
+  $r['response']['token'] = $token;
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());

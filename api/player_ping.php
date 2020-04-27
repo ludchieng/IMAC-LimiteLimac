@@ -34,10 +34,13 @@ try {
     check_for_end_round($id_room);
     
     $r['response']['status'] = $status = get_room($id_room, 'status');
-    $r['response']['blackCard'] = get_round_card($id_room);
 
     switch ($status) {
+      case ROOM_STATUS_STANDBY:
+        $r['response']['players'] = get_room_players_details($id_room);
       case ROOM_STATUS_PLAYING_ROUND:
+        $r['response']['whiteCards'] = get_player_cards($pname);
+        $r['response']['blackCard'] = get_round_card($id_room);
         $r['response']['remainingTime'] = get_round_remaining_time($id_room);
         $r['response']['players'] = get_room_players_details($id_room);
         break;
