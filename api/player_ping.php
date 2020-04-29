@@ -49,7 +49,7 @@ try {
         $players = get_room_players_details($id_room);
         for ($i=0; $i < count($players); $i++) { 
           if (!$players[$i]['isGameMaster']) {
-            $players[$i]['selectedCards'] = get_player_selected_cards($players[$i]['pname']);
+            $players[$i]['selected'] = get_player_selected_cards($players[$i]['pname']);
           }
           $r['response']['players'][] = $players[$i];
         }
@@ -66,7 +66,7 @@ try {
   }
   // TODO
 } catch (PDOException $e) {
-  throw_error($r, 201, $e->getMessage() . '\n\n' . $e->getTraceAsString());
+  throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {
   throw_error($r, 666);
 }

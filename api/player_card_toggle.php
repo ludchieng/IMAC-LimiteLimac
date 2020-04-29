@@ -41,24 +41,49 @@ try {
   if (!in_array($id_card, $handcards))
     throw_error($r, 402, "{$pname} does not have card {$id_card}");
 
-  $blanksCount = get_card_blanks_count(get_room($id_room, 'id_card'));
-
   $selected = get_player_selected_cards($pname);
-  if ($blanksCount > count($selected)) {
-    set_player_isSelected_card($pname, $id_card);
-  } else {
-    set_player_isSelected_card($pname, $selected[0]['id_card'], false);
-    set_player_isSelected_card($pname, $id_card);
-  }
 
-  if ($blanksCount === count(get_player_selected_cards($pname))) {
-    set_player($pname, 'hasPlayed', 1);
-  } else {
-    set_player($pname, 'hasPlayed', 0);
-  }
+  if (!in_array($id_card, array_column($selected, 'id_card'))) {
+    // Select card
+    $blanksCount = get_card_blanks_count(get_room($id_room, 'id_card'));
+  
+    if ($blanksCount > count($selected)) {
+      set_player_isSelected_card($pname, $id_card);
+    } else {
+      set_player_isSelected_card($pname, $selected[0]['id_card'], false);
+      set_player_isSelected_card($pname, $id_card);
+    }
+  
+    if ($blanksCount === count(get_player_selected_cards($pname))) {
+      set_player($pname, 'hasPlayed', 1);
+    } else {
+      set_player($pname, 'hasPlayed', 0);
+    }
 
-  if (!in_array($id_card, array_column(get_player_selected_cards($pname), 'id_card')))
-    throw_error($r, 666, "Could not select {$id_card}");
+    $selected = get_player_selected_cards($pname);
+  
+    if (!in_array($id_card, array_column($selected, 'id_card')))
+      throw_error($r, 666, "Could not select {$id_card}");
+
+  } else {
+    // Unselect
+
+    set_player_isSelected_card($pname, $id_card, false);
+  
+    if (get_card_blanks_count(get_round_card($id_room)['id_card']) == count(get_player_selected_cards($pname))) {
+      set_player($pname, 'hasPlayed', 1);
+    } else {
+      set_player($pname, 'hasPlayed', 0);
+    }
+
+    $selected = get_player_selected_cards($pname);
+    
+    if (in_array($id_card, array_column($selected, 'id_card')))
+      throw_error($r, 666, "{$id_card} is still selected");
+  }
+  
+  $r['response'] = [];
+  $r['response']['selected'] = $selected;
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());

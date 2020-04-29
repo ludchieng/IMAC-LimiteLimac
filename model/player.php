@@ -202,7 +202,7 @@ function draw_card(string $pname, int $amount = 1): array
  */
 function get_player_cards(string $pname): array
 {
-  $sql = 'SELECT H.id_card, C.content
+  $sql = 'SELECT H.id_card, C.content, H.isSelected
     FROM handcard H, card C
     WHERE H.pname = :pname
     AND H.id_card = C.id_card;

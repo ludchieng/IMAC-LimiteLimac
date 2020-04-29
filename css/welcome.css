@@ -117,7 +117,7 @@
   top: 0;
   padding: 20vh 54px 0 0;
   height: 100vh;
-  width: 300px;
+  width: 220px;
   max-height: 100vh;
   background: linear-gradient(-90deg, #1125, #1120);
   overflow: hidden;
@@ -145,7 +145,7 @@
   display: block;
   white-space: nowrap;
   margin: 0 0 8px 0;
-  width: calc(300px - 54px);
+  width: calc(220px - 54px);
   list-style-type: none;
   text-align: right;
   font-family: Roboto;

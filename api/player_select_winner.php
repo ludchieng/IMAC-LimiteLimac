@@ -47,7 +47,7 @@ try {
   set_current_timestamp('room', $id_room, 'lastRoundEnd');
 
 } catch (PDOException $e) {
-  throw_error($r, 201, $e->getMessage() . '\n\n' . $e->getTraceAsString());
+  throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {
   throw_error($r, 666);
 }

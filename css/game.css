@@ -22,14 +22,27 @@
 
 #game[data-status="STANDBY"] #game-title::after {
   content: 'En attente de joueurs...';
+  height: auto;
 }
 
-#game[data-status="PLAYING_ROUND"] #game-title::after {
+#game[data-status="PLAYING_ROUND"][data-role="player"] #game-title::after {
   content: 'Choisis une carte';
 }
 
-#game[data-status="END_ROUND"] #game-title::after {
+#game[data-status="PLAYING_ROUND"][data-role="gamemaster"] #game-title::after {
+  content: 'Sélection des cartes';
+  height: auto;
+}
+
+#game[data-status="END_ROUND"][data-role="player"] #game-title::after {
   content: 'Manche terminée';
+  height: auto;
+}
+
+#game[data-status="END_ROUND"][data-role="gamemaster"] #game-title::after {
+  content: 'Choisis le vainqueur';
+  font-size: 2.25rem;
+  height: auto;
 }
 
 #game-ready-btn {
@@ -72,7 +85,8 @@
   content: ' !';
 }
 
-#white-cards-panel {
+#white-cards-panel,
+#end-round-panel {
   display: none;
   margin: 0 auto;
   max-width: 680px;
@@ -87,7 +101,11 @@
   scrollbar-color: rgba(245, 50, 99, 0.644) rgba(78, 40, 49, 0.4);
 }
 
-#game[data-status="PLAYING_ROUND"] #white-cards-panel {
+#game[data-status="PLAYING_ROUND"][data-role="player"] #white-cards-panel {
+  display: flex;
+}
+
+#game[data-status="END_ROUND"] #end-round-panel {
   display: flex;
 }
 
@@ -103,11 +121,16 @@
   border-radius: 12px;
   background-color: var(--W);
   transition: .1s cubic-bezier(0.23, 1, 0.320, 1);
-  cursor: pointer;
 }
 
-.white-card:hover {
+.white-card *::selection {
+  background: #f042;
+}
+
+#game[data-status="PLAYING_ROUND"] .white-card:hover,
+#game[data-status="END_ROUND"][data-role="gamemaster"] .white-card:hover {
     opacity: 1;
+    cursor: pointer;
 }
 
 .white-card-selected {
@@ -119,8 +142,21 @@
 .white-card img {
   position: absolute;
   bottom: 7%;
-  left: 10%;
+  left: 8%;
   width: 12%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.white-card-footer {
+  position: absolute;
+  bottom: 6.2%;
+  left: calc(8% + 12% + 3%);
+  max-width: calc(95% - 8% - 12% - 3%);
+  overflow: hidden;
+  color: #222;
+  font-weight: 400;
+  font-size: 0.8em;
 }
 
 #room-panel {

@@ -24,6 +24,7 @@ require_once('views/modals.php');
         <h1 id="game-title"></h1>
         <button id="game-ready-btn"><span>Prêt</span></button>
         <div id="white-cards-panel"></div>
+        <div id="end-round-panel"></div>
     </main>
 
     <aside id="room-players">

@@ -2,6 +2,7 @@ function Game(pname, token) {
   this.pname = pname;
   this.token = token;
   this.isReady = false;
+  this.isGameMaster;
   this.bCard;
   this.wCards = [];
   this.players = [];
@@ -30,25 +31,26 @@ function Game(pname, token) {
 
   this.apiToggleCard = (event) => {
     let dom = jQuery(event.currentTarget);
+    dom.toggleClass('white-card-selected');
     let idCard = this.wCards[dom.data('number')].id_card;
-    //TODO choose select / deselect
     jQuery.ajax({
-      type: "POST", url: "api/player_card_select.php",
+      type: "POST", url: "api/player_card_toggle.php",
       data: { pname: this.pname, token: this.token, idcard: idCard }
     }).done((r) => {
       if (!r.success) {
         throw r.errors[0].message;
       } else {
-        if (r.response.isReady == 1) {
-          jQuery("#game-ready-btn").addClass('game-ready-btn-active');
-        } else {
-          jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
+        jQuery('.white-card').removeClass('white-card-selected');
+        for (let sc of r.response.selected) {
+          jQuery(`.white-card[data-id="${sc.id_card}"]`).addClass('white-card-selected');
         }
-        this.isReady = r.response.isReady;
       }
     });
-    dom.toggleClass('white-card-selected');
-  }
+  };
+
+  this.apiSelectWinner = (event) => {
+    //TODO
+  };
 
   this.apiPing = () => {
     jQuery.ajax({
@@ -77,29 +79,34 @@ function Game(pname, token) {
       }, 199);
     }
     this.remainingTime = time;
-  }
+  };
 
   this.clockStop = () => {
     clearInterval(this.remainingTimeItv);
     this.remainingTimeItv = undefined;
     jQuery('#room-time-min').text('••');
     jQuery('#room-time-sec').text('••');
-  }
+  };
 
   this.update = (r) => {
     console.log(r);
+    me = r.players.find((e) => e.pname == this.pname);
+    this.isGameMaster = me.isGameMaster;
     jQuery("#game").attr('data-status', r.status);
+    jQuery("#game").attr('data-role', me.isGameMaster ? "gamemaster" : "player");
     this.domRefreshPlayers(r);
     switch (r.status) {
       case 'STANDBY':
         this.clockStop();
         break;
       case 'PLAYING_ROUND':
+        jQuery('#end-round-panel').html('');
         this.domRefreshCards(r);
         this.clock(r.remainingTime);
         break;
       case 'END_ROUND':
         this.clockStop();
+        this.domRefreshEndRoundPanel(r);
         break;
     }
   };
@@ -118,13 +125,13 @@ function Game(pname, token) {
       for (let i = 0; i < r.whiteCards.length; i++) {
         let wcR = r.whiteCards[i];
         jQuery('#white-cards-panel').append(`
-          <div class="white-card" data-number="${i}">
+          <div class="white-card${wcR.isSelected ? ' white-card-selected' : ''}" data-number="${i}" data-id="${wcR.id_card}">
               <img src="img/imac-uni-darkblue.svg">
               <p class="white-card-content">${wcR.content}</p>
           </div>
         `);
       }
-      jQuery('.white-card').click(apiToggleCard);
+      jQuery('#white-cards-panel .white-card').click(this.apiToggleCard);
     }
   };
 
@@ -157,5 +164,27 @@ function Game(pname, token) {
       let pR = r.players[i];
       let pT = this.players[i];
     }*/
+  };
+
+  this.domRefreshEndRoundPanel = (r) => {
+    jQuery('#end-round-panel').html('');
+    let ps = r.players;
+    for (let p of ps) {
+      if (p.isGameMaster == false) {
+        for (let sc of p.selected) {
+          jQuery('#end-round-panel').append(`
+              <div class="white-card" data-id="${sc.id_card}">
+                <p class="white-card-content">${sc.content}</p>
+                <img src="img/imac-uni-darkblue.svg">
+                <span class="white-card-footer">${p.pname}</span>
+                <div class="white-card-strip"></div>
+              </div>
+            `);
+          jQuery(`#end-round-panel .white-card[data-id="${sc.id_card}"] .white-card-strip`)
+            .css('background-color', `#${p.color}`);
+        }
+        jQuery('#end-round-panel .white-card').click(this.apiSelectWinner);
+      }
+    }
   };
 }

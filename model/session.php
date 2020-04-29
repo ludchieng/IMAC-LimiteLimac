@@ -6,7 +6,7 @@ require_once('../model/player.php');
 require_once('../model/room.php');
 
 //TODO adapt value
-define('SESSION_TIMEOUT_DURATION', 60); // seconds
+define('SESSION_TIMEOUT_DURATION', 6000); // seconds
 
 function ping($pname): bool
 {
