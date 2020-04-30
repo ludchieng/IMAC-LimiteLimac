@@ -14,11 +14,11 @@ if ($DB_PASSWORD === '')
 	die('Error: DB_PASSWORD is required in ./_private/env.php');
 
 
-if (!isset($_GET['db_admin'], $_GET['db_password']))
+if (!isset($_POST['db_admin'], $_POST['db_password']))
 	die('Error: Database admin username and password are required.');
 
 // Connect to mysql server
-$db = mysqli_connect($DB_HOST, $_GET['db_admin'], $_GET['db_password']);
+$db = mysqli_connect($DB_HOST, $_POST['db_admin'], $_POST['db_password']);
 if (!$db)
 	die('Error: could not connect to mysql.');
 if ($db->connect_error)

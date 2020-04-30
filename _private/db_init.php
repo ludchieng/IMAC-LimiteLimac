@@ -1,10 +1,10 @@
 <?php
 require_once('_private/env.php');
 
-if (!isset($_GET['path']))
+if (!isset($_POST['path']))
 	die("Error: No sql file provided.");
 
-if (!isset($_GET['db_admin'], $_GET['db_password']))
+if (!isset($_POST['db_admin'], $_POST['db_password']))
 	die('Error: Database admin username and password are required.');
 
 // Create schema

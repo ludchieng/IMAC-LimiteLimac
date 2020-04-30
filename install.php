@@ -61,12 +61,12 @@
 <body>
   <div id="output">
     <?php
-    if (isset($_GET['db_init']) && $_GET['db_init']) {
+    if (isset($_POST['db_init']) && $_POST['db_init']) {
       echo '<a href="install.php">Return to install page</a><br/>';
       require_once('_private/db_init.php');
       die();
     }
-    if (isset($_GET['db_drop']) && $_GET['db_drop']) {
+    if (isset($_POST['db_drop']) && $_POST['db_drop']) {
       echo '<a href="install.php">Return to install page</a><br/>';
       require_once('_private/db_drop_schema.php');
       die();
@@ -75,7 +75,7 @@
   </div>
 
 
-  <form action="install.php" method="get">
+  <form action="install.php" method="post">
     <div class="form-group">
       <label for="db_admin">Database Admin Username</label>
       <input id="db_admin" class="form-control" name="db_admin" type="text" value="root">

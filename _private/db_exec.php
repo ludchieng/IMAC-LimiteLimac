@@ -14,11 +14,11 @@ if ($DB_PASSWORD === '')
 	die('Error: DB_PASSWORD is required in ./_private/env.php');
 
 
-if (!isset($_GET['path'])) {
+if (!isset($_POST['path'])) {
 	die("Error: No sql file provided.");
 }
 
-$path = '_private/' . $_GET['path'];
+$path = '_private/' . $_POST['path'];
 
 $MAX_RUN_TIME = 8;
 
@@ -35,7 +35,7 @@ if (!$db->select_db($DB_DATABASE))
 	die('Error: could not select: ' . $DB_DATABASE);
 
 if (!$fp = fopen($path, 'r'))
-	die('Error: could not read sql script: ' . $_GET['path']);
+	die('Error: could not read sql script: ' . $_POST['path']);
 
 	$sql = '';
 	while ($deadline > time() and ($line = fgets($fp, 1024000))) {
