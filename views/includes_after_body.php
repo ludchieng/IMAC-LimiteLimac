@@ -11,5 +11,5 @@ echo '<script src="js/particle_settings.js"></script>
 echo '<script src="js/colorpicker.js"></script>
 ';
 
-echo '<script src="js/limitelimac.js"></script>
+echo '<script src="js/utils.js"></script>
 ';

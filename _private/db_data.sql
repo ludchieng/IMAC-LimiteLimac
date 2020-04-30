@@ -149,42 +149,6 @@ CREATE TABLE IF NOT EXISTS `had` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `had` DISABLE KEYS */;
-INSERT INTO `had` (`id_room`, `id_card`) VALUES
-	(4, 'B1001'),
-	(4, 'B1002'),
-	(4, 'B1003'),
-	(4, 'B1004'),
-	(4, 'B1007'),
-	(4, 'B1008'),
-	(4, 'B1009'),
-	(4, 'B1010'),
-	(4, 'B1012'),
-	(4, 'B1015'),
-	(4, 'B1016'),
-	(4, 'B1018'),
-	(4, 'B1021'),
-	(4, 'B1024'),
-	(4, 'B1025'),
-	(4, 'B1028'),
-	(4, 'B1032'),
-	(4, 'B1037'),
-	(4, 'B1038'),
-	(4, 'B1041'),
-	(4, 'B1042'),
-	(4, 'B1043'),
-	(4, 'B1045'),
-	(4, 'B1046'),
-	(4, 'B1047'),
-	(4, 'B2001'),
-	(4, 'B2002'),
-	(4, 'B2003'),
-	(4, 'B2004'),
-	(6, 'B1007'),
-	(6, 'B1010'),
-	(6, 'B1020'),
-	(6, 'B1025'),
-	(6, 'B1040'),
-	(6, 'B1045');
 /*!40000 ALTER TABLE `had` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `handcard` (
@@ -196,35 +160,6 @@ CREATE TABLE IF NOT EXISTS `handcard` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `handcard` DISABLE KEYS */;
-INSERT INTO `handcard` (`id_room`, `pname`, `id_card`, `isSelected`) VALUES
-	(4, 'Takkiedinou', 'W0002', 0),
-	(4, 'Sarkoz12', 'W0003', 0),
-	(4, 'Kadafrites974', 'W0005', 0),
-	(4, 'Kadafrites974', 'W0006', 0),
-	(4, 'Takkiedinou', 'W0011', 0),
-	(4, 'Sarkoz12', 'W0013', 0),
-	(4, 'B4lkanik', 'W0016', 0),
-	(4, 'Sarkoz12', 'W0017', 0),
-	(4, 'Kadafrites974', 'W0023', 0),
-	(4, 'B4lkanik', 'W0026', 0),
-	(4, 'Takkiedinou', 'W0029', 0),
-	(4, 'Sarkoz12', 'W0035', 0),
-	(4, 'B4lkanik', 'W0036', 0),
-	(4, 'Kadafrites974', 'W0038', 0),
-	(4, 'B4lkanik', 'W0039', 0),
-	(4, 'Takkiedinou', 'W0040', 0),
-	(4, 'Sarkoz12', 'W0042', 0),
-	(4, 'Sarkoz12', 'W0044', 0),
-	(4, 'Takkiedinou', 'W0050', 0),
-	(4, 'B4lkanik', 'W0055', 0),
-	(4, 'Takkiedinou', 'W0056', 0),
-	(4, 'Sarkoz12', 'W0058', 0),
-	(4, 'B4lkanik', 'W0059', 0),
-	(4, 'Kadafrites974', 'W0060', 0),
-	(4, 'Kadafrites974', 'W0061', 0),
-	(4, 'B4lkanik', 'W0063', 0),
-	(4, 'Kadafrites974', 'W0065', 0),
-	(4, 'Takkiedinou', 'W0072', 0);
 /*!40000 ALTER TABLE `handcard` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `player` (
@@ -245,10 +180,10 @@ CREATE TABLE IF NOT EXISTS `player` (
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', 'CQGMEbn', 0, 0, 0, 0, 0, 0, '2020-04-30 14:03:01', 6),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', '2cbUXj8', 0, 0, 1, 0, 0, 0, '2020-04-30 14:02:50', 6),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', 'iEnvnlr', 0, 0, 0, 0, 0, 0, '2020-04-30 14:03:02', 6),
-	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'ROIecMi', 0, 0, 0, 0, 0, 0, '2020-04-30 14:03:02', 6);
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (
@@ -261,14 +196,13 @@ CREATE TABLE IF NOT EXISTS `room` (
   `lastRoundEnd` timestamp NULL DEFAULT NULL,
   `id_card` char(5) DEFAULT NULL,
   PRIMARY KEY (`id_room`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 INSERT INTO `room` (`id_room`, `name`, `status`, `roundDuration`, `endRoundDuration`, `lastRoundStart`, `lastRoundEnd`, `id_card`) VALUES
 	(1, 'Salon du sale', 'STANDBY', 45, 8, NULL, NULL, NULL),
 	(2, 'Carré VIP', 'STANDBY', 45, 8, NULL, NULL, NULL),
-	(3, 'Le Mils', 'STANDBY', 45, 8, NULL, NULL, NULL),
-	(6, 'Protool', 'STANDBY', 45, 8, NULL, NULL, 'B2002');
+	(3, 'Le Mils', 'STANDBY', 45, 8, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

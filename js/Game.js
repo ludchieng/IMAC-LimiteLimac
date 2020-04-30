@@ -97,6 +97,11 @@ function Game(pname, token) {
     this.domRefreshPlayers(r);
     switch (r.status) {
       case 'STANDBY':
+        if (this.isReady = me.isReady == true) {
+          jQuery("#game-ready-btn").addClass('game-ready-btn-active');
+        } else {
+          jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
+        }
         this.clockStop();
         break;
       case 'PLAYING_ROUND':
@@ -126,7 +131,7 @@ function Game(pname, token) {
         let wcR = r.whiteCards[i];
         jQuery('#white-cards-panel').append(`
           <div class="white-card${wcR.isSelected ? ' white-card-selected' : ''}" data-number="${i}" data-id="${wcR.id_card}">
-              <img src="img/imac-uni-darkblue.svg">
+              <img class="white-card-icon" src="img/imac-uni-darkblue.svg">
               <p class="white-card-content">${wcR.content}</p>
           </div>
         `);
@@ -160,10 +165,7 @@ function Game(pname, token) {
         li.css('border-color', '#' + p.color);
       }
     }
-    /*for (let i = 0; i < this.players.length; i++) {
-      let pR = r.players[i];
-      let pT = this.players[i];
-    }*/
+    //li.css('border-width', '').css('background-color', 'transparent')
   };
 
   this.domRefreshEndRoundPanel = (r) => {
@@ -173,15 +175,12 @@ function Game(pname, token) {
       if (p.isGameMaster == false) {
         for (let sc of p.selected) {
           jQuery('#end-round-panel').append(`
-              <div class="white-card" data-id="${sc.id_card}">
-                <p class="white-card-content">${sc.content}</p>
-                <img src="img/imac-uni-darkblue.svg">
-                <span class="white-card-footer">${p.pname}</span>
-                <div class="white-card-strip"></div>
-              </div>
-            `);
-          jQuery(`#end-round-panel .white-card[data-id="${sc.id_card}"] .white-card-strip`)
-            .css('background-color', `#${p.color}`);
+            <div class="white-card" data-id="${sc.id_card}">
+              <p class="white-card-content">${sc.content}</p>
+              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.bg{fill:#${p.color};}</style></defs><g><g><g><path class="bg" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="bg" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
+              <span class="white-card-footer">${p.pname}</span>
+            </div>
+          `);
         }
         jQuery('#end-round-panel .white-card').click(this.apiSelectWinner);
       }
