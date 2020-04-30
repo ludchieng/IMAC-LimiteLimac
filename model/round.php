@@ -215,9 +215,7 @@ function get_round_end_time(int $id_room): ?int
 function check_for_end_round(int $id_room): void
 {
   if (get_room($id_room, 'status') === ROOM_STATUS_PLAYING_ROUND
-      && (get_round_remaining_time($id_room) <= 0
-        //TODO|| have_players_all_played($id_room)
-      )
+      && (get_round_remaining_time($id_room) <= 0)
   ) {
     end_round($id_room);
   }

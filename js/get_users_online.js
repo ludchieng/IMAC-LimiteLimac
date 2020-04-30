@@ -8,19 +8,20 @@ $(document).ready(() => {
 
       let users = r.response.online;
       let itv = setInterval(() => {
-
-        let u = users.pop();
         
-        if (u.pname != getCookie('pname')) {
-          jQuery('#lezami ul').append(`
-          <li class="fade-in">
-              <div class="dot" style="background-color: #${u.color}"></div>
-              <p>${u.pname}</p>
-          </li>`);
-        }
+        let u = users.pop();
 
-        if (users.length == 0) 
+        if (u === undefined) {
           clearInterval(itv);
+        } else {
+          if (u.pname != getCookie('pname')) {
+            jQuery('#lezami ul').append(`
+            <li class="fade-in">
+                <div class="dot" style="background-color: #${u.color}"></div>
+                <p>${u.pname}</p>
+            </li>`);
+          }
+        }
 
       }, 50);
       
