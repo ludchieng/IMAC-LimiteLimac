@@ -23,6 +23,7 @@ function start_round(int $id_room, string $pnameGM): void
 {
   set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   del_players_selected_cards($id_room);
+  set_room_handcards($id_room, 'isSelected', 0);
   set_room_players($id_room, 'hasPlayed', 0);
   set_room_players($id_room, 'hasWon', 0);
   // Changing game master
@@ -48,6 +49,8 @@ function can_round_start(int $id_room): bool
     return false;
   if (get_round_end_time($id_room) > 0)
     return false;
+  if (get_room($id_room, 'roundCount') >= get_room($id_room, 'roundCountMax'))
+    return false;
   return true;
 }
 
@@ -55,6 +58,13 @@ function can_round_start(int $id_room): bool
 function end_round($id_room): void
 {
   set_room($id_room, 'status', ROOM_STATUS_END_ROUND);
+}
+
+function round_celebration($id_room): void
+{
+  set_room($id_room, 'status', ROOM_STATUS_CELEBRATION);
+  set_room($id_room, 'roundCount', 1+get_room($id_room, 'roundCount'));
+  set_current_timestamp('room', $id_room, 'lastRoundEnd');
 }
 
 /**

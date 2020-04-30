@@ -52,7 +52,7 @@ jQuery('#room-create').submit((e) => {
       }
     }).done((r) => {
       if (r.success) {
-        setCookie('token', r.response.token, 4);
+        setCookie('token', r.response.token, .5);
         location.href = "index.php?action=player";
       } else {
         jQuery('#room-create-info').text('Erreur creation du salon');
@@ -84,7 +84,7 @@ jQuery('#room-join').submit((e) => {
       }
     }).done((r) => {
       if (r.success) {
-        setCookie('token', r.response.token, 4);
+        setCookie('token', r.response.token, .5);
         location.href = "index.php?action=player";
       } else if (r.errors[0].code == 203) {
         jQuery('#room-join-info').text('Erreur salon inexistant');

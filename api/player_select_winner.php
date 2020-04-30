@@ -33,18 +33,22 @@ try {
   $token = $_POST['token'];
   $id_card = $_POST['idcard'];
 
+  if ($pname != get_round_game_master($id_room))
+    throw_error($r, 402, 'Only the game master is allowed to select the winner');
+
   $cards = get_round_selected_cards($id_room);
   if (!in_array($id_card, array_column($cards, 'id_card')))
-    throw_error($r, 402, "Competitors selected cards does not include card {$id_card}");
+    throw_error($r, 402, "Competitors selected cards does not include card ${id_card}");
 
   $idx = array_search($id_card, array_column($cards, 'id_card'));
   $winner = $cards[$idx]['pname'];
   set_player($winner, 'hasWon', 1);
   $rPts = get_player($winner, 'roomPoints');
   set_player($winner, 'roomPoints', $rPts+1);
-  
 
-  set_current_timestamp('room', $id_room, 'lastRoundEnd');
+  round_celebration($id_room);
+
+  $r['response']['winner'] = $winner;
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());

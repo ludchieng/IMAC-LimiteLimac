@@ -15,6 +15,7 @@ define('TOKEN_LENGTH', 7);
 define('ROOM_STATUS_STANDBY', 'STANDBY');
 define('ROOM_STATUS_PLAYING_ROUND', 'PLAYING_ROUND');
 define('ROOM_STATUS_END_ROUND', 'END_ROUND');
+define('ROOM_STATUS_CELEBRATION', 'CELEBRATION');
 
 /**
  * Inserts a new room in database.
@@ -24,9 +25,6 @@ define('ROOM_STATUS_END_ROUND', 'END_ROUND');
  */
 function create_room(string $name): int
 {
-  // Check for obsolete rooms
-  purge_empty_rooms();
-  
   $sql = "INSERT INTO room (name)
     VALUES (:name);
   ";
@@ -243,17 +241,14 @@ function purge_room_cards_history(int $id_room): void
 
 function purge_empty_rooms(): void
 {
-  /*
   $sql = "DELETE FROM room
-    WHERE (
-      SELECT R.id_room FROM room R
-    ) NOT IN (
+    WHERE id_room NOT IN (
       SELECT P.id_room FROM player P
       WHERE id_room IS NOT NULL
       GROUP BY id_room
     );
   ";
-  connect_db_player()->query($sql);*/
+  connect_db_player()->query($sql);
 }
 
 
@@ -270,6 +265,15 @@ function del_players_selected_cards(int $id_room): void
 function set_room_players(int $id_room, string $attr, $value): void
 {
   $sql = "UPDATE player
+    SET {$attr} = :val
+    WHERE id_room = :id_room;
+  ";
+  set_multiple($sql, ['val' => $value, 'id_room' => $id_room]);
+}
+
+function set_room_handcards(int $id_room, string $attr, $value): void
+{
+  $sql = "UPDATE handcard
     SET {$attr} = :val
     WHERE id_room = :id_room;
   ";

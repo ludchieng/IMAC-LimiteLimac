@@ -1,15 +1,24 @@
 function Game(pname, token) {
   this.pname = pname;
   this.token = token;
-  this.isReady = false;
-  this.isGameMaster;
+  this.color;
+  this.me;
   this.bCard;
   this.wCards = [];
+  this.selectedCards = [];
   this.players = [];
   this.remainingTime;
   this.remainingTimeItv;
+  this.roundCount;
+  this.roundCountMax;
 
   this.count = 0;
+  this.playerDot;
+
+  this.updateCookie = () => {
+    setCookie('pname', this.pname, 4);
+    setCookie('token', this.token, .5);
+  }
 
   this.apiSetReady = (value) => {
     jQuery.ajax({
@@ -24,7 +33,7 @@ function Game(pname, token) {
         } else {
           jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
         }
-        this.isReady = r.response.isReady;
+        this.me.isReady = r.response.isReady;
       }
     });
   };
@@ -49,10 +58,17 @@ function Game(pname, token) {
   };
 
   this.apiSelectWinner = (event) => {
-    //TODO
+    let dom = jQuery(event.currentTarget);
+    jQuery.ajax({
+      type: "POST", url: "api/player_select_winner.php",
+      data: { pname: this.pname, token: this.token, idcard: dom.data('id') }
+    }).done((r) => {
+      if (!r.success)
+        throw r.errors[0].message;
+    });
   };
 
-  this.apiPing = () => {
+  this.apiPing = (callback) => {
     jQuery.ajax({
       type: "GET", url: "api/player_ping.php",
       data: { pname: getCookie('pname'), token: getCookie('token') }
@@ -67,6 +83,8 @@ function Game(pname, token) {
           location.href = "index.php?action=welcome&message=disconnected";
         }
         this.update(r.response);
+        if (callback)
+          callback(r);
       }
     });
   };
@@ -90,18 +108,19 @@ function Game(pname, token) {
 
   this.update = (r) => {
     console.log(r);
-    me = r.players.find((e) => e.pname == this.pname);
-    this.isGameMaster = me.isGameMaster;
+    this.me = r.players.find((e) => e.pname == this.pname);
+    this.domRefreshRoundCount(r);
     jQuery("#game").attr('data-status', r.status);
-    jQuery("#game").attr('data-role', me.isGameMaster ? "gamemaster" : "player");
+    jQuery("#game").attr('data-role', this.me.isGameMaster ? "gamemaster" : "player");
     this.domRefreshPlayers(r);
     switch (r.status) {
       case 'STANDBY':
-        if (this.isReady = me.isReady == true) {
+        this.updateCookie();/*
+        if (this.me.isReady == true) {
           jQuery("#game-ready-btn").addClass('game-ready-btn-active');
         } else {
           jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
-        }
+        }*/
         this.clockStop();
         break;
       case 'PLAYING_ROUND':
@@ -110,8 +129,11 @@ function Game(pname, token) {
         this.clock(r.remainingTime);
         break;
       case 'END_ROUND':
+        this.wCards = [];
         this.clockStop();
         this.domRefreshEndRoundPanel(r);
+        break;
+      case 'CELEBRATION':
         break;
     }
   };
@@ -142,16 +164,25 @@ function Game(pname, token) {
 
   this.domRefreshTime = () => {
     let t = this.remainingTime.toFixed(0);
-    let min = (t / 60).toFixed(0);
-    let sec = t % 60 > 9 ? t % 60 : "0" + t % 60;
+    let min = Math.abs(Math.trunc(t / 60));
+    let sec = t % 60 > 9 ? t % 60 : "0" + Math.max(0, t % 60);
     jQuery('#room-time-min').text(min);
     jQuery('#room-time-sec').text(sec);
   };
 
+  this.domRefreshRoundCount = (r) => {
+    if (this.roundCount != r.roundCount) {
+      jQuery('#room-round-current').text(r.roundCount);
+    }
+    if (this.roundCountMax != r.roundCountMax) {
+      jQuery('#room-round-max').text(r.roundCountMax);
+    }
+  }
+
   this.domRefreshPlayers = (r) => {
+    let ul = jQuery('#room-players ul');
     if (this.players.length !== r.players.length) {
       this.players = r.players;
-      let ul = jQuery('#room-players ul');
       ul.text('');
       for (let p of r.players) {
         ul.append(`
@@ -160,12 +191,48 @@ function Game(pname, token) {
             <p>${p.pname}</p>
           </li>
         `);
-        li = ul.find(`li[data-pname="${p.pname}"] .room-players-dot`);
-        li.css('background-color', '#' + p.color);
-        li.css('border-color', '#' + p.color);
+        let liDot = ul.find(`li[data-pname="${p.pname}"] .room-players-dot`);
+        liDot.css('background-color', '#' + p.color);
+        liDot.css('border-color', '#' + p.color);
+        if (this.pname == p.pname)
+          this.playerDot = liDot;
       }
     }
-    //li.css('border-width', '').css('background-color', 'transparent')
+    for (let p of r.players) {
+      let li = ul.find(`li[data-pname="${p.pname}"]`);
+      let liDot = li.find(`.room-players-dot`);
+      if (p.isGameMaster) {
+        li.addClass('room-players-gamemaster');
+      } else {
+        li.removeClass('room-players-gamemaster');
+      }
+      if (p.isReady == false) {
+        li.addClass('room-players-not-ready');
+      } else {
+        li.removeClass('room-players-not-ready');
+      }
+      switch (r.status) {
+        case 'STANDBY':
+          if (p.isReady == true || p.isGameMaster == true) {
+            liDot.css('background-color', `#${p.color}`);
+          } else {
+            liDot.css('background-color', 'transparent');
+          }
+          break;
+        case 'PLAYING_ROUND':
+          if (p.hasPlayed == true || p.isGameMaster == true) {
+            liDot.css('background-color', `#${p.color}`);
+          } else {
+            liDot.css('background-color', 'transparent');
+          }
+          break;
+        case 'END_ROUND':
+          liDot.css('background-color', `#${p.color}`);
+          break;
+        case 'CELEBRATION':
+          break;
+      }
+    }
   };
 
   this.domRefreshEndRoundPanel = (r) => {
@@ -177,13 +244,26 @@ function Game(pname, token) {
           jQuery('#end-round-panel').append(`
             <div class="white-card" data-id="${sc.id_card}">
               <p class="white-card-content">${sc.content}</p>
-              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.bg{fill:#${p.color};}</style></defs><g><g><g><path class="bg" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="bg" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
+              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${p.pname}{fill:#${p.color};}</style></defs><g><g><g><path class="col-${p.pname}" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="col-${p.pname}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
               <span class="white-card-footer">${p.pname}</span>
             </div>
           `);
         }
-        jQuery('#end-round-panel .white-card').click(this.apiSelectWinner);
       }
     }
+    if (this.me.isGameMaster) {
+      jQuery('#end-round-panel .white-card').click(this.apiSelectWinner);
+    }
   };
+  
+  (() => {
+    this.apiPing((r) => {
+      this.me = r.response.players.find((e) => e.pname == this.pname);
+      if (this.me.isReady == true) {
+        jQuery("#game-ready-btn").addClass('game-ready-btn-active');
+      } else {
+        jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
+      }
+    });
+  })();
 }

@@ -180,29 +180,28 @@ CREATE TABLE IF NOT EXISTS `player` (
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL);
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', 's0PRe@G', 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', 'QDJMJV$', 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', 'RzU5Pkh', 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'IYfqWyM', 0, 0, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (
   `id_room` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `status` enum('STANDBY','PLAYING_ROUND','END_ROUND') NOT NULL DEFAULT 'STANDBY',
+  `status` enum('STANDBY','PLAYING_ROUND','END_ROUND','CELEBRATION') NOT NULL DEFAULT 'STANDBY',
+  `roundCount` int(11) NOT NULL DEFAULT '1',
+  `roundCountMax` int(11) NOT NULL DEFAULT '15',
+  `pingTimeOut` int(11) NOT NULL DEFAULT '6',
   `roundDuration` int(11) NOT NULL DEFAULT '45',
   `endRoundDuration` int(11) NOT NULL DEFAULT '8',
   `lastRoundStart` timestamp NULL DEFAULT NULL,
   `lastRoundEnd` timestamp NULL DEFAULT NULL,
   `id_card` char(5) DEFAULT NULL,
   PRIMARY KEY (`id_room`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` (`id_room`, `name`, `status`, `roundDuration`, `endRoundDuration`, `lastRoundStart`, `lastRoundEnd`, `id_card`) VALUES
-	(1, 'Salon du sale', 'STANDBY', 45, 8, NULL, NULL, NULL),
-	(2, 'Carré VIP', 'STANDBY', 45, 8, NULL, NULL, NULL),
-	(3, 'Le Mils', 'STANDBY', 45, 8, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

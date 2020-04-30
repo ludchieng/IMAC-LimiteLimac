@@ -9,6 +9,8 @@ try {
 
   if ('GET' !== $_SERVER['REQUEST_METHOD'])
     throw_error($r, 501, "had {$_SERVER['REQUEST_METHOD']}");
+  
+  purge_empty_rooms();
 
   $sql = 'SELECT R.id_room, R.name FROM room R;';
 

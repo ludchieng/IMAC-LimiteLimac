@@ -19,15 +19,11 @@ try {
   if (null == $id_room = get_player($_POST['pname'], 'id_room'))
     throw_error($r, 404, 'player does not have any room');
 
-  if (ROOM_STATUS_STANDBY != $s = get_room($id_room, 'status'))
-    throw_error($r, 402, "Round status is {$s}");
-
   abort_if_errors($r);
 
   $pname = $_POST['pname'];
   $token = $_POST['token'];
   $ready = strtolower($_POST['ready'] ?? 'yes');
-
 
   if (!is_valid_token($pname, $token))
     throw_error($r, 401);

@@ -5,12 +5,9 @@
 require_once('../model/player.php');
 require_once('../model/room.php');
 
-//TODO adapt value
-define('SESSION_TIMEOUT_DURATION', 6000); // seconds
-
 function ping($pname): bool
 {
-  check_players_session();
+  check_players_session($pname);
   if (null === get_player($pname, 'id_room'))
     return false;
   
@@ -19,18 +16,19 @@ function ping($pname): bool
 }
 
 
-function check_players_session(): void
+function check_players_session($pname): void
 {
-  foreach(get_timeout_players() as $tmoutp) {
+  foreach(get_timeout_players($pname) as $tmoutp) {
     quit_room($tmoutp);
   }
 }
 
 
-function get_timeout_players(): array
+function get_timeout_players($pname): array
 {
   $now = date('Y-m-d H:i:s');
-  $timeoutDuration = SESSION_TIMEOUT_DURATION;
+  $id_room = get_player($pname, 'id_room');
+  $timeoutDuration = get_room($id_room, 'pingTimeOut');
   $sql = "SELECT P.pname FROM player P
     WHERE P.id_room IS NOT NULL
     AND P.lastPing IS NOT NULL

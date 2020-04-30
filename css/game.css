@@ -13,7 +13,6 @@
 
 #game-title {
   display: block;
-  height: 50px;
   line-height: 50px;
   overflow: hidden;
   width: 100%;
@@ -22,7 +21,10 @@
 
 #game[data-status="STANDBY"] #game-title::after {
   content: 'En attente de joueurs...';
-  height: auto;
+}
+
+#game[data-status="PLAYING_ROUND"][data-role="player"] #game-title {
+  height: 50px;
 }
 
 #game[data-status="PLAYING_ROUND"][data-role="player"] #game-title::after {
@@ -30,19 +32,24 @@
 }
 
 #game[data-status="PLAYING_ROUND"][data-role="gamemaster"] #game-title::after {
-  content: 'Sélection des cartes';
-  height: auto;
+  content: 'Tu es le Maître de Jeu';
 }
 
 #game[data-status="END_ROUND"][data-role="player"] #game-title::after {
-  content: 'Manche terminée';
-  height: auto;
+  content: 'Fin du round';
 }
 
 #game[data-status="END_ROUND"][data-role="gamemaster"] #game-title::after {
   content: 'Choisis le vainqueur';
   font-size: 2.25rem;
-  height: auto;
+}
+
+#game[data-status="CELEBRATION"] #game-title::before {
+  content: 'Bravo ';
+}
+
+#game[data-status="CELEBRATION"] #game-title::after {
+  content: ' !';
 }
 
 #game-ready-btn {
@@ -64,6 +71,17 @@
 
 #game[data-status="STANDBY"] #game-ready-btn {
   display: block;
+}
+
+#game:not([data-status="STANDBY"]) #game-ready-btn {
+  display: block;
+  position: absolute;
+  right: 16px;
+  top: 0px;
+  height: 32px;
+  width: 72px;
+  padding: 3px;
+  font-size: .8rem;
 }
 
 #game-ready-btn:hover {
@@ -172,10 +190,13 @@
   margin: 0;
   height: 350px;
   max-height: 40vh;
-  padding: 32px 24px 24px 24px;
+  padding: 20px 24px 24px 24px;
   background-color: var(--B);
   border-radius: 20px;
   text-align: left;
+  font-family: Arial;
+  font-weight: 600;
+  font-size: 1.2em;
 }
 
 #black-card img {
@@ -222,11 +243,23 @@
   font-family: Roboto;
 }
 
+.room-players-gamemaster {
+  color: #ffde97;
+  font-weight: 700;
+  text-shadow: 1px 1px 5px #ffba2477;
+}
+
+.room-players-not-ready {
+  color: #aaa;
+  font-style: italic;
+
+}
+
 .room-players-dot {
   display: inline-block;
   flex-shrink: 0;
   align-self: center;
-  margin-right: 10px;
+  margin: 0 8px 0 2px;
   height: 16px;
   width: 16px;
   background-color: #fff;
@@ -235,14 +268,27 @@
   box-shadow: 0 0 8px #00000055;
 }
 
+.room-players-gamemaster .room-players-dot {
+  position: relative;
+  left: 4px;
+  transform: rotate(45deg);
+  width: 13px;
+  height: 13px;
+  margin: 0 11px 0 0;
+  border-radius: 0;
+  box-shadow: 0 0 3px #ffba24aa;
+}
+
 #room-round {
   font-size: 1.5em;
+  text-align: center;
   font-family: roboto;
   font-weight: 600;
 }
 
 #room-time {
   font-size: 2.5em;
+  text-align: center;
   font-family: roboto;
   font-weight: 600;
 }

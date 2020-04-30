@@ -12,7 +12,7 @@ require_once('views/modals.php');
 <div id="game">
 
     <aside id="room-panel">
-        <div id="room-round">Round : <span>1</span>/20</div>
+        <div id="room-round">Round : <span id="room-round-current">1</span>/<span id="room-round-max">20</span></div>
         <div id="room-time"><span id="room-time-min">••</span>:<span id="room-time-sec">••</span></div>
         <div id="black-card">
             <img src="img/imac-uni-white.svg">

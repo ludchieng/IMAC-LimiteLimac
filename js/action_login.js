@@ -27,7 +27,7 @@ function login(requireHTTPS) {
         }).done((r) => {
             if (r.success) {
                 setCookie('pname', pname, 4);
-                setCookie('token', r.response.token, 4);
+                setCookie('token', r.response.token, .5);
                 location.href = "index.php?action=welcome";
             } else if (r.errors[0].code == 203) {
                 jQuery('#form-fullscreen-info').text("Pseudo inconnu :(");

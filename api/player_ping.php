@@ -34,6 +34,8 @@ try {
     check_for_end_round($id_room);
     
     $r['response']['status'] = $status = get_room($id_room, 'status');
+    $r['response']['roundCount'] = get_room($id_room, 'roundCount');
+    $r['response']['roundCountMax'] = get_room($id_room, 'roundCountMax');
 
     switch ($status) {
       case ROOM_STATUS_STANDBY:
@@ -54,19 +56,20 @@ try {
           $r['response']['players'][] = $players[$i];
         }
 
-        // Check to restart round
-        if (null != $winner = get_round_winner($id_room)) {
-          if (can_round_start($id_room)) {
-            start_round($id_room, $winner);
-          }
-        }
-
         break;
+      case ROOM_STATUS_CELEBRATION:
+        $r['response']['players'] = get_room_players_details($id_room);
+        $r['response']['winner'] = $winner = get_round_winner($id_room);
+
+        if (can_round_start($id_room)) {
+          start_round($id_room, $winner);
+        }
+      break;
     }
   }
   // TODO
 } catch (PDOException $e) {
-  throw_error($r, 201, $e->getMessage());
+  throw_error($r, 201, $e->getMessage() . ' | ' . $e->getTraceAsString());
 } catch (Exception $e) {
   throw_error($r, 666);
 }
