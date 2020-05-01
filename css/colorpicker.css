@@ -1,5 +1,6 @@
-#div1 {
+#color-picker {
     /*position: absolute;*/
+    margin-bottom: 40px;
     font-family: roboto;
     width: 90%;
     position: relative;

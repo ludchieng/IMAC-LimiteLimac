@@ -166,7 +166,7 @@
   -webkit-user-select: none;
 }
 
-.white-card-footer {
+.white-card-author {
   position: absolute;
   bottom: 6.2%;
   left: calc(8% + 12% + 3%);

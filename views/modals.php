@@ -1,3 +1,4 @@
+<!--
 <div class="modal fade" id="newCardModal" tabindex="-1" role="dialog" aria-labelledby="newCardModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -32,12 +33,13 @@
         </div>
     </div>
 </div>
+-->
 
-<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true">
+<div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">Paramètres</h5>
+                <h5 class="modal-title" id="user-modalLabel">Utilisateur</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -45,7 +47,8 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <div id="div1">
+                        <label for="message-text" class="col-form-label">Couleur</label>
+                        <div id="color-picker">
                             <div id="view"></div>
                             <div id="colors">
                                 <input type="text" id="txt" value="">
@@ -57,15 +60,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Pseudo:</label>
-                        <input type="text" class="form-control" id="message-text" placeholder="">
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Enregistrer les modifications</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary">Valider</button>
             </div>
         </div>
     </div>

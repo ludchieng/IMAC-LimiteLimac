@@ -8,6 +8,10 @@ Deny from all
   Allow from all
 </Files>
 
+<Files "manager.php">
+  Allow from all
+</Files>
+
 <Files "install.php">
   Order Deny,Allow
   Deny from all
