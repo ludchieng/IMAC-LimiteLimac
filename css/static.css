@@ -49,6 +49,23 @@ header>button:hover {
     background: linear-gradient(135deg, #4f60ff, #4f3bbe);
 }
 
+header .btn-icon {
+    padding: 6px 6px 0 6px;
+}
+
+header .btn-icon span {
+    position: relative;
+    top: -3px;
+}
+
+header .btn-red {
+    background: linear-gradient(135deg, #d43b43, #9e2c3b);
+}
+
+header .btn-red:hover {
+    background: linear-gradient(135deg, #ff4f5e, #be3b46);
+}
+
 #logo {
     z-index: 1;
     position: absolute;

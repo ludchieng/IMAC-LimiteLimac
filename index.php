@@ -19,11 +19,19 @@ require_once('actions/actions.php');
 
     <div class="main">
         <?php
-        // Quelle est l'action à faire ?
-        if (isset($_GET["action"])) {
-            $action = $_GET["action"];
-        } else {
-            $action = "landing";
+        $action = $_GET["action"] ?? 'landing';
+
+        switch ($action) {
+            case 'welcome':
+            case 'player':
+            case 'packs':
+                if (!isset($_COOKIE['pname'], $_COOKIE['token']))
+                    header('Location: index.php?action=login');
+                break;
+            case 'login':
+                if (isset($_COOKIE['pname'], $_COOKIE['token']))
+                    header('Location: index.php?action=welcome');
+                break;
         }
 
         // Est ce que cette action existe dans la liste des actions
@@ -36,7 +44,7 @@ require_once('actions/actions.php');
         ?>
     </div>
     <?php require_once('views/footer.php'); ?>
+    <?php require_once('views/includes_after_body.php'); ?>
 </body>
-<?php require_once('views/includes_after_body.php'); ?>
 
 </html>

@@ -16,3 +16,7 @@ $(document).ready(() => {
     game.apiSetReady(!game.me.isReady);
   })
 });
+
+jQuery('#btn-quit').click(() => {
+  location.href = 'index.php?action=welcome';
+});

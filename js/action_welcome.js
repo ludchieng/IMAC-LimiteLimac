@@ -15,6 +15,12 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   modal.find('.modal-body input').val(recipient)
 });
 
+jQuery('#btn-signout').click(() => {
+  delCookie('pname');
+  delCookie('token');
+  location.href = 'index.php';
+});
+
 
 // Room create/join buttons
 jQuery("#create-button").click(() => {

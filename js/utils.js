@@ -20,6 +20,10 @@ function getCookie(key) {
   return null;
 }
 
+function delCookie(key) {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
 function isCertifiedConnection() {
   return location.protocol === 'https:';
 }
