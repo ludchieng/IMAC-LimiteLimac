@@ -29,16 +29,16 @@ function Manager() {
 
       jQuery('#select-packs').append(`
         <div class="col-6 custom-control custom-checkbox">
-          <input type="checkbox" class="form-control custom-control-input" id="select-packs-${µ(i)}" checked>
-          <label class="custom-control-label" for="select-packs-${µ(i)}</label>
+          <input type="checkbox" class="form-control custom-control-input" id="select-packs-${µ(i)}" data-id="${µ(i)}" checked>
+          <label class="custom-control-label" for="select-packs-${µ(i)}">${µ(p.name)}</label>
         </div>
       `);
 
       for (let c of p.cards) {
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
-          <div class="card card-${µ(isBlack ? 'black' : 'white')}">
-            <img class="card-icon" src="img/imac-uni-${µ((isBlack ? 'white' : 'darkblue'))}.svg">
+          <div class="card card-${µ(isBlack ? 'black' : 'white')}" data-id="${µ(c.id_card)}">
+            <img class="card-icon" src="img/imac-uni-${µ(isBlack ? 'white' : 'darkblue')}.svg">
             <p class="card-content">${µ(c.content)}</p>
             <span class="card-author"></span>
           </div>

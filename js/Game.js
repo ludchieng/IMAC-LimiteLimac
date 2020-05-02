@@ -152,7 +152,7 @@ function Game(pname, token) {
       for (let i = 0; i < r.whiteCards.length; i++) {
         let wcR = r.whiteCards[i];
         jQuery('#white-cards-panel').append(`
-          <div class="white-card${µ(wcR.isSelected ? ' white-card-selected' : '')}" data-number="${µ(i)}">
+          <div class="white-card${µ(wcR.isSelected ? ' white-card-selected' : '')}" data-number="${µ(i)}" data-id="${µ(wcR.id_card)}">
               <img class="white-card-icon" src="img/imac-uni-darkblue.svg">
               <p class="white-card-content">${µ(wcR.content)}</p>
           </div>
@@ -244,7 +244,7 @@ function Game(pname, token) {
           jQuery('#end-round-panel').append(`
             <div class="white-card" data-id="${µ(sc.id_card)}">
               <p class="white-card-content">${µ(sc.content)}</p>
-              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${µ(p.pname)}{fill:#${µ(p.color)};}</style></defs><g><g><g><path class="col-${µ(p.pname)}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
+              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${µ(p.pname)}{fill:#${µ(p.color)};}</style></defs><g><g><g><path class="col-${µ(p.pname)}" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="col-${µ(p.pname)}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
               <span class="white-card-author">${µ(p.pname)}</span>
             </div>
           `);
