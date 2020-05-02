@@ -18,28 +18,28 @@ function Manager() {
     for (let i in this.data) {
       let p = this.data[i];
 
-      jQuery('#card-panel').append(`<div class="card-pack" data-id="${i}"></div>`);
-      let domPack = jQuery(`.card-pack[data-id="${i}"]`);
+      jQuery('#card-panel').append(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+      let domPack = jQuery(`.card-pack[data-id="${µ(i)}"]`);
       domPack.append(`
         <div class="card-pack-header">
-          <h2>${p.name}</h2>
-          <div class="card-pack-author">${p.pname ? '' : '(par défaut)'}</div>
+          <h2>${µ(p.name)}</h2>
+          <div class="card-pack-author">${µ(p.pname ? '' : '(par défaut)')}</div>
         </div>
       `);
 
       jQuery('#select-packs').append(`
         <div class="col-6 custom-control custom-checkbox">
-          <input type="checkbox" class="form-control custom-control-input" id="select-packs-${i}" data-id="${i}" checked>
-          <label class="custom-control-label" for="select-packs-${i}">${p.name}</label>
+          <input type="checkbox" class="form-control custom-control-input" id="select-packs-${µ(i)}" checked>
+          <label class="custom-control-label" for="select-packs-${µ(i)}</label>
         </div>
       `);
 
       for (let c of p.cards) {
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
-          <div class="card card-${isBlack ? 'black' : 'white'}" data-id="${c.id_card}">
-            <img class="card-icon" src="img/imac-uni-${(isBlack ? 'white' : 'darkblue')}.svg">
-            <p class="card-content">${c.content}</p>
+          <div class="card card-${µ(isBlack ? 'black' : 'white')}">
+            <img class="card-icon" src="img/imac-uni-${µ((isBlack ? 'white' : 'darkblue'))}.svg">
+            <p class="card-content">${µ(c.content)}</p>
             <span class="card-author"></span>
           </div>
         `);
@@ -50,9 +50,9 @@ function Manager() {
       let dom = jQuery(e.currentTarget);
       let idPack = dom.data('id');
       if (dom.is(':checked')) {
-        jQuery(`.card-pack[data-id="${idPack}"]`).removeClass('hidden');
+        jQuery(`.card-pack[data-id="${µ(idPack)}"]`).removeClass('hidden');
       } else {
-        jQuery(`.card-pack[data-id="${idPack}"]`).addClass('hidden');
+        jQuery(`.card-pack[data-id="${µ(idPack)}"]`).addClass('hidden');
       }
       this.domRefreshInfo();
     });
@@ -78,16 +78,16 @@ function Manager() {
           isVisible = isVisible && jQuery('#show-white').is(':checked');
         }
         if (!isVisible) {
-          jQuery(`.card[data-id="${c.id_card}"]`).addClass('hidden');
+          jQuery(`.card[data-id="${µ(c.id_card)}"]`).addClass('hidden');
         } else {
-          jQuery(`.card[data-id="${c.id_card}"]`).removeClass('hidden');
+          jQuery(`.card[data-id="${µ(c.id_card)}"]`).removeClass('hidden');
         }
       }
-      /*if (0 == jQuery(`.card-pack[data-id="${p.id_pack}"] .card:not(.hidden)`).length) {
+      /*if (0 == jQuery(`.card-pack[data-id="${µ(p.id_pack)}"] .card:not(.hidden)`).length) {
         // No card shown in this pack
-        jQuery(`.card-pack[data-id="${i}"]`).addClass('hidden');
+        jQuery(`.card-pack[data-id="${µ(i)}"]`).addClass('hidden');
       } else {
-        jQuery(`.card-pack[data-id="${i}"]`).removeClass('hidden');
+        jQuery(`.card-pack[data-id="${µ(i)}"]`).removeClass('hidden');
       }*/
       this.domRefreshInfo();
     }

@@ -51,7 +51,7 @@ function Game(pname, token) {
       } else {
         jQuery('.white-card').removeClass('white-card-selected');
         for (let sc of r.response.selected) {
-          jQuery(`.white-card[data-id="${sc.id_card}"]`).addClass('white-card-selected');
+          jQuery(`.white-card[data-id="${µ(sc.id_card)}"]`).addClass('white-card-selected');
         }
       }
     });
@@ -152,9 +152,9 @@ function Game(pname, token) {
       for (let i = 0; i < r.whiteCards.length; i++) {
         let wcR = r.whiteCards[i];
         jQuery('#white-cards-panel').append(`
-          <div class="white-card${wcR.isSelected ? ' white-card-selected' : ''}" data-number="${i}" data-id="${wcR.id_card}">
+          <div class="white-card${µ(wcR.isSelected ? ' white-card-selected' : '')}" data-number="${µ(i)}">
               <img class="white-card-icon" src="img/imac-uni-darkblue.svg">
-              <p class="white-card-content">${wcR.content}</p>
+              <p class="white-card-content">${µ(wcR.content)}</p>
           </div>
         `);
       }
@@ -186,12 +186,12 @@ function Game(pname, token) {
       ul.text('');
       for (let p of r.players) {
         ul.append(`
-          <li class="fade-in" data-pname="${p.pname}">
+          <li class="fade-in" data-pname="${µ(p.pname)}">
             <div class="room-players-dot"></div>
-            <p>${p.pname}</p>
+            <p>${µ(p.pname)}</p>
           </li>
         `);
-        let liDot = ul.find(`li[data-pname="${p.pname}"] .room-players-dot`);
+        let liDot = ul.find(`li[data-pname="${µ(p.pname)}"] .room-players-dot`);
         liDot.css('background-color', '#' + p.color);
         liDot.css('border-color', '#' + p.color);
         if (this.pname == p.pname)
@@ -199,7 +199,7 @@ function Game(pname, token) {
       }
     }
     for (let p of r.players) {
-      let li = ul.find(`li[data-pname="${p.pname}"]`);
+      let li = ul.find(`li[data-pname="${µ(p.pname)}"]`);
       let liDot = li.find(`.room-players-dot`);
       if (p.isGameMaster) {
         li.addClass('room-players-gamemaster');
@@ -214,20 +214,20 @@ function Game(pname, token) {
       switch (r.status) {
         case 'STANDBY':
           if (p.isReady == true || p.isGameMaster == true) {
-            liDot.css('background-color', `#${p.color}`);
+            liDot.css('background-color', `#${µ(p.color)}`);
           } else {
             liDot.css('background-color', 'transparent');
           }
           break;
         case 'PLAYING_ROUND':
           if (p.hasPlayed == true || p.isGameMaster == true) {
-            liDot.css('background-color', `#${p.color}`);
+            liDot.css('background-color', `#${µ(p.color)}`);
           } else {
             liDot.css('background-color', 'transparent');
           }
           break;
         case 'END_ROUND':
-          liDot.css('background-color', `#${p.color}`);
+          liDot.css('background-color', `#${µ(p.color)}`);
           break;
         case 'CELEBRATION':
           break;
@@ -242,10 +242,10 @@ function Game(pname, token) {
       if (p.isGameMaster == false) {
         for (let sc of p.selected) {
           jQuery('#end-round-panel').append(`
-            <div class="white-card" data-id="${sc.id_card}">
-              <p class="white-card-content">${sc.content}</p>
-              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${p.pname}{fill:#${p.color};}</style></defs><g><g><g><path class="col-${p.pname}" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="col-${p.pname}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
-              <span class="white-card-author">${p.pname}</span>
+            <div class="white-card" data-id="${µ(sc.id_card)}">
+              <p class="white-card-content">${µ(sc.content)}</p>
+              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${µ(p.pname)}{fill:#${µ(p.color)};}</style></defs><g><g><g><path class="col-${µ(p.pname)}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
+              <span class="white-card-author">${µ(p.pname)}</span>
             </div>
           `);
         }

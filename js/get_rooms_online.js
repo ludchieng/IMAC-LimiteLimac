@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           jQuery('#lezalons ul').append(`
           <li class="fade-in">
-            ${r.name} <span class="txt-gold">#${r.id_room}</span>
+            ${µ(r.name)}</span>
           </li>
         `);
         }

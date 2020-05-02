@@ -95,7 +95,7 @@ jQuery('#room-join').submit((e) => {
       } else if (r.errors[0].code == 203) {
         jQuery('#room-join-info').text('Erreur salon inexistant');
       } else if (r.errors[0].code == 401) {
-        location.href = `index.php?action=login&join=${idroom}`;
+        location.href = `index.php?action=login&join=${µ(idroom)}`;
       } else {
         jQuery('#room-join-info').text('Erreur accès du salon');
       }

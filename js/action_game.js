@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (game.me.isReady == true) {
       game.playerDot.css('background-color', 'transparent');
     } else {
-      game.playerDot.css('background-color', `#${game.me.color}`);
+      game.playerDot.css('background-color', `#${µ(game.me.color)}`);
     }
     jQuery(e.currentTarget).toggleClass('game-ready-btn-active');
     game.apiSetReady(!game.me.isReady);

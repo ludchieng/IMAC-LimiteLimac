@@ -1,7 +1,7 @@
 function setCookie(key, val, expireHours) {
   var d = new Date();
   d.setTime(d.getTime() + (expireHours * 60 * 60 * 1000));
-  document.cookie = `${key}=${val}; expires=${d.toUTCString()}`;
+  document.cookie = `${µ(key)}=${µ(val)}`;
 }
 
 function getCookie(key) {
@@ -21,36 +21,14 @@ function getCookie(key) {
 }
 
 function delCookie(key) {
-  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  document.cookie = `${µ(key)}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 function isCertifiedConnection() {
   return location.protocol === 'https:';
 }
 
-function changeSVGtoInlineSVG(selector) {
-  let e = jQuery(selector);
-  let classes = e.attr('class');
-  let src = e.attr('src');
-
-  jQuery.get(src, function (data) {
-    // Get the SVG tag, ignore the rest
-    let svg = jQuery(data).find('svg');
-
-    // Add replaced image's ID to the new SVG
-    if (typeof id !== 'undefined') {
-      svg = svg.attr('id', id);
-    }
-    // Add replaced image's classes to the new SVG
-    if (typeof classes !== 'undefined') {
-      svg = svg.attr('class', classes + ' replaced-svg');
-    }
-
-    // Remove any invalid XML tags as per http://validator.w3.org
-    svg = svg.removeAttr('xmlns:a');
-
-    // Replace image with new SVG
-    e.replaceWith(svg);
-
-  }, 'xml');
+function µ(str) {
+  // Escape < > chars
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

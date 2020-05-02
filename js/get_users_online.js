@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (u.pname != getCookie('pname')) {
             jQuery('#lezami ul').append(`
             <li class="fade-in">
-                <div class="dot" style="background-color: #${u.color}"></div>
-                <p>${u.pname}</p>
+                <div class="dot" style="background-color: #${µ(u.color)}"></div>
+                <p>${µ(u.pname)}</p>
             </li>`);
           }
         }

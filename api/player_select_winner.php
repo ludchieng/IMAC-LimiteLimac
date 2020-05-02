@@ -38,7 +38,7 @@ try {
 
   $cards = get_round_selected_cards($id_room);
   if (!in_array($id_card, array_column($cards, 'id_card')))
-    throw_error($r, 402, "Competitors selected cards does not include card ${id_card}");
+    throw_error($r, 402, "Competitors selected cards does not include card {$id_card}");
 
   $idx = array_search($id_card, array_column($cards, 'id_card'));
   $winner = $cards[$idx]['pname'];
