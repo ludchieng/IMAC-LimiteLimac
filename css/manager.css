@@ -1,13 +1,29 @@
+.row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Cocogoose, Roboto;
+}
+
 #manager {
   display: flex;
+  font-family: Roboto;
 }
 
 #manager main {
   flex: 6;
+  padding: 5px;
 }
 
 #manager aside {
   flex: 1 0 300px;
+  justify-content: start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(78, 40, 49, 0.4);
 }
 
 #manager.manager-compact {
@@ -16,7 +32,6 @@
 #card-panel {
   margin: 0 auto;
   max-height: 100vh;
-  font-family: Roboto;
   font-weight: 600;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -25,28 +40,46 @@
 
 .card-pack {
   display: flex;
+  margin: 32px 0 10px 0;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
 }
 
+.card-pack-header {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: baseline;
+}
+
 .card-pack h2 {
   display: block;
-  width: 100%;
-  margin: 32px 0 10px 4px;
+  margin-right: 8px;
   font-family: Cocogoose, Roboto;
+}
+
+.card-pack-author {
+  font-weight: 400;
+  color: #ffdbac;
 }
 
 .card {
   position: relative;
   flex: 0 0 160px;
+  max-width: 160px;
   margin: 5px;
   padding: 10px;
   height: 190px;
   opacity: 0.9;
   font-size: 0.9em;
+  font-weight: 600;
   border-radius: 12px;
   transition: .1s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.hidden {
+  display: none;
 }
 
 #manager.manager-compact .card {
@@ -99,6 +132,12 @@
   cursor: pointer;
 }
 
+.card-content-editable {
+  width: 100%;
+  height: 100%;
+  cursor: text;
+}
+
 .card-icon {
   position: absolute;
   bottom: 7%;
@@ -117,4 +156,16 @@
   color: #222;
   font-weight: 400;
   font-size: 0.8em;
+}
+
+input::selection {
+  background: #E8317833;
+}
+
+#select-packs {
+  max-height: 18vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 50, 99, 0.644) rgba(78, 40, 49, 0.4);
 }

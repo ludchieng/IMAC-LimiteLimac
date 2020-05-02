@@ -1,7 +1,7 @@
 var game;
 var itv;
 
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
   game = new Game(getCookie('pname'), getCookie('token'));
   game.apiPing();
   itv = setInterval(game.apiPing, 2000);

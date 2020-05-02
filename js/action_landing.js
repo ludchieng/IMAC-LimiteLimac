@@ -1,8 +1,10 @@
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
   if (null == getCookie('pname')) {
     jQuery('#btn-signout').addClass('btn-hidden');
+    jQuery('#btn-user').addClass('btn-hidden');
   } else {
     jQuery('#btn-signout').removeClass('btn-hidden');
+    jQuery('#btn-user').removeClass('btn-hidden');
   }
 });
 

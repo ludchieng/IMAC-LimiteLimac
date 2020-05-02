@@ -1,4 +1,4 @@
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
 
   jQuery.ajax({
     type: "GET",
