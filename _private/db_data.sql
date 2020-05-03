@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `pack` (
   `id_pack` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_pack`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `pack` DISABLE KEYS */;
 INSERT INTO `pack` (`id_pack`, `name`) VALUES
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `player` (
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
 	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', 'crjP9g9', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
 	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', 'hohPTqH', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', 'h0ftp0g', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', 'y57rZEr', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
 	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'H@RRGm2', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 

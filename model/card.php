@@ -69,7 +69,7 @@ function is_valid_type(string $type): bool
 }
 
 
-function create_pack(string $pname): void
+function create_pack(string $pname): array
 {
   $sql = "INSERT INTO pack (name)
     VALUES ('{$pname}');
@@ -80,4 +80,7 @@ function create_pack(string $pname): void
   ";
   $data = get_multiple($sql, ['pname' => $pname])[0];
   set_player($pname, 'id_pack', $data['id_pack']);
+  $res['id_pack'] = $data['id_pack'];
+  $res['name'] = $pname;
+  return $res;
 }

@@ -31,6 +31,14 @@ function Manager() {
         throw 'Echec card create';
       } else {
         let c = r.response.card;
+        if (undefined === this.data[c.id_pack]) {
+          this.data[c.id_pack] = {
+            cards: [],
+            name: r.response.pack.name,
+            id_pack: r.response.pack.id_pack
+          };
+        }
+        this.data[c.id_pack].cards.push(c);
         let domPack = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"]`);
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
@@ -41,6 +49,10 @@ function Manager() {
           </div>
         `);
         jQuery(`main .card[data-id="${µ(c.id_card)}"]`).click(this.onClickCard);
+
+        if (r.response.hasCreatedPack == true) {
+          this.domSetData();
+        }
       }
     });
   };
@@ -87,6 +99,8 @@ function Manager() {
 
   this.domSetData = () => {
     jQuery('#card-panel').empty();
+    jQuery('aside #select-packs').empty();
+    
     for (let i in this.data) {
       let p = this.data[i];
 

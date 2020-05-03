@@ -36,11 +36,15 @@ try {
     if (!is_valid_token($pname, $_POST['token']))
       throw_error($r, 401);
   }
+  
+  $hasCreatedPack = false;
   if (NULL == get_player($pname, 'id_pack')) {
-    create_pack($pname);
+    $r['response']['pack'] = create_pack($pname);
+    $hasCreatedPack = true;
   }
   
   $r['response']['card'] = create_card($pname, $content, $type);
+  $r['response']['hasCreatedPack'] = $hasCreatedPack;
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
