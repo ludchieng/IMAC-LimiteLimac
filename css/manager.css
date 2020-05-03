@@ -8,6 +8,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #manager {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   font-family: Roboto;
 }
@@ -127,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #ddd;
 }
 
-.card:hover {
+.card-selectable:hover {
   opacity: 1;
   cursor: pointer;
 }

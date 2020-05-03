@@ -71,7 +71,7 @@ try {
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage() . ' | ' . $e->getTraceAsString());
 } catch (Exception $e) {
-  throw_error($r, 666);
+  throw_error($r, 666, $e->getMessage() . ' | ' . $e->getTraceAsString());
 }
 
 send_response($r);

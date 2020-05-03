@@ -11,9 +11,9 @@ try {
     throw_error($r, 501, "had {$_SERVER['REQUEST_METHOD']}");
 
 
-  $cards = get_multiple('SELECT C.id_card, C.content, C.pname, C.id_pack FROM card C;');
+  $cards = get_multiple('SELECT C.id_card, C.content, C.id_pack FROM card C;');
 
-  $packs = get_multiple('SELECT P.id_pack, P.name, P.pname FROM pack P;');
+  $packs = get_multiple('SELECT P.id_pack, P.name FROM pack P;');
 
   foreach ($packs as $p) {
     $res[$p['id_pack']] = $p;

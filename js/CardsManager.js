@@ -1,6 +1,9 @@
 function Manager() {
+  this.pname = getCookie('pname');
+  this.token = getCookie('token');
   this.data;
-  this.search = jQuery('#search-card').val().toLowerCase();
+  this.search = jQuery('aside #search-card').val().toLowerCase();
+  this.selected;
 
   (this.apiGetCards = () => {
     jQuery.ajax({
@@ -13,21 +16,94 @@ function Manager() {
     });
   })();
 
+  this.apiCardCreate = () => {
+    jQuery.ajax({
+      type: 'POST',
+      url: 'api/card_create.php',
+      data: {
+        pname: this.pname,
+        token: this.token,
+        content: jQuery('#card-create-content').text(),
+        type: jQuery('input[name="card-create"]:checked').val()
+      }
+    }).done((r) => {
+      if (!r.success) {
+        throw 'Echec card create';
+      } else {
+        let c = r.response.card;
+        let domPack = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"]`);
+        let isBlack = c.id_card.charAt(0) === 'B';
+        domPack.append(`
+          <div class="card card-${µ(isBlack ? 'black' : 'white')} card-selectable" data-id="${µ(c.id_card)}">
+            <img class="card-icon" src="img/imac-uni-${µ(isBlack ? 'white' : 'darkblue')}.svg">
+            <p class="card-content">${µ(c.content)}</p>
+            <span class="card-author"></span>
+          </div>
+        `);
+        jQuery(`main .card[data-id="${µ(c.id_card)}"]`).click(this.onClickCard);
+      }
+    });
+  };
+
+  this.apiCardEdit = () => {
+    jQuery.ajax({
+      type: 'POST',
+      url: 'api/card_edit.php',
+      data: {
+        pname: this.pname,
+        token: this.token,
+        idcard: this.selected.data('id'),
+        content: jQuery('#card-edit-content').text()
+      }
+    }).done((r) => {
+      if (!r.success) {
+        throw 'Echec card edit';
+      } else {
+        let c = r.response.card;
+        let domCard = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${c.id_card}"]`);
+        domCard.find('.card-content').text(µ(c.content));
+      }
+    });
+  };
+
+  this.apiCardDelete = () => {
+    jQuery.ajax({
+      type: 'POST',
+      url: 'api/card_delete.php',
+      data: {
+        pname: this.pname,
+        token: this.token,
+        idcard: this.selected.data('id')
+      }
+    }).done((r) => {
+      if (!r.success) {
+        throw 'Echec card delete';
+      } else {
+        let domCard = jQuery(`.card[data-id="${this.selected.data('id')}"]`);
+        domCard.remove();
+      }
+    });
+  };
+
   this.domSetData = () => {
     jQuery('#card-panel').empty();
     for (let i in this.data) {
       let p = this.data[i];
 
-      jQuery('#card-panel').append(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+      if (p.name == this.pname) {
+        jQuery('#card-panel').prepend(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+      } else {
+        jQuery('#card-panel').append(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+      }
       let domPack = jQuery(`.card-pack[data-id="${µ(i)}"]`);
       domPack.append(`
         <div class="card-pack-header">
           <h2>${µ(p.name)}</h2>
-          <div class="card-pack-author">${µ(p.pname ? '' : '(par défaut)')}</div>
+          <div class="card-pack-author"></div>
         </div>
       `);
 
-      jQuery('#select-packs').append(`
+      jQuery('aside #select-packs').append(`
         <div class="col-6 custom-control custom-checkbox">
           <input type="checkbox" class="form-control custom-control-input" id="select-packs-${µ(i)}" data-id="${µ(i)}" checked>
           <label class="custom-control-label" for="select-packs-${µ(i)}">${µ(p.name)}</label>
@@ -37,7 +113,7 @@ function Manager() {
       for (let c of p.cards) {
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
-          <div class="card card-${µ(isBlack ? 'black' : 'white')}" data-id="${µ(c.id_card)}">
+          <div class="card card-${µ(isBlack ? 'black' : 'white')}${µ(p.name == this.pname ? ' card-selectable':'')}" data-id="${µ(c.id_card)}">
             <img class="card-icon" src="img/imac-uni-${µ(isBlack ? 'white' : 'darkblue')}.svg">
             <p class="card-content">${µ(c.content)}</p>
             <span class="card-author"></span>
@@ -57,13 +133,7 @@ function Manager() {
       this.domRefreshInfo();
     });
 
-    jQuery('main .card').click((e) => {
-      let dom = jQuery(e.currentTarget);
-      if (dom.hasClass('card-selected'))
-        dom.removeClass('card-selected');
-      else
-        dom.addClass('card-selected');
-    });
+    jQuery('main .card-selectable').click(this.onClickCard);
   };
 
   this.domRefreshCards = () => {
@@ -102,4 +172,31 @@ function Manager() {
       jQuery('#info').addClass('hidden');
     }
   };
+
+  this.onClickCard = (e) => {
+    jQuery('#card-edit-container').removeClass('hidden');
+    jQuery('#card-edit-info').addClass('hidden');
+    if (this.selected !== undefined)
+      this.selected.removeClass('card-selected');
+    let dom = jQuery(e.currentTarget);
+    this.selected = dom;
+    if (dom.hasClass('card-selected'))
+      dom.removeClass('card-selected');
+    else
+      dom.addClass('card-selected');
+    let domEdit = jQuery('#card-edit .card');
+    if (dom.hasClass('card-white')) {
+      domEdit.addClass('card-white');
+      domEdit.removeClass('card-black');
+      domEdit.find('.card-icon-dark').removeClass('hidden');
+      domEdit.find('.card-icon-light').addClass('hidden');
+    } else {
+      domEdit.addClass('card-black');
+      domEdit.removeClass('card-white');
+      domEdit.find('.card-icon-dark').addClass('hidden');
+      domEdit.find('.card-icon-light').removeClass('hidden');
+    }
+    let content = dom.find('.card-content').text();
+    domEdit.find('#card-edit-content').text(content);
+  }
 }

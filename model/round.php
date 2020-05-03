@@ -227,6 +227,8 @@ function check_for_end_round(int $id_room): void
   if (get_room($id_room, 'status') === ROOM_STATUS_PLAYING_ROUND
       && (get_round_remaining_time($id_room) <= 0)
   ) {
+    if (is_null(get_room($id_room, 'lastRoundStart')))
+      throw new Exception('lastRoundStart is null at check_for_end_round()');
     end_round($id_room);
   }
 }

@@ -14,6 +14,7 @@ $DB_DATA_PK = [
   'player' => 'pname',
   'room' => 'id_room',
   'card' => 'id_card',
+  'pack' => 'id_pack'
 ];
 
 /**

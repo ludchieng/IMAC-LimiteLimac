@@ -15,6 +15,10 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   modal.find('.modal-body input').val(recipient)
 });
 
+jQuery('#btn-edit').click(() => {
+  location.href = 'manager.php';
+});
+
 jQuery('#btn-signout').click(() => {
   delCookie('pname');
   delCookie('token');
