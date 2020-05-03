@@ -33,6 +33,8 @@ try {
       throw_error($r, 401);
   }
 
+  //TODO only allow deleting for his own card
+
   del('card', $id_card);
 
 } catch (PDOException $e) {

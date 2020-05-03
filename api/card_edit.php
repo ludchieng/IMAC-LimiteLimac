@@ -37,6 +37,8 @@ try {
       throw_error($r, 401);
   }
 
+  //TODO only allow editing for his own card
+
   set_card($id_card, 'content', $content);
   
   $r['response']['card']['id_card'] = $id_card;
