@@ -23,7 +23,6 @@ require_once('../model/log.php');
 function start_round(int $id_room, string $pnameGM): void
 {
   logs("START ROUND CALLED: #$id_room, gamemaster: $pnameGM");
-  set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   del_players_selected_cards($id_room);
   set_room_handcards($id_room, 'isSelected', 0);
   set_room_players($id_room, 'hasPlayed', 0);
@@ -36,7 +35,7 @@ function start_round(int $id_room, string $pnameGM): void
   foreach ($players as $p) {
     $cardsCount = count(get_player_cards($p));
     if (0 < $numberToDraw = ROOM_MAX_HAND_CARDS_COUNT - $cardsCount)
-      draw_card($p, $numberToDraw);
+    draw_card($p, $numberToDraw);
     if ($p === $pnameGM) {
       set_player($p, 'isGameMaster', 1);
     } else {
@@ -47,6 +46,7 @@ function start_round(int $id_room, string $pnameGM): void
   log_room($id_room);
   draw_black_card($id_room);
   set_current_timestamp('room', $id_room, 'lastRoundStart');
+  set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   logs("START ROUND: #$id_room, Final steps done");
   log_room($id_room);
   logs("START ROUND SUCCESS: #$id_room, Final steps done");
