@@ -8,6 +8,7 @@
 require_once('../model/data_access.php');
 require_once('../model/player.php');
 require_once('../model/room.php');
+require_once('../model/log.php');
 
 /**
  * Initiates a new round in the specified room
@@ -21,11 +22,15 @@ require_once('../model/room.php');
  */
 function start_round(int $id_room, string $pnameGM): void
 {
+  logs("START ROUND CALLED: #$id_room, gamemaster: $pnameGM");
   set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   del_players_selected_cards($id_room);
   set_room_handcards($id_room, 'isSelected', 0);
   set_room_players($id_room, 'hasPlayed', 0);
   set_room_players($id_room, 'hasWon', 0);
+  set_room_players($id_room, 'isGameMaster', 0);
+  logs("START ROUND: #$id_room, Reset done");
+  log_room($id_room);
   // Changing game master
   $players = get_room_ready_players($id_room);
   foreach ($players as $p) {
@@ -38,30 +43,39 @@ function start_round(int $id_room, string $pnameGM): void
       set_player($p, 'isGameMaster', 0);
     }
   }
+  logs("START ROUND: #$id_room, Player init done");
+  log_room($id_room);
   draw_black_card($id_room);
   set_current_timestamp('room', $id_room, 'lastRoundStart');
+  logs("START ROUND: #$id_room, Final steps done");
+  log_room($id_room);
+  logs("START ROUND SUCCESS: #$id_room, Final steps done");
 }
 
 
 function can_round_start(int $id_room): bool
 {
+  logs("CAN ROUND START CALLED: #$id_room");
   if (get_room($id_room, 'status') == ROOM_STATUS_PLAYING_ROUND)
     return false;
   if (get_round_end_time($id_room) > 0)
     return false;
   if (get_room($id_room, 'roundCount') >= get_room($id_room, 'roundCountMax'))
     return false;
+  logs("CAN ROUND START: #$id_room, returned TRUE");
   return true;
 }
 
 
 function end_round($id_room): void
 {
+  logs("END ROUND: #$id_room");
   set_room($id_room, 'status', ROOM_STATUS_END_ROUND);
 }
 
 function round_celebration($id_room): void
 {
+  logs("ROUND CELEBRATION: #$id_room");
   set_room($id_room, 'status', ROOM_STATUS_CELEBRATION);
   set_room($id_room, 'roundCount', 1+get_room($id_room, 'roundCount'));
   set_current_timestamp('room', $id_room, 'lastRoundEnd');

@@ -8,6 +8,7 @@
 require_once('../model/data_access.php');
 require_once('../model/player.php');
 require_once('../model/round.php');
+require_once('../model/log.php');
 
 define('ROOM_MAX_HAND_CARDS_COUNT', 7);
 define('TOKEN_LENGTH', 7);
@@ -264,6 +265,7 @@ function del_players_selected_cards(int $id_room): void
 
 function set_room_players(int $id_room, string $attr, $value): void
 {
+  logs("SET ROOM PLAYERS: #$id_room, $attr: $value");
   $sql = "UPDATE player
     SET {$attr} = :val
     WHERE id_room = :id_room;
@@ -273,6 +275,7 @@ function set_room_players(int $id_room, string $attr, $value): void
 
 function set_room_handcards(int $id_room, string $attr, $value): void
 {
+  logs("SET ROOM HC: #$id_room, $attr: $value");
   $sql = "UPDATE handcard
     SET {$attr} = :val
     WHERE id_room = :id_room;

@@ -8,6 +8,7 @@
 
 require_once('api_response.php');
 require_once('../_private/env.php');
+require_once('../model/log.php');
 
 
 $DB_DATA_PK = [
@@ -167,6 +168,7 @@ function get_multiple(string $sql, array $params = []): array
  */
 function set(string $table, $id, string $attr, $value): void
 {
+  logs("SET $table: #$id, $attr: $value");
   global $DB_DATA_PK;
   $sql = "UPDATE {$table} SET {$attr} = :value
     WHERE {$DB_DATA_PK[$table]} = :id;

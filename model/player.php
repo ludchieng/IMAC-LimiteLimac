@@ -7,6 +7,7 @@
 
 require_once('../model/data_access.php');
 require_once('../model/room.php');
+require_once('../model/log.php');
 
 /**
  * Inserts a new player in database.

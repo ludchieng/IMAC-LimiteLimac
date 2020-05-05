@@ -4,6 +4,7 @@
  */
 require_once('../model/player.php');
 require_once('../model/room.php');
+require_once('../model/log.php');
 
 function ping($pname): bool
 {

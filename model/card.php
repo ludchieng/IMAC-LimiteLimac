@@ -6,6 +6,7 @@
  */
 
 require_once('../model/data_access.php');
+require_once('../model/log.php');
 
 
 function create_card(string $pname, string $content, string $type): array

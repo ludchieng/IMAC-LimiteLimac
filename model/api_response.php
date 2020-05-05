@@ -4,6 +4,7 @@
  * 
  * @package APIResponse
  */
+require_once('../model/log.php');
 
 $API_ERROR_MSG = [
   666 => 'Something wrong occured',

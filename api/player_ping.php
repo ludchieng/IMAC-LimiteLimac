@@ -3,6 +3,7 @@ require_once('../model/api_response.php');
 require_once('../model/session.php');
 require_once('../model/room.php');
 require_once('../model/player.php');
+require_once('../model/log.php');
 
 $r = create_response();
 
@@ -23,11 +24,13 @@ try {
   abort_if_errors($r);
 
   $pname = $_GET['pname'];
+
+  logs("PING START: ${pname}, #".get_player($pname, 'id_room'));
+
   $token = $_GET['token'];
   $toktok = get_player($pname, 'token');
   if (!is_valid_token($pname, $token))
     throw_error($r, 401);
-
   
   $r['response'] = [];
   if ($r['response']['stillInGame'] = ping($pname)) {
@@ -73,5 +76,6 @@ try {
 } catch (Exception $e) {
   throw_error($r, 666, $e->getMessage() . ' | ' . $e->getTraceAsString());
 }
-
+log_room($id_room);
+logs("PING SUCCESS: ${pname}, #".get_player($pname, 'id_room').", response: ".json_encode($r));
 send_response($r);

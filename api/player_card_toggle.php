@@ -3,6 +3,7 @@ require_once('../model/api_response.php');
 require_once('../model/room.php');
 require_once('../model/card.php');
 require_once('../model/player.php');
+require_once('../model/log.php');
 
 $r = create_response();
 
