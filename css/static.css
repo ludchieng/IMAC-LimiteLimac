@@ -83,6 +83,7 @@ header .btn-hidden {
     width: 72px;
     transition: .5s cubic-bezier(.5, 0, 0, 1);
     -moz-user-select: none;
+    cursor: pointer;
 }
 
 #logo:hover img {

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   game = new Game(getCookie('pname'), getCookie('token'));
   game.apiPing();
   itv = setInterval(game.apiPing, 2000);
-  
+
   jQuery('#game-ready-btn').click((e) => {
     if (game.me.isReady == true) {
       game.playerDot.css('background-color', 'transparent');
@@ -15,8 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
     jQuery(e.currentTarget).toggleClass('game-ready-btn-active');
     game.apiSetReady(!game.me.isReady);
   })
-});
 
-jQuery('#btn-quit').click(() => {
-  location.href = 'index.php?action=welcome';
+  jQuery('#logo').click(() => {
+    jQuery.ajax({
+      type: "POST", url: "api/room_quit.php",
+      data: { pname: getCookie('pname'), token: getCookie('token') }
+    }).done((r) => {
+      location.href = 'index.php?action=welcome';
+    });
+  });
+
+  jQuery('#btn-quit').click(() => {
+    jQuery.ajax({
+      type: "POST", url: "api/room_quit.php",
+      data: { pname: getCookie('pname'), token: getCookie('token') }
+    }).done((r) => {
+      location.href = 'index.php?action=welcome';
+    });
+  });
 });

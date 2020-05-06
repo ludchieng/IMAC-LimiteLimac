@@ -14,30 +14,27 @@ try {
   if (!isset($_POST['pname']))
     throw_error($r, 101, 'pname', API_ERROR_DONT_ABORT);
 
-  if (!isset($_POST['pass']))
-    throw_error($r, 101, 'pass', API_ERROR_DONT_ABORT);
+  if (!isset($_POST['pass']) && !isset($_POST['token']))
+    throw_error($r, 101, 'pass or token', API_ERROR_DONT_ABORT);
 
   abort_if_errors($r);
 
   $pname = $_POST['pname'];
-  $pass = $_POST['pass'];
 
-  if (!is_known_player($pname))
-    throw_error($r, 203);
+  if (isset($_POST['pass'])) {
+    if (!authenticate_player($pname, $_POST['pass']))
+      throw_error($r, 403);
 
-  if (false == authenticate_player($pname, $pass))
-    throw_error($r, 403);
+  } else if (isset($_POST['token'])) {
+    if (!is_valid_token($pname, $_POST['token']))
+      throw_error($r, 401);
+  }
+  
+  quit_room($pname);
 
-  $r['response'] = [];
-
-  $token = player_generate_token();
-  set_player($pname, 'token', $token);
-
-  if ($token != get_player($pname, 'token'))
+  if (NULL != get_player($pname, 'id_room'))
     throw_error($r, 666);
 
-  $r['response']['token'] = $token;
-  $r['response']['color'] = get_player($pname, 'color');
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());
 } catch (Exception $e) {

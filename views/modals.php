@@ -1,45 +1,8 @@
-<!--
-<div class="modal fade" id="newCardModal" tabindex="-1" role="dialog" aria-labelledby="newCardModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="newCardModalLabel">Nouvelle carte</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline1">Black</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadioInline2">White</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Contenu:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Proposer la carte</button>
-            </div>
-        </div>
-    </div>
-</div>
--->
-
 <div class="modal fade" id="user-modal" tabindex="-1" role="dialog" aria-labelledby="user-modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="user-modalLabel">Utilisateur</h5>
+                <h5 class="modal-title" id="user-modalLabel"><?= $_COOKIE['pname'] ?? 'Utilisateur' ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -64,8 +27,35 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-primary">Valider</button>
+                <button id="btn-submit-color" type="button" class="btn btn-primary">Valider</button>
             </div>
         </div>
     </div>
 </div>
+
+<script src="../js/colorpicker.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    let cp = new ColorPicker(getCookie('color'));
+    cp.init();
+    
+
+    jQuery('#btn-submit-color').click(() => {
+        jQuery.ajax({
+            type: "POST", url: "api/player_edit_color.php",
+            data: {
+                pname: getCookie('pname'),
+                token: getCookie('token'),
+                color: jQuery('#hex').text().slice(1,7)
+            }
+        }).done((r) => {
+            if (!r.success) {
+                throw 'Error edit color';
+            } else {
+                setCookie('color', r.response.color);
+            }
+        });
+        $('#user-modal').modal('hide');
+    });
+});
+</script>

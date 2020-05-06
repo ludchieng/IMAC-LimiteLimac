@@ -199,10 +199,7 @@ function can_room_start(int $id_room): bool
  */
 function start_room(int $id_room): void
 {
-  // Pick random player as game master
-  $players = get_room_players($id_room);
-  $r = rand(0, count($players) - 1);
-  start_round($id_room, $players[$r]);
+  pick_random_game_master($id_room);
 }
 
 /**

@@ -28,6 +28,7 @@ function login(requireHTTPS) {
             if (r.success) {
                 setCookie('pname', pname, 4);
                 setCookie('token', r.response.token, .5);
+                setCookie('color', r.response.color, 24*7);
                 location.href = "index.php?action=welcome";
             } else if (r.errors[0].code == 203) {
                 jQuery('#form-fullscreen-info').text("Pseudo inconnu :(");

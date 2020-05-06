@@ -1,7 +1,6 @@
 function Game(pname, token) {
   this.pname = pname;
   this.token = token;
-  this.color;
   this.me;
   this.bCard;
   this.wCards = [];
@@ -18,7 +17,7 @@ function Game(pname, token) {
   this.updateCookie = () => {
     setCookie('pname', this.pname, 4);
     setCookie('token', this.token, .5);
-  }
+  };
 
   this.apiSetReady = (value) => {
     jQuery.ajax({
@@ -78,8 +77,6 @@ function Game(pname, token) {
       } else {
         this.count++;
         if (r.response.stillInGame == 'false') {
-          //TODO remove
-          throw 'kicked from room';
           location.href = "index.php?action=welcome&message=disconnected";
         }
         this.update(r.response);
@@ -107,7 +104,6 @@ function Game(pname, token) {
   };
 
   this.update = (r) => {
-    console.log(r);
     this.me = r.players.find((e) => e.pname == this.pname);
     this.domRefreshRoundCount(r);
     jQuery("#game").attr('data-status', r.status);
@@ -134,6 +130,7 @@ function Game(pname, token) {
         this.domRefreshEndRoundPanel(r);
         break;
       case 'CELEBRATION':
+        this.updateCookie();
         break;
     }
   };
@@ -200,11 +197,19 @@ function Game(pname, token) {
     }
     for (let p of r.players) {
       let li = ul.find(`li[data-pname="${µ(p.pname)}"]`);
-      let liDot = li.find(`.room-players-dot`);
-      if (p.isGameMaster) {
+      let liDot = li.find('.room-players-dot');
+      if (p.color != rgbToHex(liDot[0].style['border-color'])) {
+        liDot.css('border-color', '#'+p.color);
+      }
+      if (p.isGameMaster == true) {
         li.addClass('room-players-gamemaster');
       } else {
         li.removeClass('room-players-gamemaster');
+      }
+      if (p.pname == this.pname) {
+        li.addClass('room-players-me');
+      } else {
+        li.removeClass('room-players-me');
       }
       if (p.isReady == false) {
         li.addClass('room-players-not-ready');
@@ -214,20 +219,20 @@ function Game(pname, token) {
       switch (r.status) {
         case 'STANDBY':
           if (p.isReady == true || p.isGameMaster == true) {
-            liDot.css('background-color', `#${µ(p.color)}`);
+            liDot.css('background-color', `#${p.color}`);
           } else {
             liDot.css('background-color', 'transparent');
           }
           break;
         case 'PLAYING_ROUND':
           if (p.hasPlayed == true || p.isGameMaster == true) {
-            liDot.css('background-color', `#${µ(p.color)}`);
+            liDot.css('background-color', `#${p.color}`);
           } else {
             liDot.css('background-color', 'transparent');
           }
           break;
         case 'END_ROUND':
-          liDot.css('background-color', `#${µ(p.color)}`);
+          liDot.css('background-color', `#${p.color}`);
           break;
         case 'CELEBRATION':
           break;

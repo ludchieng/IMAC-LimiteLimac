@@ -23,6 +23,7 @@ require_once('../model/log.php');
 function start_round(int $id_room, string $pnameGM): void
 {
   logs("START ROUND CALLED: #$id_room, gamemaster: $pnameGM");
+  set_room($id_room, 'isStatusLocked', 1);
   del_players_selected_cards($id_room);
   set_room_handcards($id_room, 'isSelected', 0);
   set_room_players($id_room, 'hasPlayed', 0);
@@ -30,12 +31,13 @@ function start_round(int $id_room, string $pnameGM): void
   set_room_players($id_room, 'isGameMaster', 0);
   logs("START ROUND: #$id_room, Reset done");
   log_room($id_room);
-  // Changing game master
   $players = get_room_ready_players($id_room);
+  if (get_player($pnameGM, 'isReady') != 1)
+    pick_random_game_master($id_room);
   foreach ($players as $p) {
     $cardsCount = count(get_player_cards($p));
     if (0 < $numberToDraw = ROOM_MAX_HAND_CARDS_COUNT - $cardsCount)
-    draw_card($p, $numberToDraw);
+      draw_card($p, $numberToDraw);
     if ($p === $pnameGM) {
       set_player($p, 'isGameMaster', 1);
     } else {
@@ -46,6 +48,8 @@ function start_round(int $id_room, string $pnameGM): void
   log_room($id_room);
   draw_black_card($id_room);
   set_current_timestamp('room', $id_room, 'lastRoundStart');
+  set_room($id_room, 'roundCount', 1+get_room($id_room, 'roundCount'));
+  set_room($id_room, 'isStatusLocked', 0);
   set_room($id_room, 'status', ROOM_STATUS_PLAYING_ROUND);
   logs("START ROUND: #$id_room, Final steps done");
   log_room($id_room);
@@ -56,6 +60,8 @@ function start_round(int $id_room, string $pnameGM): void
 function can_round_start(int $id_room): bool
 {
   logs("CAN ROUND START CALLED: #$id_room");
+  if (get_room($id_room, 'isStatusLocked') == true)
+    return false;
   if (get_room($id_room, 'status') == ROOM_STATUS_PLAYING_ROUND)
     return false;
   if (get_round_end_time($id_room) > 0)
@@ -77,7 +83,6 @@ function round_celebration($id_room): void
 {
   logs("ROUND CELEBRATION: #$id_room");
   set_room($id_room, 'status', ROOM_STATUS_CELEBRATION);
-  set_room($id_room, 'roundCount', 1+get_room($id_room, 'roundCount'));
   set_current_timestamp('room', $id_room, 'lastRoundEnd');
 }
 
@@ -91,6 +96,13 @@ function round_celebration($id_room): void
 function has_round_started(int $id_room): bool
 {
   return null !== get_round_card($id_room);
+}
+
+function pick_random_game_master(int $id_room): void
+{
+  $players = get_room_ready_players($id_room);
+  $r = rand(0, count($players) - 1);
+  start_round($id_room, $players[$r]);
 }
 
 /**
@@ -240,6 +252,7 @@ function check_for_end_round(int $id_room): void
 {
   if (get_room($id_room, 'status') === ROOM_STATUS_PLAYING_ROUND
       && (get_round_remaining_time($id_room) <= 0)
+      && (get_room($id_room, 'isStatusLocked') == false)
   ) {
     if (is_null(get_room($id_room, 'lastRoundStart')))
       throw new Exception('lastRoundStart is null at check_for_end_round()');
