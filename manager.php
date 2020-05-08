@@ -105,17 +105,6 @@ if (!isset($_COOKIE['pname'], $_COOKIE['token']))
         </aside>
 
     </div>
-    <!--<div>
-        <h5 class="mt-4">Créer un bundle</h5>
-
-        <select id="select-packs" multiple>
-            <option value="1">IMAC Vie</option>
-            <option value="2">Pouloulou</option>
-            <option value="3">Le Sel Pack</option>
-            <option value="4">Damn boi</option>
-            <option value="5">Trashtalk</option>
-        </select>
-    </div>-->
 
     <?php require_once('views/includes_after_body.php'); ?>
 

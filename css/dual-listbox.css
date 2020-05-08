@@ -1,5 +1,5 @@
 :root {
-  --dlb-border: #fffa;
+  --dlb-border: #ddd;
 }
 
 .dual-listbox {
@@ -27,9 +27,8 @@
 
 .dual-listbox .dual-listbox__search {
   border: 1px solid var(--dlb-border);
-  padding: 0 8px;
+  padding: 4px 8px;
   font-size: 0.9em;
-  max-width: 120px;
 }
 
 .dual-listbox__available {
@@ -40,7 +39,7 @@
 .dual-listbox .dual-listbox__available, .dual-listbox .dual-listbox__selected {
   border: 1px solid var(--dlb-border);
   border-radius: 0 0 8px 8px;
-  height: 300px;
+  height: 230px;
   overflow-y: auto;
   padding: 0;
   margin-top: 0;
@@ -58,15 +57,16 @@
 
 .dual-listbox .dual-listbox__button {
   margin-bottom: 5px;
-  border: 1px solid #fff;
+  border: 1px solid #ddd;
   border-radius: 4px;
   background: transparent;
   padding: 2;
-  color: #fff;
+  color: #777;
+  cursor: pointer;
 }
 
 .dual-listbox .dual-listbox__button:hover {
-  box-shadow: inset 0 0 16px #fff5;
+  box-shadow: inset 0 0 4px rgba(255, 0, 157, 0.333);
   background-color: #fff2;
 }
 
@@ -94,5 +94,5 @@
 }
 
 .dual-listbox .dual-listbox__item.dual-listbox__item--selected {
-  background: #e3084a55;
+  background: #ff316f2a;
 }

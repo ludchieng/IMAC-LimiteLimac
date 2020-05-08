@@ -38,11 +38,10 @@ try {
   if ($pname == get_round_game_master($id_room))
     throw_error($r, 402, 'Game master is not allowed to select a card');
 
-  $handcards = array_column(get_player_cards($pname), 'id_card');
-  if (!in_array($id_card, $handcards))
+  if (!has_card($pname, $id_card))
     throw_error($r, 402, "{$pname} does not have card {$id_card}");
 
-  $selected = get_player_selected_cards($pname);
+  $selected = get_player_selected_hcards($pname);
 
   if (!in_array($id_card, array_column($selected, 'id_card'))) {
     // Select card
@@ -55,13 +54,13 @@ try {
       set_player_isSelected_card($pname, $id_card);
     }
   
-    if ($blanksCount === count(get_player_selected_cards($pname))) {
+    if ($blanksCount === count(get_player_selected_hcards($pname))) {
       set_player($pname, 'hasPlayed', 1);
     } else {
       set_player($pname, 'hasPlayed', 0);
     }
 
-    $selected = get_player_selected_cards($pname);
+    $selected = get_player_selected_hcards($pname);
   
     if (!in_array($id_card, array_column($selected, 'id_card')))
       throw_error($r, 666, "Could not select {$id_card}");
@@ -71,13 +70,13 @@ try {
 
     set_player_isSelected_card($pname, $id_card, false);
   
-    if (get_card_blanks_count(get_round_card($id_room)['id_card']) == count(get_player_selected_cards($pname))) {
+    if (get_card_blanks_count(get_round_card($id_room)['id_card']) == count(get_player_selected_hcards($pname))) {
       set_player($pname, 'hasPlayed', 1);
     } else {
       set_player($pname, 'hasPlayed', 0);
     }
 
-    $selected = get_player_selected_cards($pname);
+    $selected = get_player_selected_hcards($pname);
     
     if (in_array($id_card, array_column($selected, 'id_card')))
       throw_error($r, 666, "{$id_card} is still selected");

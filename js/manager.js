@@ -58,19 +58,4 @@ document.addEventListener('DOMContentLoaded', () => {
   jQuery('#card-edit-submit').click(manager.apiCardEdit);
 
   jQuery('#card-edit-delete').click(manager.apiCardDelete);
-
-  /*dlb = new DualListbox('#select-packs', {
-    addEvent: function (value) {
-      //console.log(value);
-    },
-    removeEvent: function (value) {
-      //console.log(value);
-    },
-    availableTitle: 'Disponibles',
-    selectedTitle: 'Sélectionnés',
-    addButtonText: '>',
-    removeButtonText: '<', addAllButtonText: '>>',
-    removeAllButtonText: '<<'
-  });
-  jQuery('.dual-listbox__search').addClass('form-control');*/
 });

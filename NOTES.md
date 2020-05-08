@@ -16,6 +16,12 @@ pouletcurry
 pepe
 wtflesamis
 
+## TODO
+
+* Fin de partie: annonce
+* Refresh users/rooms on welcome
+* join.php → redirect after login/register
+
 
 ## TO DEBUG
 

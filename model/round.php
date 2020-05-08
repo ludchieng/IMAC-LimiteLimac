@@ -35,7 +35,7 @@ function start_round(int $id_room, string $pnameGM): void
   if (get_player($pnameGM, 'isReady') != 1)
     pick_random_game_master($id_room);
   foreach ($players as $p) {
-    $cardsCount = count(get_player_cards($p));
+    $cardsCount = count(get_player_handcards($p));
     if (0 < $numberToDraw = ROOM_MAX_HAND_CARDS_COUNT - $cardsCount)
       draw_card($p, $numberToDraw);
     if ($p === $pnameGM) {
@@ -114,14 +114,17 @@ function pick_random_game_master(int $id_room): void
  */
 function draw_black_card(int $id_room): array
 {
-  $sql = "SELECT C.id_card, C.content FROM card C
-    WHERE C.id_card LIKE 'B%'
+  $sql = "SELECT C.id_card, C.content
+    FROM card C, `use` U
+    WHERE C.id_pack = U.id_pack
+    AND U.id_room = :id_room
+    AND C.id_card LIKE 'B%'
     AND C.id_card NOT IN (
-    SELECT H.id_card FROM had H
-    WHERE H.id_room = :id_room
-  )
-  ORDER BY RAND()
-  LIMIT 1;
+      SELECT H.id_card FROM had H
+      WHERE H.id_room = :id_room
+    )
+    ORDER BY RAND()
+    LIMIT 1;
   ";
   $blackCard = get_multiple($sql, ['id_room' => $id_room])[0];
   set('room', $id_room, 'id_card', $blackCard['id_card']);
@@ -237,7 +240,7 @@ function get_round_remaining_time(int $id_room): ?int
 
 function get_round_end_time(int $id_room): ?int
 {
-  $rd = get_room($id_room, 'endRoundDuration');
+  $rd = get_room($id_room, 'celebrationDuration');
   $sql  ="SELECT UNIX_TIMESTAMP(R.lastRoundEnd)
   - UNIX_TIMESTAMP(current_timestamp()) + {$rd} as diff
   FROM room R WHERE id_room = :id_room;

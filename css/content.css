@@ -121,6 +121,19 @@
   color: var(--B);
 }
 
+.modal-body {
+  font-family: Roboto;
+}
+
+.modal-body *::selection {
+  background: #ff528655;
+}
+
+.modal-body input::placeholder {
+  font-style: italic;
+  color: #bbb;
+}
+
 @media screen and (max-width: 640px) {
   .title {
       font-size: 1.5em;

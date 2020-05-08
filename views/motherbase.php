@@ -27,8 +27,8 @@ require_once('views/modals.php');
         <h1 class="title">Bienvenue !</h1>
         <div id="room-form">
             <div id="room-form-buttons">
-                <button type="submit" class="sub" id="create-button"><span>Créer</span></button>
-                <button type="submit" class="sub" id="join-button"><span>Rejoindre</span></button>
+                <button type="submit" class="sub" id="create-button" data-toggle="modal" data-target="#create"><span>Créer</span></button>
+                <button type="submit" class="sub" id="join-button" data-toggle="modal" data-target="#join"><span>Rejoindre</span></button>
             </div>
             <form id="room-create">
                 <div id="room-create-info"></div>
@@ -48,6 +48,8 @@ require_once('views/modals.php');
         <ul></ul>
     </aside>
 </div>
+
+<?php require('views/create_room.php') ?>
 
 <script src="js/get_users_online.js"></script>
 <script src="js/get_rooms_online.js"></script>

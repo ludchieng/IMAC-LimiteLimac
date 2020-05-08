@@ -34,7 +34,8 @@ try {
       throw_error($r, 401);
   }
 
-  //TODO only allow deleting for his own card
+  if (!owns_card($pname, $id_card))
+    throw_error($r, 400, "{$pname} does not own card {$id_card}");
 
   del('card', $id_card);
 

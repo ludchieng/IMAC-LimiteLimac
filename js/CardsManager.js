@@ -28,7 +28,19 @@ function Manager() {
       }
     }).done((r) => {
       if (!r.success) {
-        throw 'Echec card create';
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#manager-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#manager-info').text('Erreur création de carte :(');
+          }
+        }
       } else {
         let c = r.response.card;
         if (undefined === this.data[c.id_pack]) {
@@ -69,10 +81,25 @@ function Manager() {
       }
     }).done((r) => {
       if (!r.success) {
-        throw 'Echec card edit';
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 400:
+              jQuery('#manager-info').text(`Requête non autorisé: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#manager-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#manager-info').text('Erreur édition de carte :(');
+          }
+        }
       } else {
         let c = r.response.card;
-        let domCard = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${c.id_card}"]`);
+        let domCard = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${µ(c.id_card)}"]`);
         domCard.find('.card-content').text(µ(c.content));
       }
     });
@@ -89,7 +116,22 @@ function Manager() {
       }
     }).done((r) => {
       if (!r.success) {
-        throw 'Echec card delete';
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 400:
+              jQuery('#manager-info').text(`Requête non autorisé: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#manager-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#manager-info').text('Erreur suppression de carte :(');
+          }
+        }
       } else {
         let domCard = jQuery(`.card[data-id="${this.selected.data('id')}"]`);
         domCard.remove();
@@ -100,7 +142,7 @@ function Manager() {
   this.domSetData = () => {
     jQuery('#card-panel').empty();
     jQuery('aside #select-packs').empty();
-    
+
     for (let i in this.data) {
       let p = this.data[i];
 
@@ -127,7 +169,7 @@ function Manager() {
       for (let c of p.cards) {
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
-          <div class="card card-${µ(isBlack ? 'black' : 'white')}${µ(p.name == this.pname ? ' card-selectable':'')}" data-id="${µ(c.id_card)}">
+          <div class="card card-${µ(isBlack ? 'black' : 'white')}${µ(p.name == this.pname ? ' card-selectable' : '')}" data-id="${µ(c.id_card)}">
             <img class="card-icon" src="img/imac-uni-${µ(isBlack ? 'white' : 'darkblue')}.svg">
             <p class="card-content">${µ(c.content)}</p>
             <span class="card-author"></span>

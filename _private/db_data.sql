@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
 INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
-	('B100001', 'Pourquoi le dernier jeudimac m\'a traumatisé', 1),
+	('B100001', 'Pourquoi le dernier jeudimac m\'a traumatisé AH', 1),
 	('B100002', 'Le plaisir coupable de Gérald Robin.', 1),
 	('B100003', '50% des jeudimacs finissent par __________.', 1),
 	('B100004', 'La médecine alternative loue, désormais, les bienfaits de __________.', 1),
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `pack` (
   `id_pack` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_pack`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `pack` DISABLE KEYS */;
 INSERT INTO `pack` (`id_pack`, `name`) VALUES
@@ -193,9 +193,9 @@ CREATE TABLE IF NOT EXISTS `player` (
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', 'aa55dd', 'crjP9g9', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', '25e483', 'hohPTqH', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', 'e6b021', 'y57rZEr', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', '0EbtA6U', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f91f1f', 'EJJwDIh', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '4eefde', 'nGaiA37', 2, 0, 0, 0, 0, 0, 0, NULL, NULL),
 	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'H@RRGm2', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
@@ -203,16 +203,17 @@ CREATE TABLE IF NOT EXISTS `room` (
   `id_room` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` enum('STANDBY','PLAYING_ROUND','END_ROUND','CELEBRATION') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'STANDBY',
-  `roundCount` int(11) NOT NULL DEFAULT '1',
-  `roundCountMax` int(11) NOT NULL DEFAULT '15',
+  `isStatusLocked` tinyint(1) NOT NULL DEFAULT '0',
+  `roundCount` int(11) NOT NULL DEFAULT '0',
+  `roundCountMax` int(11) NOT NULL DEFAULT '10',
   `pingTimeOut` int(11) NOT NULL DEFAULT '6',
   `roundDuration` int(11) NOT NULL DEFAULT '45',
-  `endRoundDuration` int(11) NOT NULL DEFAULT '8',
+  `celebrationDuration` int(11) NOT NULL DEFAULT '6',
   `lastRoundStart` timestamp NULL DEFAULT NULL,
   `lastRoundEnd` timestamp NULL DEFAULT NULL,
   `id_card` char(7) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_room`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;

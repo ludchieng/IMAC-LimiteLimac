@@ -24,17 +24,29 @@ define('ROOM_STATUS_CELEBRATION', 'CELEBRATION');
  * @param string $name
  * @return integer id of the created room
  */
-function create_room(string $name): int
+function create_room(string $name, int $nbRounds,
+  int $roundDuration, int $celebrationDuration, array $packs): int
 {
-  $sql = "INSERT INTO room (name)
-    VALUES (:name);
+  $sql = "INSERT INTO room (name, roundCountMax, roundDuration, celebrationDuration)
+    VALUES (:name, :rcm, :rd, :cd);
   ";
   $pdo = connect_db_player();
   $pst = $pdo->prepare($sql);
   $pst->bindValue(':name', $name, PDO::PARAM_STR);
+  $pst->bindValue(':rcm', $nbRounds, PDO::PARAM_INT);
+  $pst->bindValue(':rd', $roundDuration, PDO::PARAM_INT);
+  $pst->bindValue(':cd', $celebrationDuration, PDO::PARAM_INT);
   $pst->execute();
+  $id = $pdo->lastInsertId();
   $pst->closeCursor();
-  return $pdo->lastInsertId();
+  $sql = "INSERT INTO `use` (id_room, id_pack) ";
+  foreach ($packs as $p) {
+    if (!is_numeric($p))
+      break;
+    $sql .= "VALUES ({$id}, {$p});";
+  }
+  $pdo->query($sql);
+  return $id;
 }
 
 /**
@@ -239,6 +251,22 @@ function purge_room_cards_history(int $id_room): void
 
 function purge_empty_rooms(): void
 {
+  $sql = "DELETE FROM had
+    WHERE id_room NOT IN (
+      SELECT P.id_room FROM player P
+      WHERE id_room IS NOT NULL
+      GROUP BY id_room
+    );
+  ";
+  connect_db_player()->query($sql);
+  $sql = "DELETE FROM `use`
+    WHERE id_room NOT IN (
+      SELECT P.id_room FROM player P
+      WHERE id_room IS NOT NULL
+      GROUP BY id_room
+    );
+  ";
+  connect_db_player()->query($sql);
   $sql = "DELETE FROM room
     WHERE id_room NOT IN (
       SELECT P.id_room FROM player P

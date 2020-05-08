@@ -27,15 +27,25 @@ function login(requireHTTPS) {
         }).done((r) => {
             if (r.success) {
                 setCookie('pname', pname, 4);
-                setCookie('token', r.response.token, .5);
-                setCookie('color', r.response.color, 24*7);
+                setCookie('token', r.response.token, 4);
+                setCookie('color', r.response.color, 24 * 7);
                 location.href = "index.php?action=welcome";
-            } else if (r.errors[0].code == 203) {
-                jQuery('#form-fullscreen-info').text("Pseudo inconnu :(");
-            } else if (r.errors[0].code == 403) {
-                jQuery('#form-fullscreen-info').text("Mauvais mot de passe :(");
             } else {
-                jQuery('#form-fullscreen-info').text("Erreur à l'authentification :(");
+                for (let e of r.errors) {
+                    switch (e.code) {
+                        case 101:
+                            jQuery('#form-fullscreen-info').text("Renseigne le pseudo et le mot de passe");
+                            break;
+                        case 203:
+                            jQuery('#form-fullscreen-info').text("Pseudo inconnu :(");
+                            break;
+                        case 403:
+                            jQuery('#form-fullscreen-info').text("Mauvais mot de passe :(");
+                            break;
+                        default:
+                            jQuery('#form-fullscreen-info').text("Erreur à l'authentification :(");
+                    }
+                }
             }
         });
     }

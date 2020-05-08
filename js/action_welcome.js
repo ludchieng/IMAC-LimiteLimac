@@ -1,20 +1,3 @@
-// Modals
-$('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget)
-  var recipient = button.data('whatever')
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-});
-
-$('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget)
-  var recipient = button.data('whatever')
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-});
-
 jQuery('#btn-edit').click(() => {
   location.href = 'manager.php';
 });
@@ -27,11 +10,11 @@ jQuery('#btn-signout').click(() => {
 
 
 // Room create/join buttons
-jQuery("#create-button").click(() => {
+/*jQuery("#create-button").click(() => {
   jQuery("#room-create").css('display', "inline-block");
   jQuery("#room-create").addClass('fade-in');
   jQuery("#room-join").css('display', "none");
-});
+});*/
 
 jQuery("#join-button").click(() => {
   jQuery("#room-join").css('display', "inline-block");
@@ -41,7 +24,7 @@ jQuery("#join-button").click(() => {
 
 
 // Ajax create room
-jQuery('#room-create').submit((e) => {
+/*jQuery('#room-create').submit((e) => {
   e.preventDefault();
 
   let roomName = jQuery('#room-create input').val();
@@ -62,14 +45,22 @@ jQuery('#room-create').submit((e) => {
       }
     }).done((r) => {
       if (r.success) {
-        setCookie('token', r.response.token, .5);
+        setCookie('token', r.response.token, 4);
         location.href = "index.php?action=player";
       } else {
-        jQuery('#room-create-info').text('Erreur creation du salon');
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#room-create-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            default:
+              jQuery('#room-create-info').text('Erreur création du salon :(');
+          }
+        }
       }
     });
   }
-});
+});*/
 
 
 // Ajax join room
@@ -94,14 +85,25 @@ jQuery('#room-join').submit((e) => {
       }
     }).done((r) => {
       if (r.success) {
-        setCookie('token', r.response.token, .5);
+        setCookie('token', r.response.token, 4);
         location.href = "index.php?action=player";
-      } else if (r.errors[0].code == 203) {
-        jQuery('#room-join-info').text('Erreur salon inexistant');
-      } else if (r.errors[0].code == 401) {
-        location.href = `index.php?action=login&join=${µ(idroom)}`;
       } else {
-        jQuery('#room-join-info').text('Erreur accès du salon');
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#room-join-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 203:
+              jQuery('#room-join-info').text('Erreur salon inexistant');
+              break;
+            case 401:
+            case 403:
+              location.href = `index.php?action=login&join=${µ(idroom)}`;
+              break;
+            default:
+              jQuery('#room-join-info').text('Erreur accès au salon :(');
+          }
+        }
       }
     });
   }

@@ -31,12 +31,21 @@ function register(requireHTTPS = true) {
       }).done((r) => {
         if (r.success) {
           setCookie('pname', pname, 4);
-          setCookie('token', r.response.token, .5);
+          setCookie('token', r.response.token, 4);
           location.href = "index.php?action=registerGo";
-        } else if (r.errors[0].code == 202) {
-          jQuery('#form-fullscreen-info').text('Ce pseudo est déjà pris :(');
         } else {
-          jQuery('#form-fullscreen-info').text("Quelque chose s'est mal passé :(");
+          for (let e of r.errors) {
+            switch (e.code) {
+              case 101:
+                jQuery('#form-fullscreen-info').text("Renseigne le pseudo et le mot de passe");
+                break;
+              case 202:
+                jQuery('#form-fullscreen-info').text('Ce pseudo est déjà pris :(');
+                break;
+              default:
+                jQuery('#form-fullscreen-info').text("Quelque chose s'est mal passé :(");
+            }
+          }
         }
       });
     }

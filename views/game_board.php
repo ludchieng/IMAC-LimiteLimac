@@ -16,7 +16,7 @@ require_once('views/modals.php');
 <div id="game">
 
     <aside id="room-panel">
-        <div id="room-round">Round : <span id="room-round-current">1</span>/<span id="room-round-max">20</span></div>
+        <div id="room-round">Round : <span id="room-round-current">•</span>/<span id="room-round-max">•</span></div>
         <div id="room-time"><span id="room-time-min">••</span>:<span id="room-time-sec">••</span></div>
         <div id="black-card">
             <img src="img/imac-uni-white.svg">
@@ -26,9 +26,11 @@ require_once('views/modals.php');
 
     <main>
         <h1 id="game-title"></h1>
+        <div id="game-info"></div>
         <button id="game-ready-btn"><span>Prêt</span></button>
-        <div id="white-cards-panel"></div>
+        <div id="playing-round-cards-panel"></div>
         <div id="end-round-panel"></div>
+        <div id="celebration-panel"></div>
     </main>
 
     <aside id="room-players">

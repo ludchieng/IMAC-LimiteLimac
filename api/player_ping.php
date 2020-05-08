@@ -43,8 +43,9 @@ try {
     switch ($status) {
       case ROOM_STATUS_STANDBY:
         $r['response']['players'] = get_room_players_details($id_room);
+        $r['response']['share'] = "https://{$_SERVER['HTTP_HOST']}/join.php?idroom=" . $id_room;
       case ROOM_STATUS_PLAYING_ROUND:
-        $r['response']['whiteCards'] = get_player_cards($pname);
+        $r['response']['whiteCards'] = get_player_handcards($pname);
         $r['response']['blackCard'] = get_round_card($id_room);
         $r['response']['remainingTime'] = get_round_remaining_time($id_room);
         $r['response']['players'] = get_room_players_details($id_room);
@@ -54,14 +55,20 @@ try {
         $players = get_room_players_details($id_room);
         for ($i=0; $i < count($players); $i++) { 
           if (!$players[$i]['isGameMaster']) {
-            $players[$i]['selected'] = get_player_selected_cards($players[$i]['pname']);
+            $players[$i]['selected'] = get_player_selected_hcards($players[$i]['pname']);
           }
           $r['response']['players'][] = $players[$i];
         }
 
         break;
       case ROOM_STATUS_CELEBRATION:
-        $r['response']['players'] = get_room_players_details($id_room);
+        $players = get_room_players_details($id_room);
+        for ($i=0; $i < count($players); $i++) { 
+          if (!$players[$i]['isGameMaster']) {
+            $players[$i]['selected'] = get_player_selected_hcards($players[$i]['pname']);
+          }
+          $r['response']['players'][] = $players[$i];
+        }
         $r['response']['winner'] = $winner = get_round_winner($id_room);
 
         if (can_round_start($id_room)) {
@@ -70,7 +77,6 @@ try {
       break;
     }
   }
-  // TODO
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage() . ' | ' . $e->getTraceAsString());
 } catch (Exception $e) {

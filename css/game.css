@@ -52,6 +52,11 @@
   content: ' !';
 }
 
+#game-info {
+  font-family: Roboto;
+  text-align: center;
+}
+
 #game-ready-btn {
   display: none;
   margin: 50px auto 0 auto;
@@ -103,8 +108,9 @@
   content: ' !';
 }
 
-#white-cards-panel,
-#end-round-panel {
+#playing-round-cards-panel,
+#end-round-panel,
+#celebration-panel {
   display: none;
   margin: 0 auto;
   max-width: 680px;
@@ -119,11 +125,15 @@
   scrollbar-color: rgba(245, 50, 99, 0.644) rgba(78, 40, 49, 0.4);
 }
 
-#game[data-status="PLAYING_ROUND"][data-role="player"] #white-cards-panel {
+#game[data-status="PLAYING_ROUND"][data-role="player"] #playing-round-cards-panel {
   display: flex;
 }
 
 #game[data-status="END_ROUND"] #end-round-panel {
+  display: flex;
+}
+
+#game[data-status="CELEBRATION"] #celebration-panel {
   display: flex;
 }
 

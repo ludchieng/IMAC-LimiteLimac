@@ -164,14 +164,17 @@ function draw_card(string $pname, int $amount = 1): array
 {
   $id_room = get_player($pname, 'id_room');
   // Get random cards from a set of drawable cards for a given in-game player
-  $sql = "SELECT C.id_card, C.content FROM card C
-  WHERE C.id_card LIKE 'W%'
-  AND C.id_card NOT IN (
-    SELECT H.id_card FROM handcard H
-    WHERE H.id_room = :id_room
-  )
-  ORDER BY RAND()
-  LIMIT :amount;
+  $sql = "SELECT C.id_card, C.content
+    FROM card C, `use` U
+    WHERE C.id_pack = U.id_pack
+    AND U.id_room = :id_room
+    AND C.id_card LIKE 'W%'
+    AND C.id_card NOT IN (
+      SELECT H.id_card FROM handcard H
+      WHERE H.id_room = :id_room
+    )
+    ORDER BY RAND()
+    LIMIT :amount;
   ";
 
   $pdo = connect_db_player();
@@ -194,6 +197,29 @@ function draw_card(string $pname, int $amount = 1): array
   return $cards;
 }
 
+function has_card(string $pname, string $id_card): bool
+{
+  $handcards = array_column(get_player_handcards($pname), 'id_card');
+  return in_array($id_card, $handcards);
+}
+
+function owns_card(string $pname, string $id_card): bool
+{
+  $handcards = array_column(get_player_pack_cards($pname), 'id_card');
+  return in_array($id_card, $handcards);
+}
+
+function get_player_pack_cards(string $pname): array
+{
+  $sql = 'SELECT C.id_card, C.content
+    FROM card C, player P
+    WHERE P.pname = :pname
+    AND P.id_pack = C.id_pack;
+  ';
+  $data = get_multiple($sql, ['pname' => $pname]);
+  return $data;
+}
+
 /**
  * Returns the cards' attributes of the
  * specified player.
@@ -202,7 +228,7 @@ function draw_card(string $pname, int $amount = 1): array
  * @return array the cards' attributes of the
  * specified player
  */
-function get_player_cards(string $pname): array
+function get_player_handcards(string $pname): array
 {
   $sql = 'SELECT H.id_card, C.content, H.isSelected
     FROM handcard H, card C
@@ -214,7 +240,7 @@ function get_player_cards(string $pname): array
 }
 
 
-function get_player_selected_cards($pname): ?array
+function get_player_selected_hcards($pname): ?array
 {
   $sql = 'SELECT C.id_card, C.content
     FROM handcard H, card C

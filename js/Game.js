@@ -13,10 +13,11 @@ function Game(pname, token) {
 
   this.count = 0;
   this.playerDot;
+  this.info;
 
   this.updateCookie = () => {
     setCookie('pname', this.pname, 4);
-    setCookie('token', this.token, .5);
+    setCookie('token', this.token, 4);
   };
 
   this.apiSetReady = (value) => {
@@ -25,7 +26,19 @@ function Game(pname, token) {
       data: { pname: this.pname, token: this.token, ready: value }
     }).done((r) => {
       if (!r.success) {
-        throw r.errors[0].message;
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#game-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#game-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#game-info').text('Erreur :(');
+          }
+        }
       } else {
         if (r.response.isReady == 1) {
           jQuery("#game-ready-btn").addClass('game-ready-btn-active');
@@ -46,7 +59,19 @@ function Game(pname, token) {
       data: { pname: this.pname, token: this.token, idcard: idCard }
     }).done((r) => {
       if (!r.success) {
-        throw r.errors[0].message;
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#game-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#game-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#game-info').text('Erreur :(');
+          }
+        }
       } else {
         jQuery('.white-card').removeClass('white-card-selected');
         for (let sc of r.response.selected) {
@@ -63,7 +88,19 @@ function Game(pname, token) {
       data: { pname: this.pname, token: this.token, idcard: dom.data('id') }
     }).done((r) => {
       if (!r.success)
-        throw r.errors[0].message;
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#game-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#game-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#game-info').text('Erreur :(');
+          }
+        }
     });
   };
 
@@ -73,7 +110,19 @@ function Game(pname, token) {
       data: { pname: getCookie('pname'), token: getCookie('token') }
     }).done((r) => {
       if (!r.success) {
-        throw r.errors[0].message;
+        for (let e of r.errors) {
+          switch (e.code) {
+            case 101:
+              jQuery('#game-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              break;
+            case 401:
+            case 403:
+              jQuery('#game-info').text("Échec de l'authentification");
+              break;
+            default:
+              jQuery('#game-info').text('Erreur :(');
+          }
+        }
       } else {
         this.count++;
         if (r.response.stillInGame == 'false') {
@@ -111,15 +160,21 @@ function Game(pname, token) {
     this.domRefreshPlayers(r);
     switch (r.status) {
       case 'STANDBY':
-        this.updateCookie();/*
+        //this.updateCookie();
+        /*
         if (this.me.isReady == true) {
           jQuery("#game-ready-btn").addClass('game-ready-btn-active');
         } else {
           jQuery("#game-ready-btn").removeClass('game-ready-btn-active');
         }*/
+        this.domRefreshInfo(`
+          <strong>Invite d'autres gens avec ce lien:</strong> <br/>
+          <span style="color: #ff226c">${µ(r.share)}</span>
+        `);
         this.clockStop();
         break;
       case 'PLAYING_ROUND':
+        this.domRefreshInfo('');
         jQuery('#end-round-panel').html('');
         this.domRefreshCards(r);
         this.clock(r.remainingTime);
@@ -130,10 +185,18 @@ function Game(pname, token) {
         this.domRefreshEndRoundPanel(r);
         break;
       case 'CELEBRATION':
-        this.updateCookie();
+        this.domRefreshCelebrationPanel(r);
+        //this.updateCookie();
         break;
     }
   };
+
+  this.domRefreshInfo = (msg) => {
+    if (this.info != msg) {
+      jQuery('#game-info').html(msg)
+      this.info = msg;
+    }
+  }
 
   this.domRefreshCards = (r) => {
     if (undefined == r.blackCard.id_card) {
@@ -145,17 +208,17 @@ function Game(pname, token) {
 
     if (this.wCards.length != r.whiteCards.length) {
       this.wCards = r.whiteCards;
-      jQuery('#white-cards-panel').html('');
+      jQuery('#playing-round-cards-panel').html('');
       for (let i = 0; i < r.whiteCards.length; i++) {
         let wcR = r.whiteCards[i];
-        jQuery('#white-cards-panel').append(`
+        jQuery('#playing-round-cards-panel').append(`
           <div class="white-card${µ(wcR.isSelected ? ' white-card-selected' : '')}" data-number="${µ(i)}" data-id="${µ(wcR.id_card)}">
               <img class="white-card-icon" src="img/imac-uni-darkblue.svg">
               <p class="white-card-content">${µ(wcR.content)}</p>
           </div>
         `);
       }
-      jQuery('#white-cards-panel .white-card').click(this.apiToggleCard);
+      jQuery('#playing-round-cards-panel .white-card').click(this.apiToggleCard);
     }
   };
 
@@ -199,7 +262,7 @@ function Game(pname, token) {
       let li = ul.find(`li[data-pname="${µ(p.pname)}"]`);
       let liDot = li.find('.room-players-dot');
       if (p.color != rgbToHex(liDot[0].style['border-color'])) {
-        liDot.css('border-color', '#'+p.color);
+        liDot.css('border-color', '#' + p.color);
       }
       if (p.isGameMaster == true) {
         li.addClass('room-players-gamemaster');
@@ -260,7 +323,25 @@ function Game(pname, token) {
       jQuery('#end-round-panel .white-card').click(this.apiSelectWinner);
     }
   };
-  
+
+  this.domRefreshCelebrationPanel = (r) => {
+    jQuery('#celebration-panel').html('');
+    let ps = r.players;
+    for (let p of ps) {
+      if (p.pname == r.winner) {
+        for (let sc of p.selected) {
+          jQuery('#celebration-panel').append(`
+            <div class="white-card" data-id="${µ(sc.id_card)}">
+              <p class="white-card-content">${µ(sc.content)}</p>
+              <svg viewBox="0 0 380 304" class="white-card-icon"><defs><style>.col-${µ(p.pname)}{fill:#${µ(p.color)};}</style></defs><g><g><g><path class="col-${µ(p.pname)}" d="M228,152,152,76l38-38L152,0,114,38,76,0,38,38,76,76,0,152l76,76L38,266l38,38,38-38,38,38,38-38-38-38ZM76,152l38-38,38,38-38,38Z"></path><polygon class="col-${µ(p.pname)}" points="228 0 190 38 304 152 190 266 228 304 380 152 228 0"></polygon></g></g></g></svg>
+              <span class="white-card-author">${µ(p.pname)}</span>
+            </div>
+          `);
+        }
+      }
+    }
+  };
+
   (() => {
     this.apiPing((r) => {
       this.me = r.response.players.find((e) => e.pname == this.pname);

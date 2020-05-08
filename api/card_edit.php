@@ -38,7 +38,8 @@ try {
       throw_error($r, 401);
   }
 
-  //TODO only allow editing for his own card
+  if (!owns_card($pname, $id_card))
+    throw_error($r, 400, "{$pname} does not own card {$id_card}");
 
   set_card($id_card, 'content', $content);
   
