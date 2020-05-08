@@ -177,7 +177,7 @@ INSERT INTO `pack` (`id_pack`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `player` (
   `pname` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pass` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `color` char(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` char(6) COLLATE utf8mb4_unicode_ci DEFAULT 'eae5eb',
   `token` char(7) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_pack` int(11) DEFAULT NULL,
   `winCount` int(11) NOT NULL DEFAULT '0',
@@ -187,16 +187,17 @@ CREATE TABLE IF NOT EXISTS `player` (
   `hasPlayed` tinyint(1) NOT NULL DEFAULT '0',
   `hasWon` tinyint(1) NOT NULL DEFAULT '0',
   `lastPing` datetime DEFAULT NULL,
+  `lastActivity` datetime DEFAULT NULL,
   `id_room` int(11) DEFAULT NULL,
   PRIMARY KEY (`pname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `id_room`) VALUES
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', '0EbtA6U', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f91f1f', 'EJJwDIh', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '4eefde', 'nGaiA37', 2, 0, 0, 0, 0, 0, 0, NULL, NULL),
-	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'H@RRGm2', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL);
+INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `lastActivity`, `id_room`) VALUES
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'LrjvVWI', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:38', NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f91f1f', 'J8T@nBm', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:40', NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '4eefde', '8YopV@W', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:39', NULL),
+	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'wAN7OW7', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:41', NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (
