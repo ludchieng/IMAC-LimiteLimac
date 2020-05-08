@@ -99,6 +99,7 @@ function set_player(string $pname, string $attr, $value): void
  */
 function authenticate_player(string $pname, string $pass): bool
 {
+  set_current_timestamp('player', $pname, 'lastActivity');
   return password_verify($pass, get_player($pname, 'pass'));
 }
 
@@ -113,6 +114,7 @@ function authenticate_player(string $pname, string $pass): bool
  */
 function is_valid_token(string $pname, string $token): bool
 {
+  set_current_timestamp('player', $pname, 'lastActivity');
   return get_player($pname, 'token') == $token;
 }
 

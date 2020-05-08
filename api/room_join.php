@@ -36,7 +36,7 @@ try {
   } else if (isset($_POST['token'])) {
     if (!is_valid_token($pname, $_POST['token']))
       throw_error($r, 401);
-
+    
     $token = join_room($id_room, $pname, $_POST['token']);
   }
 

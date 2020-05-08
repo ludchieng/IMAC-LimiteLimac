@@ -10,6 +10,10 @@ try {
 
   if ('GET' !== $_SERVER['REQUEST_METHOD'])
     throw_error($r, 501, "had {$_SERVER['REQUEST_METHOD']}");
+
+  if (isset($_COOKIE['pname'])) {
+    set_current_timestamp('player', $_COOKIE['pname'], 'lastActivity');
+  }
   
   purge_empty_rooms();
 

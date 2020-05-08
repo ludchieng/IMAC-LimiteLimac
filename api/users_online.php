@@ -11,9 +11,13 @@ try {
   if ('GET' !== $_SERVER['REQUEST_METHOD'])
     throw_error($r, 501, "had {$_SERVER['REQUEST_METHOD']}");
 
-  $sql = 'SELECT P.pname, P.color, P.winCount
-    FROM player P WHERE P.id_room IS NOT NULL;
-  ';
+  if (isset($_COOKIE['pname'])) {
+    set_current_timestamp('player', $_COOKIE['pname'], 'lastActivity');
+  }
+
+  $sql = 'SELECT P.pname, P.color, P.winCount FROM player P
+    WHERE P.lastActivity > CURRENT_TIMESTAMP() - 120
+  ;';
 
   $r['response'] = [];
   $r['response']['online'] = get_multiple($sql);

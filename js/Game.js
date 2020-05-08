@@ -241,7 +241,7 @@ function Game(pname, token) {
 
   this.domRefreshPlayers = (r) => {
     let ul = $('#room-players ul');
-    if (this.players.length !== r.players.length) {
+    if (this.mustPlayersBeRefreshed(r)) {
       this.players = r.players;
       ul.text('');
       for (let p of r.players) {
@@ -340,6 +340,27 @@ function Game(pname, token) {
         }
       }
     }
+  };
+
+  this.mustPlayersBeRefreshed = (r) => {
+    if (!Array.isArray(this.players)
+      || !Array.isArray(r.players)
+      || this.players.length !== r.players.length
+    ) {
+      return true;
+    }
+    
+    let oldP = this.players.map((e) => e.pname);
+    let newP = r.players.map((e) => e.pname);
+    
+    oldP = oldP.concat().sort();
+    newP = newP.concat().sort();
+
+    for (var i = 0; i < oldP.length; i++) {
+      if (oldP[i] !== newP[i])
+        return true;
+    }
+    return false;
   };
 
   (() => {

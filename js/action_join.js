@@ -15,12 +15,12 @@ $(document).ready(() => {
         switch (e.code) {
           case 203:
             $('#form-fullscreen-alert').html("Le salon n'existe plus :( <br/>Redirection...");
-            window.setTimeout(() => {
-              location.href = "/index.php?action=welcome"
-            }, 3000);
             break;
         }
       }
+      window.setTimeout(() => {
+        location.href = "/index.php?action=welcome"
+      }, 3000);
     } else {
       $('#join button').show();
       $('#room-details').text(r.response.name)
@@ -49,16 +49,20 @@ $(document).ready(() => {
               $('#form-fullscreen-alert').text(`Paramètre manquant: ${µ(e.message)}`);
               break;
             case 203:
-              $('#form-fullscreen-alert').text('Erreur salon inexistant');
+              $('#form-fullscreen-alert').text('Erreur salon inexistant <br/>Redirection...');
               break;
             case 401:
             case 403:
               location.href = `index.php?action=login&join=${µ(idroom)}`;
               break;
             default:
-              $('#form-fullscreen-alert').text('Erreur accès au salon :(');
+              $('#form-fullscreen-alert').html('Erreur accès au salon :( <br/>Redirection...');
           }
         }
+        delCookie('pname')
+        window.setTimeout(() => {
+          location.href = "/index.php?action=login"
+        }, 3000);
       }
     });
 
