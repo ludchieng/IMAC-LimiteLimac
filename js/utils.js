@@ -28,6 +28,16 @@ function isCertifiedConnection() {
   return location.protocol === 'https:';
 }
 
+function getParam(name) {
+  let res;
+  let tmp = [];
+  location.search.substr(1).split("&").forEach((item) => {
+    tmp = item.split("=");
+    if (tmp[0] === name) res = decodeURIComponent(tmp[1]);
+  });
+  return res;
+}
+
 function µ(str) {
   // Escape < > chars
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -39,8 +49,8 @@ function rgbToHex(rgb) {
   rgb = rgb.replace(")", "");
   rgb = rgb.split(",");
   var hex = [0, 0, 0];
-  hex[0] = parseFloat(rgb[0]).toString(16).padStart(2,0);
-  hex[1] = parseFloat(rgb[1]).toString(16).padStart(2,0);
-  hex[2] = parseFloat(rgb[2]).toString(16).padStart(2,0);
+  hex[0] = parseFloat(rgb[0]).toString(16).padStart(2, 0);
+  hex[1] = parseFloat(rgb[1]).toString(16).padStart(2, 0);
+  hex[2] = parseFloat(rgb[2]).toString(16).padStart(2, 0);
   return hex[0] + hex[1] + hex[2];
 }

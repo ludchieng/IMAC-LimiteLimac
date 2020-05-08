@@ -10,7 +10,7 @@
     </button>
 </header>
 <?php
-require_once('views/modals.php');
+require_once('views/modal_user.php');
 ?>
 
 <div id="game">
@@ -26,7 +26,7 @@ require_once('views/modals.php');
 
     <main>
         <h1 id="game-title"></h1>
-        <div id="game-info"></div>
+        <div id="game-alert"></div>
         <button id="game-ready-btn"><span>Prêt</span></button>
         <div id="playing-round-cards-panel"></div>
         <div id="end-round-panel"></div>

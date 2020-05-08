@@ -2,11 +2,11 @@ function Manager() {
   this.pname = getCookie('pname');
   this.token = getCookie('token');
   this.data;
-  this.search = jQuery('aside #search-card').val().toLowerCase();
+  this.search = $('aside #search-card').val().toLowerCase();
   this.selected;
 
   (this.apiGetCards = () => {
-    jQuery.ajax({
+    $.ajax({
       type: 'GET',
       url: 'api/cards_list.php'
     }).done((r) => {
@@ -17,28 +17,28 @@ function Manager() {
   })();
 
   this.apiCardCreate = () => {
-    jQuery.ajax({
+    $.ajax({
       type: 'POST',
       url: 'api/card_create.php',
       data: {
         pname: this.pname,
         token: this.token,
-        content: jQuery('#card-create-content').text(),
-        type: jQuery('input[name="card-create"]:checked').val()
+        content: $('#card-create-content').text(),
+        type: $('input[name="card-create"]:checked').val()
       }
     }).done((r) => {
       if (!r.success) {
         for (let e of r.errors) {
           switch (e.code) {
             case 101:
-              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              $('#manager-alert').text(`Paramètre manquant: ${µ(e.message)}`);
               break;
             case 401:
             case 403:
-              jQuery('#manager-info').text("Échec de l'authentification");
+              $('#manager-alert').text("Échec de l'authentification");
               break;
             default:
-              jQuery('#manager-info').text('Erreur création de carte :(');
+              $('#manager-alert').text('Erreur création de carte :(');
           }
         }
       } else {
@@ -51,7 +51,7 @@ function Manager() {
           };
         }
         this.data[c.id_pack].cards.push(c);
-        let domPack = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"]`);
+        let domPack = $(`.card-pack[data-id="${µ(c.id_pack)}"]`);
         let isBlack = c.id_card.charAt(0) === 'B';
         domPack.append(`
           <div class="card card-${µ(isBlack ? 'black' : 'white')} card-selectable" data-id="${µ(c.id_card)}">
@@ -60,7 +60,7 @@ function Manager() {
             <span class="card-author"></span>
           </div>
         `);
-        jQuery(`main .card[data-id="${µ(c.id_card)}"]`).click(this.onClickCard);
+        $(`main .card[data-id="${µ(c.id_card)}"]`).click(this.onClickCard);
 
         if (r.response.hasCreatedPack == true) {
           this.domSetData();
@@ -70,43 +70,43 @@ function Manager() {
   };
 
   this.apiCardEdit = () => {
-    jQuery.ajax({
+    $.ajax({
       type: 'POST',
       url: 'api/card_edit.php',
       data: {
         pname: this.pname,
         token: this.token,
         idcard: this.selected.data('id'),
-        content: jQuery('#card-edit-content').text()
+        content: $('#card-edit-content').text()
       }
     }).done((r) => {
       if (!r.success) {
         for (let e of r.errors) {
           switch (e.code) {
             case 101:
-              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              $('#manager-alert').text(`Paramètre manquant: ${µ(e.message)}`);
               break;
             case 400:
-              jQuery('#manager-info').text(`Requête non autorisé: ${µ(e.message)}`);
+              $('#manager-alert').text(`Requête non autorisé: ${µ(e.message)}`);
               break;
             case 401:
             case 403:
-              jQuery('#manager-info').text("Échec de l'authentification");
+              $('#manager-alert').text("Échec de l'authentification");
               break;
             default:
-              jQuery('#manager-info').text('Erreur édition de carte :(');
+              $('#manager-alert').text('Erreur édition de carte :(');
           }
         }
       } else {
         let c = r.response.card;
-        let domCard = jQuery(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${µ(c.id_card)}"]`);
+        let domCard = $(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${µ(c.id_card)}"]`);
         domCard.find('.card-content').text(µ(c.content));
       }
     });
   };
 
   this.apiCardDelete = () => {
-    jQuery.ajax({
+    $.ajax({
       type: 'POST',
       url: 'api/card_delete.php',
       data: {
@@ -119,39 +119,39 @@ function Manager() {
         for (let e of r.errors) {
           switch (e.code) {
             case 101:
-              jQuery('#manager-info').text(`Paramètre manquant: ${µ(e.message)}`);
+              $('#manager-alert').text(`Paramètre manquant: ${µ(e.message)}`);
               break;
             case 400:
-              jQuery('#manager-info').text(`Requête non autorisé: ${µ(e.message)}`);
+              $('#manager-alert').text(`Requête non autorisé: ${µ(e.message)}`);
               break;
             case 401:
             case 403:
-              jQuery('#manager-info').text("Échec de l'authentification");
+              $('#manager-alert').text("Échec de l'authentification");
               break;
             default:
-              jQuery('#manager-info').text('Erreur suppression de carte :(');
+              $('#manager-alert').text('Erreur suppression de carte :(');
           }
         }
       } else {
-        let domCard = jQuery(`.card[data-id="${this.selected.data('id')}"]`);
+        let domCard = $(`.card[data-id="${this.selected.data('id')}"]`);
         domCard.remove();
       }
     });
   };
 
   this.domSetData = () => {
-    jQuery('#card-panel').empty();
-    jQuery('aside #select-packs').empty();
+    $('#card-panel').empty();
+    $('aside #select-packs').empty();
 
     for (let i in this.data) {
       let p = this.data[i];
 
       if (p.name == this.pname) {
-        jQuery('#card-panel').prepend(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+        $('#card-panel').prepend(`<div class="card-pack" data-id="${µ(i)}"></div>`);
       } else {
-        jQuery('#card-panel').append(`<div class="card-pack" data-id="${µ(i)}"></div>`);
+        $('#card-panel').append(`<div class="card-pack" data-id="${µ(i)}"></div>`);
       }
-      let domPack = jQuery(`.card-pack[data-id="${µ(i)}"]`);
+      let domPack = $(`.card-pack[data-id="${µ(i)}"]`);
       domPack.append(`
         <div class="card-pack-header">
           <h2>${µ(p.name)}</h2>
@@ -159,7 +159,7 @@ function Manager() {
         </div>
       `);
 
-      jQuery('aside #select-packs').append(`
+      $('aside #select-packs').append(`
         <div class="col-6 custom-control custom-checkbox">
           <input type="checkbox" class="form-control custom-control-input" id="select-packs-${µ(i)}" data-id="${µ(i)}" checked>
           <label class="custom-control-label" for="select-packs-${µ(i)}">${µ(p.name)}</label>
@@ -178,18 +178,18 @@ function Manager() {
       }
     }
 
-    jQuery('#select-packs input').click((e) => {
-      let dom = jQuery(e.currentTarget);
+    $('#select-packs input').click((e) => {
+      let dom = $(e.currentTarget);
       let idPack = dom.data('id');
       if (dom.is(':checked')) {
-        jQuery(`.card-pack[data-id="${µ(idPack)}"]`).removeClass('hidden');
+        $(`.card-pack[data-id="${µ(idPack)}"]`).removeClass('hidden');
       } else {
-        jQuery(`.card-pack[data-id="${µ(idPack)}"]`).addClass('hidden');
+        $(`.card-pack[data-id="${µ(idPack)}"]`).addClass('hidden');
       }
       this.domRefreshInfo();
     });
 
-    jQuery('main .card-selectable').click(this.onClickCard);
+    $('main .card-selectable').click(this.onClickCard);
   };
 
   this.domRefreshCards = () => {
@@ -199,48 +199,48 @@ function Manager() {
       for (let c of p.cards) {
         isVisible = -1 != c.content.toLowerCase().indexOf(this.search);
         if (c.id_card.charAt(0) == 'B') {
-          isVisible = isVisible && jQuery('#show-black').is(':checked');
+          isVisible = isVisible && $('#show-black').is(':checked');
         } else {
-          isVisible = isVisible && jQuery('#show-white').is(':checked');
+          isVisible = isVisible && $('#show-white').is(':checked');
         }
         if (!isVisible) {
-          jQuery(`.card[data-id="${µ(c.id_card)}"]`).addClass('hidden');
+          $(`.card[data-id="${µ(c.id_card)}"]`).addClass('hidden');
         } else {
-          jQuery(`.card[data-id="${µ(c.id_card)}"]`).removeClass('hidden');
+          $(`.card[data-id="${µ(c.id_card)}"]`).removeClass('hidden');
         }
       }
-      /*if (0 == jQuery(`.card-pack[data-id="${µ(p.id_pack)}"] .card:not(.hidden)`).length) {
+      /*if (0 == $(`.card-pack[data-id="${µ(p.id_pack)}"] .card:not(.hidden)`).length) {
         // No card shown in this pack
-        jQuery(`.card-pack[data-id="${µ(i)}"]`).addClass('hidden');
+        $(`.card-pack[data-id="${µ(i)}"]`).addClass('hidden');
       } else {
-        jQuery(`.card-pack[data-id="${µ(i)}"]`).removeClass('hidden');
+        $(`.card-pack[data-id="${µ(i)}"]`).removeClass('hidden');
       }*/
       this.domRefreshInfo();
     }
   };
 
   this.domRefreshInfo = () => {
-    if (0 == jQuery('.card:not(.hidden)').length
-      || 0 == jQuery('.card-pack:not(.hidden)').length) {
+    if (0 == $('.card:not(.hidden)').length
+      || 0 == $('.card-pack:not(.hidden)').length) {
       // No pack shown
-      jQuery('#info').removeClass('hidden');
+      $('#info').removeClass('hidden');
     } else {
-      jQuery('#info').addClass('hidden');
+      $('#info').addClass('hidden');
     }
   };
 
   this.onClickCard = (e) => {
-    jQuery('#card-edit-container').removeClass('hidden');
-    jQuery('#card-edit-info').addClass('hidden');
+    $('#card-edit-container').removeClass('hidden');
+    $('#card-edit-alert').addClass('hidden');
     if (this.selected !== undefined)
       this.selected.removeClass('card-selected');
-    let dom = jQuery(e.currentTarget);
+    let dom = $(e.currentTarget);
     this.selected = dom;
     if (dom.hasClass('card-selected'))
       dom.removeClass('card-selected');
     else
       dom.addClass('card-selected');
-    let domEdit = jQuery('#card-edit .card');
+    let domEdit = $('#card-edit .card');
     if (dom.hasClass('card-white')) {
       domEdit.addClass('card-white');
       domEdit.removeClass('card-black');

@@ -38,6 +38,7 @@ try {
     throw_error($r, 666, 'Could not set token');
 
   $r['response']['token'] = $token;
+  $r['response']['color'] = get_player($pname, 'color');
 
 } catch (PDOException $e) {
   throw_error($r, 201, $e->getMessage());

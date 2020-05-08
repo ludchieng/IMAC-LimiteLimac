@@ -1,8 +1,7 @@
 <?php
 if (!isset($_COOKIE['pname'], $_COOKIE['token']))
-    header('Location: index.php?action=login');
+    header('Location: /index.php?action=login');
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -88,7 +87,7 @@ if (!isset($_COOKIE['pname'], $_COOKIE['token']))
             </div>
             <div id="card-edit" class="my-3">
                 <h5>Modifier ma carte</h5>
-                <div id="card-edit-info">Sélectionne une de tes cartes 🙃</div>
+                <div id="card-edit-alert">Sélectionne une de tes cartes 🙃</div>
                 <div id="card-edit-container" class="row hidden" style="align-items: end">
                     <div class="card card-white m-0 col-6">
                         <img class="card-icon card-icon-dark hidden" src="img/imac-uni-darkblue.svg">

@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
 
-  jQuery.ajax({
+  $.ajax({
       type: "GET",
       url: "api/users_online.php"
   }).done((r) => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
           clearInterval(itv);
         } else {
           if (u.pname != getCookie('pname')) {
-            jQuery('#lezami ul').append(`
+            $('#lezami ul').append(`
             <li class="fade-in">
                 <div class="dot" style="background-color: #${µ(u.color)}"></div>
                 <p>${µ(u.pname)}</p>

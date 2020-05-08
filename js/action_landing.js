@@ -1,24 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
   if (null == getCookie('pname')) {
-    jQuery('#btn-signout').addClass('btn-hidden');
-    jQuery('#btn-user').addClass('btn-hidden');
-    jQuery('#btn-edit').addClass('btn-hidden');
+    $('#btn-signout').addClass('btn-hidden');
+    $('#btn-user').addClass('btn-hidden');
+    $('#btn-edit').addClass('btn-hidden');
   } else {
-    jQuery('#btn-signout').removeClass('btn-hidden');
-    jQuery('#btn-user').removeClass('btn-hidden');
-    jQuery('#btn-edit').removeClass('btn-hidden');
+    $('#btn-signout').removeClass('btn-hidden');
+    $('#btn-user').removeClass('btn-hidden');
+    $('#btn-edit').removeClass('btn-hidden');
   }
 });
 
-jQuery('#btn-play').click(() => {
+$('#btn-play').click(() => {
   location.href = 'index.php?action=welcome';
 });
 
-jQuery('#btn-edit').click(() => {
+$('#btn-edit').click(() => {
   location.href = 'manager.php';
 });
 
-jQuery('#btn-signout').click(() => {
+$('#btn-signout').click(() => {
   delCookie('pname');
   delCookie('token');
   location.href = 'index.php';

@@ -14,7 +14,7 @@
     </button>
 </header>
 <?php
-require_once('views/modals.php');
+require_once('views/modal_user.php');
 ?>
 
 <div id="welcome">
@@ -27,16 +27,11 @@ require_once('views/modals.php');
         <h1 class="title">Bienvenue !</h1>
         <div id="room-form">
             <div id="room-form-buttons">
-                <button type="submit" class="sub" id="create-button" data-toggle="modal" data-target="#create"><span>Créer</span></button>
-                <button type="submit" class="sub" id="join-button" data-toggle="modal" data-target="#join"><span>Rejoindre</span></button>
+                <button type="submit" class="sub" id="create-room-btn" data-toggle="modal" data-target="#create-room-modal"><span>Créer</span></button>
+                <button type="submit" class="sub" id="join-room-btn"><span>Rejoindre</span></button>
             </div>
-            <form id="room-create">
-                <div id="room-create-info"></div>
-                <input type="text" placeholder="Nom du salon">
-                <button type="submit" class="minisub"><span>Go</span></button>
-            </form>
             <form id="room-join">
-                <div id="room-join-info"></div>
+                <div id="room-join-alert"></div>
                 <input type="text" placeholder="ID du salon">
                 <button type="submit" class="minisub"><span>Go</span></button>
             </form>
@@ -49,7 +44,7 @@ require_once('views/modals.php');
     </aside>
 </div>
 
-<?php require('views/create_room.php') ?>
+<?php require('views/modal_create_room.php') ?>
 
 <script src="js/get_users_online.js"></script>
 <script src="js/get_rooms_online.js"></script>

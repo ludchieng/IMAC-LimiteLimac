@@ -1,11 +1,11 @@
 function ColorPicker(hex) {
   this.hex = hex;
-  this.inp1 = jQuery("#inp1")[0];
-  this.inp2 = jQuery("#inp2")[0];
-  this.inp3 = jQuery("#inp3")[0];
-  this.txt = jQuery("#txt")[0];
-  this.view = jQuery("#view")[0];
-  //this.copy = jQuery("copy");
+  this.inp1 = $("#inp1")[0];
+  this.inp2 = $("#inp2")[0];
+  this.inp3 = $("#inp3")[0];
+  this.txt = $("#txt")[0];
+  this.view = $("#view")[0];
+  //this.copy = $("copy");
   this.root = document.documentElement;
   this.h = [];
   this.s = [];
@@ -16,9 +16,9 @@ function ColorPicker(hex) {
       var color = this.hexToHSL(this.hex);
     else
       var color = {h: 0, s: 0, l: .7};
-    jQuery('#inp1').val(color.h * 360);
-    jQuery('#inp2').val(color.s * 100);
-    jQuery('#inp3').val(color.l * 100);
+    $('#inp1').val(color.h * 360);
+    $('#inp2').val(color.s * 100);
+    $('#inp3').val(color.l * 100);
     this.updateColorPicker();
   };
 
@@ -76,7 +76,7 @@ function ColorPicker(hex) {
       "--color3",
       "hsl(" + this.inp1.value + ", 100%, " + this.inp3.value + "%)"
     );
-    jQuery("#rgb").text(window.getComputedStyle(this.view).backgroundColor);
+    $("#rgb").text(window.getComputedStyle(this.view).backgroundColor);
     var str = window.getComputedStyle(this.view).backgroundColor;
     str = str.replace("rgb", "");
     str = str.replace("(", "");
@@ -98,7 +98,7 @@ function ColorPicker(hex) {
     }
 
     hex = "#" + hex.join("");
-    jQuery("#hex").text(hex);
+    $("#hex").text(hex);
   }
   this.updateColorPicker();
   this.inp1.oninput = this.updateColorPicker;

@@ -1,23 +1,23 @@
 var game;
 var itv;
 
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
   game = new Game(getCookie('pname'), getCookie('token'));
   game.apiPing();
   itv = setInterval(game.apiPing, 2000);
 
-  jQuery('#game-ready-btn').click((e) => {
+  $('#game-ready-btn').click((e) => {
     if (game.me.isReady == true) {
       game.playerDot.css('background-color', 'transparent');
     } else {
       game.playerDot.css('background-color', `#${µ(game.me.color)}`);
     }
-    jQuery(e.currentTarget).toggleClass('game-ready-btn-active');
+    $(e.currentTarget).toggleClass('game-ready-btn-active');
     game.apiSetReady(!game.me.isReady);
   })
 
-  jQuery('#logo').click(() => {
-    jQuery.ajax({
+  $('#logo').click(() => {
+    $.ajax({
       type: "POST", url: "api/room_quit.php",
       data: { pname: getCookie('pname'), token: getCookie('token') }
     }).done((r) => {
@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  jQuery('#btn-quit').click(() => {
-    jQuery.ajax({
+  $('#btn-quit').click(() => {
+    $.ajax({
       type: "POST", url: "api/room_quit.php",
       data: { pname: getCookie('pname'), token: getCookie('token') }
     }).done((r) => {

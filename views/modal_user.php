@@ -35,18 +35,18 @@
 
 <script src="../js/colorpicker.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
     let cp = new ColorPicker(getCookie('color'));
     cp.init();
     
 
-    jQuery('#btn-submit-color').click(() => {
-        jQuery.ajax({
+    $('#btn-submit-color').click(() => {
+        $.ajax({
             type: "POST", url: "api/player_edit_color.php",
             data: {
                 pname: getCookie('pname'),
                 token: getCookie('token'),
-                color: jQuery('#hex').text().slice(1,7)
+                color: $('#hex').text().slice(1,7)
             }
         }).done((r) => {
             if (!r.success) {

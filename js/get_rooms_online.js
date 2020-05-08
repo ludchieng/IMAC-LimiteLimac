@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(() => {
 
-  jQuery.ajax({
+  $.ajax({
     type: "GET",
     url: "api/rooms_online.php"
   }).done((r) => {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (r === undefined) {
           clearInterval(itv);
         } else {
-          jQuery('#lezalons ul').append(`
+          $('#lezalons ul').append(`
           <li class="fade-in">
             ${µ(r.name)} <span class="txt-gold">#${µ(r.id_room)}</span>
           </li>

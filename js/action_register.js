@@ -1,27 +1,27 @@
-jQuery('#register').submit((e) => {
+$('#register').submit((e) => {
   e.preventDefault();
   register(true);
 });
 
 function register(requireHTTPS = true) {
   if (requireHTTPS && !isCertifiedConnection()) {
-    jQuery('#form-fullscreen-info').html(`
+    $('#form-fullscreen-alert').html(`
       Sans HTTPS, ton mot de passe se balade dans la nature, continuer ? 
-      <button id="register-force" class="form-fullscreen-info-btn">Of crous</button>`
+      <button id="register-force" class="form-fullscreen-alert-btn">Of crous</button>`
     );
-    jQuery('#register-force').click((e) => {
+    $('#register-force').click((e) => {
       e.preventDefault();
       register(false);
     });
   } else {
-    let pname = jQuery('#pseudo').val();
-    let pass = jQuery('#passwd').val();
-    let vpass = jQuery('#vpasswd').val();
+    let pname = $('#pseudo').val();
+    let pass = $('#passwd').val();
+    let vpass = $('#vpasswd').val();
 
     if (pass !== vpass) {
-      jQuery('#form-fullscreen-info').text('Les mots de passe ne correspondent pas :(');
+      $('#form-fullscreen-alert').text('Les mots de passe ne correspondent pas :(');
     } else {
-      jQuery.ajax({
+      $.ajax({
         type: "POST",
         url: "api/player_create.php",
         data: {
@@ -32,18 +32,23 @@ function register(requireHTTPS = true) {
         if (r.success) {
           setCookie('pname', pname, 4);
           setCookie('token', r.response.token, 4);
-          location.href = "index.php?action=registerGo";
+          setCookie('color', r.response.color, 24 * 7);
+          if (undefined === getParam('join')) {
+            goToWelcome();
+          } else {
+            goToRoom();
+          }
         } else {
           for (let e of r.errors) {
             switch (e.code) {
               case 101:
-                jQuery('#form-fullscreen-info').text("Renseigne le pseudo et le mot de passe");
+                $('#form-fullscreen-alert').text("Renseigne le pseudo et le mot de passe");
                 break;
               case 202:
-                jQuery('#form-fullscreen-info').text('Ce pseudo est déjà pris :(');
+                $('#form-fullscreen-alert').text('Ce pseudo est déjà pris :(');
                 break;
               default:
-                jQuery('#form-fullscreen-info').text("Quelque chose s'est mal passé :(");
+                $('#form-fullscreen-alert').text("Quelque chose s'est mal passé :(");
             }
           }
         }
@@ -51,3 +56,41 @@ function register(requireHTTPS = true) {
     }
   }
 };
+
+function goToWelcome() {
+  location.href = "index.php?action=welcome";
+}
+
+function goToRoom() {
+  $.ajax({
+    type: "POST",
+    url: "api/room_join.php",
+    data: {
+      idroom: getParam('join'),
+      pname: getCookie('pname'),
+      token: getCookie('token')
+    }
+  }).done((r) => {
+    if (r.success) {
+      setCookie('token', r.response.token, 4);
+      location.href = "index.php?action=play";
+    } else {
+      for (let e of r.errors) {
+        switch (e.code) {
+          case 101:
+            $('#form-fullscreen-alert').text(`Paramètre manquant: ${µ(e.message)}`);
+            break;
+          case 203:
+            $('#form-fullscreen-alert').text('Erreur salon inexistant');
+            break;
+          case 401:
+          case 403:
+            location.href = `index.php?action=login&join=${µ(idroom)}`;
+            break;
+          default:
+            $('#form-fullscreen-alert').text('Erreur accès au salon :(');
+        }
+      }
+    }
+  });
+}

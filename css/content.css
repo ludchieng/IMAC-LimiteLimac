@@ -121,7 +121,8 @@
   color: var(--B);
 }
 
-.modal-body {
+.modal-body,
+.modal-footer {
   font-family: Roboto;
 }
 

@@ -20,7 +20,7 @@
     </button>
 </header>
 <?php
-require_once('views/modals.php');
+require_once('views/modal_user.php');
 ?>
 
 <div id="landing">
