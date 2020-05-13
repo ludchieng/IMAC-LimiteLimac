@@ -76,8 +76,8 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000003', 'Une chaise musicale dans le ZKM', 1),
 	('W000004', 'Aller au Mils à 19h pour avoir une place assise', 1),
 	('W000005', 'Les IMACs qui n\'ont pas fait leur gage', 1),
-	('W000006', 'Les IMACannes', 1),
-	('W000007', 'Les cheveux de Jules', 1),
+	('W000006', 'Du cinéma léger aux IMACannes', 1),
+	('W000007', 'La saucisse party d\'intégration ESIPE', 1),
 	('W000008', 'La chemise de Gérald Robin', 1),
 	('W000009', 'Orgimac', 1),
 	('W000010', 'Mourir de signal', 1),
@@ -88,7 +88,7 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000015', 'Adhérer au BDE Eiffel', 1),
 	('W000016', 'Les crêpes de Jules en post-partiel de maths', 1),
 	('W000017', 'Trois boules, trois trous', 1),
-	('W000018', 'Keven qui fait une référence à Star Wars', 1),
+	('W000018', 'Une course de roulades Maskim vs. Théo', 1),
 	('W000019', 'Boire un Adios Motha Fucka', 1),
 	('W000020', 'Mes incroyables skills en dessin sur OpenGL', 1),
 	('W000021', 'Épeler le nom de famille d\'Eva pour 200€ >w<', 1),
@@ -148,12 +148,12 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000075', 'La raceclette', 1),
 	('W000076', 'Être payer en visibilité', 1),
 	('W000077', 'Biri tout flagada', 1),
-	('W000078', '`Cherrier` UNION `Solo de banane`', 1),
+	('W000078', '`Cherrier` + `Banane`', 1),
 	('W000079', 'Ma collection de Seg fault', 1),
 	('W000080', 'Avoir l\'écharpe du malaise', 1),
 	('W000081', 'Le gilet jaune', 1),
 	('W000082', 'Alors, tu vas rire...', 2),
-	('W000083', 'Le GALA IMAC 2020', 2),
+	('W000083', 'Le GALA IMAC 2020', 3),
 	('W000084', 'Les traditionnelles bisals et frisettes', 3);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 
@@ -211,10 +211,10 @@ CREATE TABLE IF NOT EXISTS `player` (
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `lastActivity`, `id_room`) VALUES
 	('BobLeCon', '$2y$10$3tiqnDIHHTvdg0..bbJc0eyyhYUWtsdPqblYpKUrDZRiEBafrS3Rq', 'eae5eb', 'drEddQz', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'G659Hdh', 2, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 11:55:34', NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f92436', 'mbSZgvU', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 12:07:17', NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '41effb', 'Hn1szMv', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 13:14:58', NULL),
-	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', 'ffd30f', 'lgJw7hX', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-11 15:18:19', NULL),
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'nB8KUdN', 2, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f92436', 'i1tBuCS', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 20:03:34', NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '41d6fb', 'inxqWTa', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 20:05:40', NULL),
+	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', 'ffd30f', 'D8PVne@', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 19:46:28', NULL),
 	('theodau', '$2y$10$3hed4CD/0JIlmvrNaohX4.xHqkpWv9aivDlfycRlvyGPyencfCToC', '9effc3', 'zqAr5yD', 3, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
