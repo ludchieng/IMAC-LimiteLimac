@@ -19,7 +19,6 @@ function create_card(string $pname, string $content, string $type): array
   $inc = get_multiple($sql)[0]['inc'];
   $inc++;
   $inc = str_pad($inc, 5, "0", STR_PAD_LEFT);
-  $content = htmlspecialchars($content);
   $id_pack = get_player($pname, 'id_pack');
   $sql = "INSERT INTO card (id_card, content, id_pack)
     VALUES (:id_card, :content, :id_pack);

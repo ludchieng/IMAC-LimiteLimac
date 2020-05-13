@@ -14,21 +14,21 @@ require_once('actions/actions.php');
 <body>
   <div id="particles-js"></div>
 
-  <a id="logo"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
+  <a id="logo" href="/"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
 
   <div class="main">
     <?php
-    $action = $_GET["action"] ?? 'landing';
+    $action = $action ?? $_GET["action"] ?? '';
 
     switch ($action) {
-      case 'welcome':
-      case 'player':
+      case 'hub':
+      case 'play':
         if (!isset($_COOKIE['pname'], $_COOKIE['token']))
           header('Location: /index.php?action=login');
         break;
       case 'login':
         if (isset($_COOKIE['pname'], $_COOKIE['token']))
-          header('Location: /index.php?action=welcome');
+          header('Location: /index.php?action=hub');
         break;
     }
 
@@ -37,7 +37,6 @@ require_once('actions/actions.php');
     } else {
       include($listeDesActions[$action]);
     }
-    ob_end_flush();
     ?>
   </div>
   <?php require_once('views/footer.php'); ?>

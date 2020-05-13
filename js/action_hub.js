@@ -30,10 +30,10 @@ $("#join-room-btn").click(() => {
   let roomName = $('#room-create input').val();
   if (roomName != "") {
     if (null == getCookie('pname')) {
-      location.href = "index.php?action=login";
+      location.href = "login";
     }
     if (null == getCookie('token')) {
-      location.href = "index.php?action=login";
+      location.href = "login";
     }
     $.ajax({
       type: "POST",
@@ -46,7 +46,7 @@ $("#join-room-btn").click(() => {
     }).done((r) => {
       if (r.success) {
         setCookie('token', r.response.token, 4);
-        location.href = "index.php?action=play";
+        location.href = "/index.php?action=play";
       } else {
         for (let e of r.errors) {
           switch (e.code) {
@@ -70,10 +70,10 @@ $('#room-join').submit((e) => {
   let idroom = $('#room-join input').val();
   if (idroom != "") {
     if (null == getCookie('pname')) {
-      location.href = "index.php?action=login";
+      location.href = "/index.php?action=login";
     }
     if (null == getCookie('token')) {
-      location.href = "index.php?action=login";
+      location.href = "/index.php?action=login";
     }
     $.ajax({
       type: "POST",
@@ -86,7 +86,7 @@ $('#room-join').submit((e) => {
     }).done((r) => {
       if (r.success) {
         setCookie('token', r.response.token, 4);
-        location.href = "index.php?action=play";
+        location.href = "/index.php?action=play";
       } else {
         for (let e of r.errors) {
           switch (e.code) {
@@ -98,7 +98,7 @@ $('#room-join').submit((e) => {
               break;
             case 401:
             case 403:
-              location.href = `index.php?action=login&join=${µ(idroom)}`;
+              location.href = `/index.php?action=login&join=${µ(idroom)}`;
               break;
             default:
               $('#room-join-alert').text('Erreur accès au salon :(');

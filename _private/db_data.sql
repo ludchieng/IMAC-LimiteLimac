@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
 INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
-	('B100001', 'Pourquoi le dernier jeudimac m\'a traumatisé AH', 1),
+	('B100001', 'Pourquoi le dernier jeudimac m\'a traumatisé.', 1),
 	('B100002', 'Le plaisir coupable de Gérald Robin.', 1),
 	('B100003', '50% des jeudimacs finissent par __________.', 1),
 	('B100004', 'La médecine alternative loue, désormais, les bienfaits de __________.', 1),
@@ -40,22 +40,22 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('B100025', 'Ce que j\'ai en tête pendant le coït', 1),
 	('B100026', '__________ en slip, sah quel plaisir !', 1),
 	('B100027', 'Cette idée révolutionnaire va boulverser le monde.', 1),
-	('B100028', 'Rien ne vaut __________ mais à poil', 1),
+	('B100028', 'Rien ne vaut __________ mais à poil.', 1),
 	('B100029', '__________, c\'était bref mais intense.', 1),
 	('B100030', 'Pourquoi j\'ai la main qui colle ?', 1),
-	('B100031', 'Le fantasme de Robillard', 1),
-	('B100032', 'La moitié du budget à l\'IMAC passe dans __________', 1),
-	('B100033', 'Pimentez votre vie sexuelle en amenant __________ dans le lit', 1),
+	('B100031', 'Le fantasme de Robillard.', 1),
+	('B100032', 'La moitié du budget à l\'IMAC passe dans __________.', 1),
+	('B100033', 'Pimentez votre vie sexuelle en amenant __________ dans le lit.', 1),
 	('B100034', 'Qu\'est-ce qui est drôle avant de devenir bizarre ?', 1),
 	('B100035', 'Pourquoi l\'orgie s\'est-elle brusquement arrêtée ?', 1),
 	('B100036', 'Les futurs IMACs ne sont pas prêts pour __________', 1),
-	('B100037', 'C\'est quoi ton mot de passe ? __________ tout attaché', 1),
-	('B100038', '__________, le film', 1),
-	('B100039', 'J\'ai toujours donné des noms à mes sextoys, celui-ci s\'appelle __________', 1),
-	('B100040', 'La gauche va pousser le thème du dialogue social, il faut absolument recentrer le débat sur __________', 1),
-	('B100041', 'Oui mon fils, Dieu pardonne tout, même __________', 1),
-	('B100042', 'Quoi de mieux que __________ pour se mettre en haleine', 1),
-	('B100043', 'Au programme pour l\'IMAC show : __________', 1),
+	('B100037', 'C\'est quoi ton mot de passe ? __________ tout attaché.', 1),
+	('B100038', '__________, le film.', 1),
+	('B100039', 'J\'ai toujours donné des noms à mes sextoys, celui-ci s\'appelle __________.', 1),
+	('B100040', 'La gauche va pousser le thème du dialogue social, il faut absolument recentrer le débat sur __________.', 1),
+	('B100041', 'Oui mon fils, Dieu pardonne tout, même __________.', 1),
+	('B100042', 'Quoi de mieux que __________ pour se mettre en haleine.', 1),
+	('B100043', 'Au programme pour l\'IMAC show : __________.', 1),
 	('B100044', 'L\'ensemble du traffic sur la ligne A est interrompu à cause de __________.', 1),
 	('B100045', 'Qu\'est-ce que je ramenerai dans le passé aux anciens IMACs, pour leur prouver notre supériorité ?', 1),
 	('B100046', 'Qu\'est-ce que j\'ai ramené d\'Amsterdam ?', 1),
@@ -63,21 +63,25 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('B100048', 'Qu\'est-ce que je vais abandonner pour le Carême ?', 1),
 	('B100049', 'Les pistes d\'amélioration que je propose pour rendre l\'IMAC meilleure.', 1),
 	('B100050', 'La première fois c\'est bizarre, mais après on s\'y habitue.', 1),
+	('B100051', 'Mon background douteux sur Zoom.', 1),
+	('B100052', 'J\'ai fait un merveilleux rêve, cette nuit.', 1),
+	('B100053', 'Je ne crois pas en Dieu, je ne jure que par __________.', 1),
+	('B100054', '__________ c\'est comme tout, y a la théorie et la pratique.', 1),
 	('B200001', 'Étape 1 : __________ Étape 2 : __________ Étape 3 : Succès et célébrité.', 1),
 	('B200002', '__________ c\'est comme __________ mais en plus intense.', 1),
 	('B200003', '__________ + __________ = problème', 1),
 	('B200004', '__________ ou __________, je choisis bien évidemment la 2e option.', 1),
 	('W000001', 'Lucas, prof de oueb', 1),
-	('W000002', 'Robillard qui parle anglais', 1),
+	('W000002', 'Moi qui parle anglais', 1),
 	('W000003', 'Une chaise musicale dans le ZKM', 1),
 	('W000004', 'Aller au Mils à 19h pour avoir une place assise', 1),
-	('W000005', 'Les IMACs qui ont pas fait leur gage', 1),
+	('W000005', 'Les IMACs qui n\'ont pas fait leur gage', 1),
 	('W000006', 'Les IMACannes', 1),
 	('W000007', 'Les cheveux de Jules', 1),
 	('W000008', 'La chemise de Gérald Robin', 1),
 	('W000009', 'Orgimac', 1),
-	('W000010', 'Réviser le signal', 1),
-	('W000011', 'Les chips des ateliers 803Z', 1),
+	('W000010', 'Mourir de signal', 1),
+	('W000011', 'Les chips de 803Z', 1),
 	('W000012', 'Le 48h du court métrage', 1),
 	('W000013', 'Les 23h de la BD mais pompettes', 1),
 	('W000014', 'L\'aftermovie du WEI', 1),
@@ -87,7 +91,7 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000018', 'Keven qui fait une référence à Star Wars', 1),
 	('W000019', 'Boire un Adios Motha Fucka', 1),
 	('W000020', 'Mes incroyables skills en dessin sur OpenGL', 1),
-	('W000021', 'Épeler le nom de famille d\'Eva pour 200€', 1),
+	('W000021', 'Épeler le nom de famille d\'Eva pour 200€ >w<', 1),
 	('W000022', 'Connaître la signification du sigle UQAT', 1),
 	('W000023', 'Revenir du Québec avec l\'accent', 1),
 	('W000024', 'Les pâtes au beurre du WEI', 1),
@@ -110,28 +114,28 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000041', 'Une valse avec Laporte', 1),
 	('W000042', 'Mes talents incontestés en développements limités', 1),
 	('W000043', 'Mes aptitudes de tri par insertion', 1),
-	('W000044', 'Un snap de Mattéo', 1),
+	('W000044', 'L\'Apéro-Coper', 1),
 	('W000045', 'Templier qui nous respecte', 1),
 	('W000046', 'Le micro d\'Émilie Verger', 1),
 	('W000047', 'Réviser le CIP', 1),
 	('W000048', 'L\'ingénierie créative', 1),
-	('W000049', 'Le coronavirus', 1),
+	('W000049', 'Le C.O.V.I.D', 1),
 	('W000050', 'Citatimac', 1),
 	('W000051', 'Les cabats du CROUS', 1),
 	('W000052', 'La caisse centrale du RU, paiement uniquement par IZLY', 1),
 	('W000053', 'Une soirée karaoké raclette', 1),
-	('W000054', 'Une séance recette pompette avec Luc', 1),
+	('W000054', 'Une recette pompette chez Luc', 1),
 	('W000055', 'Le plan boule', 1),
-	('W000056', 'Gaëtan', 1),
+	('W000056', 'Antoine Chevreuil', 1),
 	('W000057', 'Une sortie obligatoire le dimanche aprem', 1),
 	('W000058', 'L\'alcoolisme', 1),
-	('W000059', 'Ma sobriété', 1),
+	('W000059', 'Soigner sa carence en bière', 1),
 	('W000060', 'La collection de memes en ma défaveur', 1),
 	('W000061', 'Ma réappropriation à base de pâte à sel', 1),
-	('W000062', 'La communication à l\'IMAC', 1),
+	('W000062', 'Le C de l\'IMAC', 1),
 	('W000063', 'Le magicien du CROUS qui fait disparaître mon nez', 1),
 	('W000064', 'Mes entraînements Voltaire orthotypographiques', 1),
-	('W000065', 'Mes facultés en intégration par parties', 1),
+	('W000065', 'Mes facultés d\'intégration par parties', 1),
 	('W000066', 'Mes burnouts récursifs', 1),
 	('W000067', 'L\'apéro-race du vendredi post-4h-de-Novelli', 1),
 	('W000068', 'Jérémi Delaire 😥', 1),
@@ -140,7 +144,17 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W000071', 'Mon abstinence en IMAC2', 1),
 	('W000072', 'L\'assistant Voltaire', 1),
 	('W000073', 'Les larmes des IMACs 2', 1),
-	('W000074', '03bèz', 1);
+	('W000074', '03bèz', 1),
+	('W000075', 'La raceclette', 1),
+	('W000076', 'Être payer en visibilité', 1),
+	('W000077', 'Biri tout flagada', 1),
+	('W000078', '`Cherrier` UNION `Solo de banane`', 1),
+	('W000079', 'Ma collection de Seg fault', 1),
+	('W000080', 'Avoir l\'écharpe du malaise', 1),
+	('W000081', 'Le gilet jaune', 1),
+	('W000082', 'Alors, tu vas rire...', 2),
+	('W000083', 'Le GALA IMAC 2020', 2),
+	('W000084', 'Les traditionnelles bisals et frisettes', 3);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `had` (
@@ -167,16 +181,18 @@ CREATE TABLE IF NOT EXISTS `pack` (
   `id_pack` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_pack`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*!40000 ALTER TABLE `pack` DISABLE KEYS */;
 INSERT INTO `pack` (`id_pack`, `name`) VALUES
-	(1, 'IMAC Vie');
+	(1, 'IMAC Vie'),
+	(2, 'GotchiT'),
+	(3, 'theodau');
 /*!40000 ALTER TABLE `pack` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `player` (
   `pname` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pass` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` char(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `color` char(6) COLLATE utf8mb4_unicode_ci DEFAULT 'eae5eb',
   `token` char(7) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_pack` int(11) DEFAULT NULL,
@@ -194,10 +210,12 @@ CREATE TABLE IF NOT EXISTS `player` (
 
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `lastActivity`, `id_room`) VALUES
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'LrjvVWI', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:38', NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f91f1f', 'J8T@nBm', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:40', NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '4eefde', '8YopV@W', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:39', NULL),
-	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', '21a8ee', 'wAN7OW7', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-08 21:11:41', NULL);
+	('BobLeCon', '$2y$10$3tiqnDIHHTvdg0..bbJc0eyyhYUWtsdPqblYpKUrDZRiEBafrS3Rq', 'eae5eb', 'drEddQz', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'G659Hdh', 2, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 11:55:34', NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f92436', 'mbSZgvU', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 12:07:17', NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '41effb', 'Hn1szMv', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 13:14:58', NULL),
+	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', 'ffd30f', 'lgJw7hX', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-11 15:18:19', NULL),
+	('theodau', '$2y$10$3hed4CD/0JIlmvrNaohX4.xHqkpWv9aivDlfycRlvyGPyencfCToC', '9effc3', 'zqAr5yD', 3, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `room` (

@@ -20,6 +20,25 @@ body *::selection {
     background: #fff3;
 }
 
+body * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245, 50, 99, 0.644) rgba(84, 23, 36, 0.133);
+}
+
+body *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+body *::-webkit-scrollbar-thumb {
+    background-color: rgba(245, 50, 99, 0.644);
+    border: 1px solid rgba(84, 23, 36, 0.5);
+}
+
+body *::-webkit-scrollbar-track {
+    background-color: rgba(84, 23, 36, 0.25);
+}
+
 header {
     display: flex;
     z-index: 10;
@@ -28,6 +47,7 @@ header {
     width: 100vw;
     max-width: 1400px;
     flex-direction: row-reverse;
+    overflow: hidden;
 }
 
 header .modal-backdrop {
@@ -112,7 +132,6 @@ footer {
 footer p {
     margin: 0%;
     line-height: 2vh;
-    font-weight: lighter;
     font-size: 0.8em;
     transform: translateY(75%);
 }

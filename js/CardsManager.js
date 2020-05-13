@@ -100,7 +100,7 @@ function Manager() {
       } else {
         let c = r.response.card;
         let domCard = $(`.card-pack[data-id="${µ(c.id_pack)}"] .card[data-id="${µ(c.id_card)}"]`);
-        domCard.find('.card-content').text(µ(c.content));
+        domCard.find('.card-content').text(c.content);
       }
     });
   };
@@ -135,6 +135,7 @@ function Manager() {
       } else {
         let domCard = $(`.card[data-id="${this.selected.data('id')}"]`);
         domCard.remove();
+        //TODO update this.data
       }
     });
   };

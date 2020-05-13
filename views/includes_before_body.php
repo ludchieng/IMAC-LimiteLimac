@@ -46,7 +46,7 @@ echo '<link rel="stylesheet" href="css/game.css">
 echo '<link rel="stylesheet" href="css/landing.css">
 ';
 
-echo '<link rel="stylesheet" href="css/welcome.css">
+echo '<link rel="stylesheet" href="css/hub.css">
 ';
 
 echo '<link rel="stylesheet" href="css/static.css">

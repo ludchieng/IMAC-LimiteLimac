@@ -17,7 +17,7 @@
 require_once('views/modal_user.php');
 ?>
 
-<div id="welcome">
+<div id="hub">
     <aside id="lezami">
         <h1>Joueurs</h1>
         <ul></ul>
@@ -48,4 +48,4 @@ require_once('views/modal_user.php');
 
 <script src="js/get_users_online.js"></script>
 <script src="js/get_rooms_online.js"></script>
-<script src="js/action_welcome.js"></script>
+<script src="js/action_hub.js"></script>

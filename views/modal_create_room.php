@@ -135,7 +135,7 @@
         }
       } else {
         setCookie('token', r.response.token, 4);
-        location.href = "index.php?action=play";
+        location.href = "/index.php?action=play";
       }
     });
   };

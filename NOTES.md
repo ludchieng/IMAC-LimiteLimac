@@ -18,9 +18,9 @@ wtflesamis
 
 ## TODO
 
-* Fin de partie: annonce
-* Refresh users/rooms on welcome
-* join.php → redirect after login/register
+* Fin de partie: annonce → win count
+* landing page img
+* rejoindre onclick
 
 
 ## TO DEBUG

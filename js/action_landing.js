@@ -11,7 +11,7 @@ $(document).ready(() => {
 });
 
 $('#btn-play').click(() => {
-  location.href = 'index.php?action=welcome';
+  location.href = '/index.php?action=hub';
 });
 
 $('#btn-edit').click(() => {

@@ -4,11 +4,11 @@ $(document).ready(() => {
   manager = new Manager();
 
   $('#btn-home').click(() => {
-    location.href = 'index.php';
+    location.href = '/index.php';
   });
   
   $('#btn-play').click(() => {
-    location.href = 'index.php?action=welcome';
+    location.href = '/index.php?action=hub';
   });
   
   $('#search-card').keyup((e) => {

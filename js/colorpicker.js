@@ -15,7 +15,7 @@ function ColorPicker(hex) {
     if (this.hex)
       var color = this.hexToHSL(this.hex);
     else
-      var color = {h: 0, s: 0, l: .7};
+      var color = { h: 0, s: 0, l: .7 };
     $('#inp1').val(color.h * 360);
     $('#inp2').val(color.s * 100);
     $('#inp3').val(color.l * 100);

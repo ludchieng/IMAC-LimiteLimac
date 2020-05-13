@@ -2,13 +2,12 @@
 // Voici la liste des actions possibles avec la page à charger associée
 
 $listeDesActions = array(
-    "landing" => "views/landing.php",
+    "" => "views/landing.php",
     "login" => "views/login.php",
     "register" => "views/register.php",
 
-    "loginGo" => "actions/login.php",
-    "registerGo" => "actions/register.php",
+    "404" => "views/404.php",
 
-    "welcome" => "views/welcome.php",
+    "hub" => "views/hub.php",
     "play" => "views/game.php",
 );

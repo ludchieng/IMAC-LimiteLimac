@@ -19,7 +19,7 @@ $(document).ready(() => {
         }
       }
       window.setTimeout(() => {
-        location.href = "/index.php?action=welcome"
+        location.href = "/index.php?action=hub"
       }, 3000);
     } else {
       $('#join button').show();
@@ -41,7 +41,7 @@ $(document).ready(() => {
     }).done((r) => {
       if (r.success) {
         setCookie('token', r.response.token, 4);
-        location.href = "index.php?action=play";
+        location.href = "/index.php?action=play";
       } else {
         for (let e of r.errors) {
           switch (e.code) {
@@ -53,7 +53,7 @@ $(document).ready(() => {
               break;
             case 401:
             case 403:
-              location.href = `index.php?action=login&join=${µ(idroom)}`;
+              location.href = `/index.php?action=login&join=${µ(idroom)}`;
               break;
             default:
               $('#form-fullscreen-alert').html('Erreur accès au salon :( <br/>Redirection...');

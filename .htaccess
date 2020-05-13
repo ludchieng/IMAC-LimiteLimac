@@ -1,4 +1,4 @@
-Deny from all
+ErrorDocument 404 /index.php?action=404
 
 <Files "">
   Allow from all

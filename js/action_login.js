@@ -30,7 +30,7 @@ function login(requireHTTPS) {
         setCookie('token', r.response.token, 4);
         setCookie('color', r.response.color, 24 * 7);
         if (undefined === getParam('join')) {
-          goToWelcome();
+          goToHub();
         } else {
           goToRoom();
         }
@@ -55,8 +55,8 @@ function login(requireHTTPS) {
   }
 }
 
-function goToWelcome() {
-  location.href = "index.php?action=welcome";
+function goToHub() {
+  location.href = "/index.php?action=hub";
 }
 
 function goToRoom() {
@@ -71,7 +71,7 @@ function goToRoom() {
   }).done((r) => {
     if (r.success) {
       setCookie('token', r.response.token, 4);
-      location.href = "index.php?action=play";
+      location.href = "/index.php?action=play";
     } else {
       for (let e of r.errors) {
         switch (e.code) {
@@ -83,7 +83,7 @@ function goToRoom() {
             break;
           case 401:
           case 403:
-            location.href = `index.php?action=login&join=${µ(idroom)}`;
+            location.href = `/index.php?action=login&join=${µ(idroom)}`;
             break;
           default:
             $('#form-fullscreen-alert').text('Erreur accès au salon :(');

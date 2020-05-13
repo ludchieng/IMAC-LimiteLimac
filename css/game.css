@@ -220,7 +220,7 @@
   padding: 96px 8px 0 16px;
   margin: 0;
   height: 100vh;
-  width: 220px;
+  max-width: 270px;
   background: linear-gradient(-90deg, #1125, #1120);
 }
 

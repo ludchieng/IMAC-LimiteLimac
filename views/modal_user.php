@@ -33,7 +33,7 @@
     </div>
 </div>
 
-<script src="../js/colorpicker.js"></script>
+<script src="../js/ColorPicker.js"></script>
 <script>
 $(document).ready(() => {
     let cp = new ColorPicker(getCookie('color'));

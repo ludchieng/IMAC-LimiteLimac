@@ -126,7 +126,7 @@ function Game(pname, token) {
       } else {
         this.count++;
         if (r.response.stillInGame == 'false') {
-          location.href = "index.php?action=welcome&message=disconnected";
+          location.href = "/index.php?action=hub&message=disconnected";
         }
         this.update(r.response);
         if (callback)
@@ -196,7 +196,7 @@ function Game(pname, token) {
       $('#game-alert').html(msg)
       this.info = msg;
     }
-  }
+  };
 
   this.domRefreshCards = (r) => {
     if (undefined == r.blackCard.id_card) {
@@ -237,7 +237,7 @@ function Game(pname, token) {
     if (this.roundCountMax != r.roundCountMax) {
       $('#room-round-max').text(r.roundCountMax);
     }
-  }
+  };
 
   this.domRefreshPlayers = (r) => {
     let ul = $('#room-players ul');

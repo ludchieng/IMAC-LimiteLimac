@@ -54,11 +54,6 @@
   font-size: 1em;
 }
 
-.break {
-  flex-basis: 100%;
-  height: 0;
-}
-
 .main {
   width: 100%;
   height: 90vh;
@@ -89,7 +84,7 @@
   padding-top: 20%;
 }
 
-.centerDiv {
+.centered {
   text-align: center;
   display: flex;
   flex-wrap: wrap;
@@ -99,22 +94,9 @@
   padding: 10% 12% 0 12%;
 }
 
-.centerDiv h1 {
+.centered h1 {
   margin-bottom: 10%;
   flex-basis: 100%;
-}
-
-.rightDiv, .leftDiv {
-  padding-top: 15vh;
-  height: 90vh;
-  width: 20vw;
-  flex-grow: 1;
-  text-align: center;
-}
-
-.column-break {
-  flex-basis: 100%;
-  width: 0;
 }
 
 .modal {

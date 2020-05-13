@@ -25,6 +25,7 @@
 }
 
 .form-fullscreen input {
+  display: inline;
   box-sizing: border-box;
   margin: 0 auto 30px auto;
   padding: 8px 12px;

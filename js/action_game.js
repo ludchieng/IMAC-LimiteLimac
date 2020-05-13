@@ -16,12 +16,13 @@ $(document).ready(() => {
     game.apiSetReady(!game.me.isReady);
   })
 
-  $('#logo').click(() => {
+  $('#logo').click((e) => {
+    e.preventDefault();
     $.ajax({
       type: "POST", url: "api/room_quit.php",
       data: { pname: getCookie('pname'), token: getCookie('token') }
     }).done((r) => {
-      location.href = 'index.php?action=welcome';
+      location.href = '/index.php?action=hub';
     });
   });
 
@@ -30,7 +31,7 @@ $(document).ready(() => {
       type: "POST", url: "api/room_quit.php",
       data: { pname: getCookie('pname'), token: getCookie('token') }
     }).done((r) => {
-      location.href = 'index.php?action=welcome';
+      location.href = '/index.php?action=hub';
     });
   });
 });

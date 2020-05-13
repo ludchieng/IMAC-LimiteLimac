@@ -1,14 +1,14 @@
-#welcome {
+#hub {
   position: absolute;
   top: 0;
   width: 100vw;
 }
 
-#welcome .title {
+#hub .title {
   display: block;
 }
 
-#welcome main {
+#hub main {
   margin: 0 auto;
   padding: 15vh 10vh 0 10vh;
   max-width: 800px;
