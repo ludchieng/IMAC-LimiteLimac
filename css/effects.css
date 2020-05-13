@@ -23,6 +23,6 @@
 
 @keyframes svgAnimPosition {
     0% {   -webkit-transform: translateY(0px); }
-    50% {  -webkit-transform: translateY(-100px); }
+    50% {  -webkit-transform: translateY(-50px); }
     100% { -webkit-transform: translateY(0px); }
 }

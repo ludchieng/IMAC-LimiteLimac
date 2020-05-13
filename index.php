@@ -14,7 +14,9 @@ require_once('actions/actions.php');
 <body>
   <div id="particles-js"></div>
 
-  <a id="logo" href="/"><img src="img/imac-uni-white.svg" alt="Logo IMAC"></a>
+  <a id="logo" href="/">
+    <img src="img/imac-uni-white.svg" alt="Logo IMAC">
+  </a>
 
   <div class="main">
     <?php

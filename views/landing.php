@@ -25,16 +25,32 @@ require_once('views/modal_user.php');
 
 <div id="landing">
     <div id="landing-left">
-        <img src="img/landing.svg" alt="">
+        <div id="landing-anim">
+            <div class="card card-black">
+                <img class="card-icon" src="img/imac-uni-white.svg">
+                <p class="card-content">Étape 1 : __________ Étape 2 : __________ Étape 3 : Succès et célébrité.</p>
+                <span class="card-author"></span>
+            </div>
+            <div class="card card-white">
+                <img class="card-icon" src="img/imac-uni-darkblue.svg">
+                <p class="card-content">Un jeudimac au bord du Rhin</p>
+                <span class="card-author"></span>
+            </div>
+            <div class="card card-white">
+                <img class="card-icon" src="img/imac-uni-darkblue.svg">
+                <p class="card-content">Se faire verbaliser par la Polizei de Karlsruhe pour tapage nocturne</p>
+                <span class="card-author"></span>
+            </div>
+        </div>
     </div>
 
     <div id="landing-right">
         <h1>LIMITE_LIMAC</h1>
         <p>Le jeu klakos pour des étudiants rigolos</p>
-        <div class="flex_break"></div>
-        <p class="lighter">Si tu n'est pas un IMAC, ce jeu n'est probablement pas fait pour toi ! Tu risques de pas comprendre toutes les références :p <br>
-            BISOUS</p>
-        <div class="flex_break"></div>
+        <div class="flex-break"></div>
+        <p class="lighter">Si tu n'est pas un IMAC 🤩, ce jeu n'est probablement pas fait pour toi ! Tu risques de pas comprendre toutes les références 👹<br>
+           <span style="font-weight: bolder">BISOUS.</span></p>
+        <div class="flex-break"></div>
         <button type="submit" class="sub" onclick="location.href = '/index.php?action=login';">
             <span class="sub_text">GO !</span>
         </button>

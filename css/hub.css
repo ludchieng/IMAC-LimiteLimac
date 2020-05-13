@@ -25,7 +25,6 @@
   justify-content: space-between;
 }
 
-#room-create-alert,
 #room-join-alert {
   margin: 0 0 16px 0;
   width: 100%;
@@ -35,16 +34,16 @@
   border-radius: 6px;
 }
 
-#room-create, #room-join {
+#room-join {
   display: none;
   margin-top: 16px;
 }
 
-#room-create button, #room-join button {
+#room-join button {
   margin-top: 12px;
 }
 
-#room-create input, #room-join input {
+#room-join input {
   padding: 5px;
   width: 100%;
   border-radius: 5px;
@@ -52,6 +51,11 @@
   background-color: rgba(255, 255, 255, 0.2);
   color: var(--W);
   font-family: Roboto;
+}
+
+#room-join ::placeholder {
+  color: #fffd;
+  font-style: italic;
 }
 
 #lezami {
@@ -149,6 +153,19 @@
   list-style-type: none;
   text-align: right;
   font-family: Roboto;
+}
+
+#lezalons a {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: .05s ease-in-out;
+}
+
+#lezalons a:hover {
+  text-shadow: 0 0 3px rgba(255, 180, 215, 0.4);
+  padding-right: 10px;
+  transition: .15s ease-in-out;
 }
 
 @media screen and (max-width: 800px) {

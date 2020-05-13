@@ -8,18 +8,10 @@
 #landing-left {
   position: absolute;
   z-index: -1;
-  transform: translateY(-60%);
-  top: 60vh;
+  transform: translateY(-50%);
+  top: calc(60vh - 12vw);
   left: 10%;
   width: calc(80% - 400px);
-}
-
-#landing-left img {
-  max-width: 750px;
-  animation: svgAnimScale 5s ease infinite;
-  animation: svgAnimPosition 5s ease infinite;
-  -moz-user-select: none;
-  -webkit-user-select: none;
 }
 
 #landing-right {
@@ -73,4 +65,79 @@
   #landing-left {
     display: none;
   }
+}
+
+#landing-anim {
+  max-width: 750px;
+  animation: svgAnimScale 5s ease infinite;
+  animation: svgAnimPosition 5s ease infinite;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#landing-anim > :nth-child(1) {
+  top: 0;
+  left: max(0px, calc(0px + 20vw - 170px));
+  transform: rotateZ(-9deg) translateY(-60px) !important; 
+}
+
+#landing-anim > :nth-child(2) {
+  top: 0;
+  left: max(120px, calc(120px + 22vw - 170px));
+  transform: rotateZ(3deg) !important; 
+}
+
+#landing-anim > :nth-child(3) {
+  top: 0;
+  left: max(200px, calc(200px + 26vw - 170px));
+  transform: translateY(70px) rotateZ(12deg) !important; 
+}
+
+#landing .card {
+  position: absolute;
+  transform: translateY(-50%);
+  width: 200px;
+  margin: 0px;
+  padding: 16px;
+  height: 280px;
+  opacity: 0.95;
+  font-size: 1.05em;
+  font-family: Roboto;
+  border-radius: 12px;
+  transition: .1s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+#landing .card-white {
+  font-weight: 600;
+  color: var(--B);
+  background-color: var(--W);
+}
+
+#landing .card-black {
+  font-weight: 500;
+  color: var(--W);
+  background-color: var(--B);
+}
+
+#landing .card-white *::selection {
+  background: #f042;
+}
+
+#landing .card-icon {
+  position: absolute;
+  bottom: 7%;
+  left: 8%;
+  width: 12%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+#landing .card-author {
+  position: absolute;
+  bottom: 6.7%;
+  left: calc(8% + 12% + 3%);
+  max-width: calc(95% - 8% - 12% - 3%);
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 0.8em;
 }

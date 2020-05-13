@@ -96,11 +96,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-white {
+  font-weight: 600;
   color: var(--B);
   background-color: var(--W);
 }
 
 .card-black {
+  font-weight: 500;
   color: var(--W);
   background-color: var(--B);
 }

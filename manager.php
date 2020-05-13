@@ -108,7 +108,7 @@ if (!isset($_COOKIE['pname'], $_COOKIE['token']))
     <?php require_once('views/includes_after_body.php'); ?>
 
     <script src="js/CardsManager.js"></script>
-    <script src="js/manager.js"></script>
+    <script src="js/action_manager.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,9 @@
+$('#join button').hide();
+
 $(document).ready(() => {
-  let idroom = getParam('idroom');
-  
   $('#join button').hide();
+  let idroom = getParam('idroom');
+
 
   $.ajax({
     type: "GET",
