@@ -39,12 +39,13 @@ function create_room(string $name, int $nbRounds,
   $pst->execute();
   $id = $pdo->lastInsertId();
   $pst->closeCursor();
-  $sql = "INSERT INTO `use` (id_room, id_pack) ";
+  $sql = "INSERT INTO `use` (id_room, id_pack) VALUES";
   foreach ($packs as $p) {
     if (!is_numeric($p))
       break;
-    $sql .= "VALUES ({$id}, {$p});";
+    $sql .= " ({$id}, {$p}),";
   }
+  $sql = substr($sql, 0, -1);
   $pdo->query($sql);
   return $id;
 }

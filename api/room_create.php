@@ -44,6 +44,9 @@ try {
     if (!authenticate_player($pname, $_POST['pass']))
       throw_error($r, 403);
 
+  if (count($packs) === 0)
+    throw_error($r, 100, "packs should not be empty");
+
     $id = create_room($name, $nbRounds, $roundDuration, $celebrationDuration, $packs);
     $token = join_room($id, $pname);
   } else if (isset($_POST['token'])) {

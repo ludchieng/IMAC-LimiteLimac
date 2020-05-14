@@ -12,6 +12,7 @@ function Manager() {
     }).done((r) => {
       this.data = r.response.data;
       this.domSetData();
+      $(`#select-packs-1`).click();
       this.domRefreshCards();
     });
   })();
@@ -197,26 +198,23 @@ function Manager() {
     for (let i in this.data) {
       let p = this.data[i];
 
-      for (let c of p.cards) {
-        isVisible = -1 != c.content.toLowerCase().indexOf(this.search);
-        if (c.id_card.charAt(0) == 'B') {
-          isVisible = isVisible && $('#show-black').is(':checked');
-        } else {
-          isVisible = isVisible && $('#show-white').is(':checked');
+      if ($(`#select-packs-${i}`).is(':checked')) {
+        for (let c of p.cards) {
+          isVisible = -1 != c.content.toLowerCase().indexOf(this.search);
+          if (c.id_card.charAt(0) == 'B') {
+            isVisible = isVisible && $('#show-black').is(':checked');
+          } else {
+            isVisible = isVisible && $('#show-white').is(':checked');
+          }
+          if (!isVisible) {
+            $(`.card[data-id="${µ(c.id_card)}"]`).addClass('hidden');
+          } else {
+            $(`.card[data-id="${µ(c.id_card)}"]`).removeClass('hidden');
+          }
         }
-        if (!isVisible) {
-          $(`.card[data-id="${µ(c.id_card)}"]`).addClass('hidden');
-        } else {
-          $(`.card[data-id="${µ(c.id_card)}"]`).removeClass('hidden');
-        }
+        this.domRefreshInfo();
       }
-      /*if (0 == $(`.card-pack[data-id="${µ(p.id_pack)}"] .card:not(.hidden)`).length) {
-        // No card shown in this pack
-        $(`.card-pack[data-id="${µ(i)}"]`).addClass('hidden');
-      } else {
-        $(`.card-pack[data-id="${µ(i)}"]`).removeClass('hidden');
-      }*/
-      this.domRefreshInfo();
+
     }
   };
 

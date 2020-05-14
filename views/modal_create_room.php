@@ -72,7 +72,7 @@
         for (let o of options) {
           o.value = o.id_pack;
           o.text = o.name;
-          if (o.id_pack == 1)
+          if (o.id_pack == 2)
             o.selected = true;
           delete o.id_pack;
           delete o.name;
@@ -108,7 +108,6 @@
     for (let s of dlb.selected) {
       packs.push(s.dataset.id);
     }
-    packs.push(2);
 
     $.ajax({
       type: "POST",
