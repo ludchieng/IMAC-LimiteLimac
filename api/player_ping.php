@@ -44,6 +44,8 @@ try {
       case ROOM_STATUS_STANDBY:
         $r['response']['players'] = get_room_players_details($id_room);
         $r['response']['share'] = "https://{$_SERVER['HTTP_HOST']}/join.php?idroom=" . $id_room;
+        break;
+
       case ROOM_STATUS_PLAYING_ROUND:
         $r['response']['whiteCards'] = get_player_handcards($pname);
         $r['response']['blackCard'] = get_round_card($id_room);
@@ -59,8 +61,8 @@ try {
           }
           $r['response']['players'][] = $players[$i];
         }
-
         break;
+
       case ROOM_STATUS_CELEBRATION:
         $players = get_room_players_details($id_room);
         for ($i=0; $i < count($players); $i++) { 
@@ -71,10 +73,15 @@ try {
         }
         $r['response']['winner'] = $winner = get_round_winner($id_room);
 
+        check_for_end_room($id_room);
+        
         if (can_round_start($id_room)) {
           start_round($id_room, $winner);
         }
-      break;
+        break;
+
+      case ROOM_STATUS_END_ROOM:
+        $r['response']['players'] = get_room_players_details($id_room);
     }
   }
 } catch (PDOException $e) {

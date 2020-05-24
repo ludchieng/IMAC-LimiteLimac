@@ -31,6 +31,7 @@ require_once('views/modal_user.php');
         <div id="playing-round-cards-panel"></div>
         <div id="end-round-panel"></div>
         <div id="celebration-panel"></div>
+        <div id="end-room-panel"></div>
     </main>
 
     <aside id="room-players">

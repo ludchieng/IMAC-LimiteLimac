@@ -66,7 +66,7 @@ function can_round_start(int $id_room): bool
     return false;
   if (get_round_end_time($id_room) > 0)
     return false;
-  if (get_room($id_room, 'roundCount') >= get_room($id_room, 'roundCountMax'))
+  if (is_room_roundcount_exceeded($id_room))
     return false;
   logs("CAN ROUND START: #$id_room, returned TRUE");
   return true;
@@ -82,8 +82,10 @@ function end_round($id_room): void
 function round_celebration($id_room): void
 {
   logs("ROUND CELEBRATION: #$id_room");
+  set_room($id_room, 'isStatusLocked', 1);
   set_room($id_room, 'status', ROOM_STATUS_CELEBRATION);
   set_current_timestamp('room', $id_room, 'lastRoundEnd');
+  set_room($id_room, 'isStatusLocked', 0);
 }
 
 /**

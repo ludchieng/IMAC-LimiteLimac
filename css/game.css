@@ -52,6 +52,10 @@
   content: ' !';
 }
 
+#game[data-status="END_ROOM"] #game-title::after {
+  content: 'Fin de partie !';
+}
+
 #game-alert {
   font-family: Roboto;
   text-align: center;
@@ -110,7 +114,8 @@
 
 #playing-round-cards-panel,
 #end-round-panel,
-#celebration-panel {
+#celebration-panel,
+#end-room-panel {
   display: none;
   margin: 0 auto;
   max-width: 680px;
@@ -135,6 +140,18 @@
 
 #game[data-status="CELEBRATION"] #celebration-panel {
   display: flex;
+}
+
+#game[data-status="END_ROOM"] #end-room-panel {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+#end-room-panel td {
+  padding-right: 24px;
+  font-family: Roboto;
+  font-size: 1.1em;
 }
 
 .white-card {

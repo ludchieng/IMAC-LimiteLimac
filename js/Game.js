@@ -188,6 +188,9 @@ function Game(pname, token) {
         this.domRefreshCelebrationPanel(r);
         //this.updateCookie();
         break;
+      case 'END_ROOM':
+        this.domRefreshEndRoomPanel(r);
+        break;
     }
   };
 
@@ -339,6 +342,21 @@ function Game(pname, token) {
           `);
         }
       }
+    }
+  };
+
+  this.domRefreshEndRoomPanel = (r) => {
+    $('#end-room-panel').html('<table></table>');
+    let ps = r.players;
+    let maxScore = Math.max.apply(Math, r.players.map((e) => { return e.roomPoints; }))
+    for (let p of ps) {
+      $('#end-room-panel table').append(`
+        <tr>
+          <td>${(p.roomPoints == maxScore) ? '🏆' : ''}</td>
+          <td>${µ(p.pname)}</td>
+          <td>${µ(p.roomPoints)}</td>
+        </tr>
+      `);
     }
   };
 

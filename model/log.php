@@ -14,11 +14,11 @@ function log_($file, $msg): void
 
 function logs($msg)
 {
-  log_('1', $msg);
+  //log_('1', $msg);
 }
 
 function log_room($id_room)
 {
-  $sql = 'SELECT * FROM room R WHERE id_room = '.$id_room;
-  log_('1', json_encode(get_multiple($sql)));
+  //$sql = 'SELECT * FROM room R WHERE id_room = '.$id_room;
+  //log_('1', json_encode(get_multiple($sql)));
 }

@@ -17,6 +17,7 @@ define('ROOM_STATUS_STANDBY', 'STANDBY');
 define('ROOM_STATUS_PLAYING_ROUND', 'PLAYING_ROUND');
 define('ROOM_STATUS_END_ROUND', 'END_ROUND');
 define('ROOM_STATUS_CELEBRATION', 'CELEBRATION');
+define('ROOM_STATUS_END_ROOM', 'END_ROOM');
 
 /**
  * Inserts a new room in database.
@@ -127,7 +128,7 @@ function get_room_ready_players(int $id_room): array
 function get_room_players_details(int $id_room): array
 {
   $sql = 'SELECT P.pname, P.color, P.isReady, P.isGameMaster,
-    P.hasPlayed, P.hasWon FROM player P
+    P.hasPlayed, P.hasWon, P.roomPoints FROM player P
     WHERE P.id_room = :id_room
   ';
   $data = get_multiple($sql, ['id_room' => $id_room]);
@@ -156,6 +157,41 @@ function is_known_room(int $id): bool
   } catch (PDOException $e) {
     return false;
   }
+}
+
+
+function is_room_roundcount_exceeded(int $id): bool
+{
+  return get_room($id, 'roundCount') >= get_room($id, 'roundCountMax');
+}
+
+function check_for_end_room(int $id): void
+{
+  if (get_room($id, 'status') === ROOM_STATUS_CELEBRATION
+      && (get_room($id, 'isStatusLocked') == false)
+      && (is_room_roundcount_exceeded($id))
+      && (get_round_end_time($id) <= 0)
+  ) {
+    end_room($id);
+  }
+}
+
+function end_room(int $id): void
+{
+  set_room($id, 'isStatusLocked', 1);
+  $sql = 'SELECT P.pname FROM player P
+    WHERE P.roomPoints = (
+      SELECT MAX(P.roomPoints)
+      FROM player P
+      WHERE P.id_room = :id_room
+    );
+  ';
+  $winners = array_column(get_multiple($sql, ['id_room' => $id]), "pname");
+  foreach ($winners as $w) {
+    set_player($w, 'winCount', get_player($w, 'winCount')+1);
+  }
+  set_room($id, 'status', ROOM_STATUS_END_ROOM);
+  set_room($id, 'isStatusLocked', 0);
 }
 
 /**

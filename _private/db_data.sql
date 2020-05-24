@@ -1078,6 +1078,7 @@ INSERT INTO `card` (`id_card`, `content`, `id_pack`) VALUES
 	('W001079', 'Ma collection de Seg fault', 2),
 	('W001080', 'Avoir l\'écharpe du malaise', 2),
 	('W001081', 'Le gilet jaune', 2),
+	('W001082', 'Une coquetterie législative signée Didier F.', 2),
 	('W002001', 'Alors, tu vas rire...', 3),
 	('W002002', 'Le GALA IMAC 2020', 4),
 	('W002003', 'Les traditionnelles bisals et frisettes', 4);
@@ -1138,9 +1139,9 @@ CREATE TABLE IF NOT EXISTS `player` (
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
 INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, `roomPoints`, `isReady`, `isGameMaster`, `hasPlayed`, `hasWon`, `lastPing`, `lastActivity`, `id_room`) VALUES
 	('BobLeCon', '$2y$10$3tiqnDIHHTvdg0..bbJc0eyyhYUWtsdPqblYpKUrDZRiEBafrS3Rq', 'eae5eb', 'drEddQz', NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL),
-	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'tazrIjh', 3, 0, 0, 0, 0, 0, 0, NULL, '2020-05-14 12:57:59', NULL),
-	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f92436', 'gD5WsHc', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-14 12:58:33', NULL),
-	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '41d6fb', 'teFSNsw', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-14 12:58:20', NULL),
+	('GotchiT', '$2y$10$yIhOMvbtDQ4BEf0hiv.aj.HVJ7fcip/TnhznwzFx3llIIJNzZ2V6S', '0df872', 'q1eq@OA', 3, 2, 0, 0, 0, 0, 0, NULL, '2020-05-24 17:18:51', NULL),
+	('Kysios', '$2y$10$FOFjUzZ6V5Xy4Mnps0IkMOdewnulBp9d8v3/JPpGKiX5H9WVCJJdG', 'f92436', 'rshcvBI', NULL, 1, 0, 0, 0, 0, 0, NULL, '2020-05-24 17:18:49', NULL),
+	('PandaDesSteppes', '$2y$10$Sgj0UZI2oEhe575hbwdD9uKcsk/jfaav28hwGTpuvaw4HJhVR9mVO', '41d6fb', '7QzqsmZ', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-24 17:18:47', NULL),
 	('pepe', '$2y$10$nlU9arR24fc9dUvnUoKymeecSykXDKAr6i3VqcswkO4x8/58VvqRW', 'ffd30f', 'D8PVne@', NULL, 0, 0, 0, 0, 0, 0, NULL, '2020-05-13 19:46:28', NULL),
 	('theodau', '$2y$10$3hed4CD/0JIlmvrNaohX4.xHqkpWv9aivDlfycRlvyGPyencfCToC', '9effc3', 'zqAr5yD', 4, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
@@ -1148,7 +1149,7 @@ INSERT INTO `player` (`pname`, `pass`, `color`, `token`, `id_pack`, `winCount`, 
 CREATE TABLE IF NOT EXISTS `room` (
   `id_room` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('STANDBY','PLAYING_ROUND','END_ROUND','CELEBRATION') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'STANDBY',
+  `status` enum('STANDBY','PLAYING_ROUND','END_ROUND','CELEBRATION','END_ROOM') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'STANDBY',
   `isStatusLocked` tinyint(1) NOT NULL DEFAULT '0',
   `roundCount` int(11) NOT NULL DEFAULT '0',
   `roundCountMax` int(11) NOT NULL DEFAULT '10',
