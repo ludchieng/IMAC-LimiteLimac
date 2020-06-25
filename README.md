@@ -8,3 +8,13 @@ Web adaptation of the famous *Cards against humanity* game with REST API archite
 ## **Instructions** :wrench::gear:
 
 Clone the repository on your web server. Request `install.php` from your browser and click `Init Database` to import the data into your mysql server.
+
+## **Preview** :rocket::framed_picture:
+
+![](_preview/screen-home.png)
+
+![](_preview/screen-room.png)
+
+![](_preview/screen-play.png)
+
+![](_preview/screen-manager.png)
